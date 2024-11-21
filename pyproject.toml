@@ -1,0 +1,146 @@
+[project]
+name = "mex-artificial"
+version = "0.1.0"
+description = "Create artificial data for the MEx project."
+authors = [{ name = "MEx Team", email = "mex@rki.de" }]
+readme = { file = "README.md", content-type = "text/markdown" }
+license = { file = "LICENSE" }
+urls = { Repository = "https://github.com/robert-koch-institut/mex-artificial" }
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "mex-backend@git+https://github.com/robert-koch-institut/mex-backend.git@0.23.0",
+    "mex-extractors@git+https://github.com/robert-koch-institut/mex-extractors.git@0.21.0",
+    "typer>=0.13,<1"
+]
+optional-dependencies.dev = [
+    "ipdb>=0.13,<1",
+    "mypy>=1,<2",
+    "pytest-cov>=5,<6",
+    "pytest-random-order>=1,<2",
+    "pytest-xdist>=3,<4",
+    "pytest>=8,<9",
+    "ruff>=0.7,<1",
+    "sphinx>=8,<9",
+]
+
+[project.scripts]
+artificial = "mex.artificial.main:cli"
+
+[tool.cruft]
+template = "https://github.com/robert-koch-institut/mex-template"
+skip = ["CHANGELOG.md", "mex", "tests"]
+
+[tool.ipdb]
+context = 5
+
+[tool.mypy]
+python_version = "3.11"
+show_error_codes = true
+strict = true
+plugins = ["pydantic.mypy"]
+
+[tool.pdm]
+distribution = true
+
+[tool.pdm.scripts]
+update-all = { cmd = "pdm update --group :all --update-all --save-compatible" }
+lock-all = { cmd = "pdm lock --group :all --python='==3.11.*'" }
+install-all = { cmd = "pdm install --group :all --frozen-lockfile" }
+export-all = { cmd = "pdm export --group :all --no-hashes -f requirements" }
+apidoc = { cmd = "pdm run sphinx-apidoc -f -o docs/source mex" }
+sphinx = { cmd = "pdm run sphinx-build -aE -b dirhtml docs docs/dist" }
+doc = { composite = ["apidoc", "sphinx"] }
+wheel = { cmd = "pdm build --no-sdist" }
+mypy-daemon = { cmd = "pdm run dmypy run --timeout 7200 -- mex" }
+lint = { cmd = "pre-commit run --all-files" }
+unit = { cmd = "pdm run pytest -m 'not integration'" }
+test = { cmd = "pdm run pytest --numprocesses=auto --dist=worksteal" }
+all = { composite = ["install-all", "lint", "test", "doc"] }
+
+[tool.pydantic-mypy]
+warn_untyped_fields = true
+
+[tool.pytest.ini_options]
+addopts = [
+    "--verbose",
+    "--cov",
+    "--no-cov-on-fail",
+    "--cov-report=term-missing:skip-covered",
+    "--cov-fail-under=95",
+    "--cov-branch",
+    "--pdbcls=IPython.terminal.debugger:TerminalPdb",
+    "--random-order-bucket=global",
+]
+markers = "integration: mark a test as integration test"
+
+[tool.ruff]
+fix = true
+line-length = 88
+show-fixes = true
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+ignore = [
+    "AIR",     # Disable airflow specific rules (we are not using airflow)
+    "ANN",     # Disable all annotations checks (handled by mypy)
+    "COM",     # Disable flake8-commas checks (let ruff format handle that)
+    "CPY",     # Disable copyright notice checks (we have LICENSE files)
+    "D100",    # Allow missing module docstring (for brevity and speed)
+    "D104",    # Allow missing package docstring (for brevity and speed)
+    "D203",    # Disallow blank line before class docstring (inverse of D211)
+    "D213",    # Disallow multi-line docstring starting at second line (inverse of D212)
+    "D406",    # Allow section name ending with newline (google style compat)
+    "D407",    # Allow missing dashed underline after section (google style compat)
+    "D413",    # Allow missing blank line after last section (google style compat)
+    "DJ",      # Disable django specific checks (we are not using django)
+    "FBT",     # Disable boolean type hint checks (for more flexibility)
+    "FIX",     # Allow committing with open TODOs (don't punish committers)
+    "ISC001",  # Disable checks for implicitly concatenated strings (formatter compat)
+    "N805",    # Allow first argument of a method to be non-self (pydantic compat)
+    "N815",    # Allow mixedCase variables in class scope (model compat)
+    "PTH123",  # Allow using builtin open method (simpler than pathlib)
+    "RUF012",  # Allow mutable class attributes (pydantic compat)
+    "SIM108",  # Allow explicit if-else instead of ternary (easier to read)
+    "TD003",   # Allow TODOs without ticket link (don't punish TODO writers)
+    "TRY003",  # Allow long exception message at the raise site (for pydantic)
+]
+select = ["ALL"]
+
+[tool.ruff.lint.per-file-ignores]
+"docs/**" = [
+    "INP001",   # Docs folder does not need to be a package
+]
+"scripts/**" = [
+    "INP001",   # Scripts folder does not need to be a package
+]
+"tests/**" = [
+    "ARG005",   # Allow unused lambda arguments for mocking
+    "D101",     # Allow missing docstring in public class
+    "D102",     # Allow missing docstring in public method
+    "D103",     # Allow missing docstring in public function
+    "D107",     # Allow missing docstring in `__init__`
+    "E501",     # Allow longer lines with test data
+    "ISC",      # Allow implicitly concatenated strings
+    "N807",     # Allow mocking `__init__`
+    "PLR0915",  # Allow functions with many statements
+    "PLR2004",  # Allow comparing with static values
+    "PT004",    # Allow public fixtures without returns
+    "PT013",    # Allow more flexible pytest imports
+    "S101",     # Allow use of `assert` in tests
+    "SLF",      # Allow private member access
+]
+
+[tool.ruff.lint.flake8-import-conventions.extend-aliases]
+"reflex" = "rx"
+
+[tool.ruff.lint.isort]
+known-first-party = ["mex", "tests"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[build-system]
+requires = ["pdm-backend==2.4.1"]
+build-backend = "pdm.backend"
