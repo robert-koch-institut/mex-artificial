@@ -39,6 +39,11 @@ wheel:
 image:
 	# build the docker image
 	@ echo building docker image mex-artificial:${LATEST}; \
+	pdm export \
+		--self \
+		--output locked-requirements.txt \
+		--no-hashes \
+		--without dev; \
 	export DOCKER_BUILDKIT=1; \
 	docker build \
 		--tag rki/mex-artificial:${LATEST} \
@@ -47,17 +52,7 @@ image:
 run: image
 	# run the service as a docker container
 	@ echo running docker container mex-artificial:${LATEST}; \
-	docker run \
-		--env MEX_ARTIFICIAL_HOST=0.0.0.0 \
-		--publish 8081:8081 \
-		rki/mex-artificial:${LATEST}; \
-
-start: image
-	# start the service using docker compose
-	@ echo start mex-artificial:${LATEST} with compose; \
-	export DOCKER_BUILDKIT=1; \
-	export COMPOSE_DOCKER_CLI_BUILD=1; \
-	docker compose up --remove-orphans; \
+	docker run -v $(pwd):/out rki/mex-artificial:${LATEST}; \
 
 docs:
 	# use sphinx to auto-generate html docs from code

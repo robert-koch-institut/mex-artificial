@@ -93,14 +93,17 @@ components of the MEx project are open-sourced under the same license as well.
 ### Container workflow
 
 - build image with `make image`
-- run directly using docker `make run`
-- start with docker compose `make start`
+- run local version using docker `make run`
+
+### Pre-built workflow
+
+- you can run the latest artificial data generator without building it locally
+- just pull it from the container registry and configure using cli arguments
+- `docker run -v $(pwd):/out docker pull ghcr.io/robert-koch-institut/mex-artificial:latest --count=100 --chattiness=10`
+- use `-v $(pwd):/out` to specify an output directory for the resulting `ndjson` file
+- `--count` controls the number of items to generate
+- `--chattiness` controls the number of words in textual fields
 
 ## Commands
 
-- run `pdm run {command} --help` to print instructions
-- run `pdm run {command} --debug` for interactive debugging
-
-### artificial
-
-- `artificial` starts the artificial service
+- run `pdm run artificial --help` to print instructions

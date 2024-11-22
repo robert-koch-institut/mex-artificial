@@ -28,7 +28,9 @@ RUN adduser \
 COPY . .
 
 RUN --mount=type=cache,target=/root/.cache/pip pip install -r locked-requirements.txt --no-deps
+RUN mkdir /out
 
 USER mex
 
-CMD [ "artificial" ]
+ENTRYPOINT [ "artificial", "--path=/out" ]
+CMD [ "--count=100", "--chattiness=10" ]
