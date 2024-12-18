@@ -29,7 +29,7 @@ def merged_items(extracted_items: ExtractedItemsRequest) -> MergedItemsResponse:
     """Transform artificial extracted items into merged items."""
     return MergedItemsResponse(
         items=[
-            create_merged_item(m.stableTargetId, [m], None)
+            create_merged_item(m.stableTargetId, [m], None, validate_cardinality=True)
             for m in extracted_items.items
         ],
         total=len(extracted_items.items),
