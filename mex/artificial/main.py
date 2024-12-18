@@ -20,7 +20,7 @@ def extracted_items(factories: Faker, identities: IdentityMap) -> ExtractedItems
     """Create artificial extracted items."""
     restore_identities(identities)  # restore state of memory identity provider
     return ExtractedItemsRequest(
-        items=[m for c in EXTRACTED_MODEL_CLASSES for m in factories.extracted_data(c)]
+        items=[m for c in EXTRACTED_MODEL_CLASSES for m in factories.extracted_items(c)]
     )
 
 
