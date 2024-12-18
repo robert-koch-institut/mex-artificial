@@ -20,7 +20,7 @@ def extracted_items(factories: Faker, identities: IdentityMap) -> ExtractedItems
     """Create artificial extracted items."""
     restore_identities(identities)  # restore state of memory identity provider
     return ExtractedItemsRequest(
-        items=[m for c in EXTRACTED_MODEL_CLASSES for m in factories.extracted_data(c)]
+        items=[m for c in EXTRACTED_MODEL_CLASSES for m in factories.extracted_items(c)]
     )
 
 
@@ -29,7 +29,7 @@ def merged_items(extracted_items: ExtractedItemsRequest) -> MergedItemsResponse:
     """Transform artificial extracted items into merged items."""
     return MergedItemsResponse(
         items=[
-            create_merged_item(m.stableTargetId, [m], None)
+            create_merged_item(m.stableTargetId, [m], None, validate_cardinality=True)
             for m in extracted_items.items
         ],
         total=len(extracted_items.items),

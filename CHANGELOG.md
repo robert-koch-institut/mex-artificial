@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changes
 
+- updated to the latest mex library versions
+
 ### Deprecated
 
 ### Removed
@@ -25,4 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - setup artificial data generation
 
-### Security
+## [0.1.0] - 2024-11-21
+
+### Added
+
+- initial project setup
