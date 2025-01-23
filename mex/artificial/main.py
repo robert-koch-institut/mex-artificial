@@ -4,9 +4,9 @@ from typing import Annotated
 import typer
 from faker import Faker
 
-from mex.backend.merged.helpers import create_merged_item
 from mex.common.backend_api.models import ExtractedItemsRequest, MergedItemsResponse
 from mex.common.logging import logger
+from mex.common.merged.main import create_merged_item
 from mex.common.models import EXTRACTED_MODEL_CLASSES
 from mex.extractors.artificial.identity import IdentityMap, restore_identities
 from mex.extractors.pipeline import asset, run_job_in_process
