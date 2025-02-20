@@ -80,6 +80,6 @@ def artificial(  # noqa: PLR0913
     logger.info("artificial data generation done")
 
 
-def cli() -> None:  # pragma: no cover
-    """Wrap cli in typer."""
+def main() -> None:  # pragma: no cover
+    """Wrap entrypoint in typer."""
     typer.run(artificial)

@@ -24,7 +24,7 @@ optional-dependencies.dev = [
 ]
 
 [project.scripts]
-artificial = "mex.artificial.main:cli"
+artificial = "mex.artificial.main:main"
 
 [tool.cruft]
 template = "https://github.com/robert-koch-institut/mex-template"
