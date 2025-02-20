@@ -109,6 +109,9 @@ ignore = [
 select = ["ALL"]
 
 [tool.ruff.lint.per-file-ignores]
+"mex/artificial/types.py" = [
+    "A005",     # Allow custom types module to shadow standard-library
+]
 "docs/**" = [
     "INP001",   # Docs folder does not need to be a package
 ]

@@ -1,4 +1,5 @@
 import re
+from collections.abc import Sequence
 from datetime import datetime
 from enum import Enum
 from functools import partial
@@ -10,9 +11,10 @@ from faker.providers.internet import Provider as InternetFakerProvider
 from faker.providers.python import Provider as PythonFakerProvider
 from pydantic.fields import FieldInfo
 
-from mex.artificial.identity import IdentityMap
+from mex.artificial.types import IdentityMap
 from mex.common.identity import Identity
-from mex.common.models import AnyExtractedModel
+from mex.common.models import EXTRACTED_MODEL_CLASSES_BY_NAME, AnyExtractedModel
+from mex.common.transform import ensure_prefix
 from mex.common.types import (
     TEMPORAL_ENTITY_FORMATS_BY_PRECISION,
     UTC,
@@ -101,26 +103,27 @@ class BuilderProvider(PythonFakerProvider):
             raise RuntimeError(msg)
         return [factory() for _ in range(self.pyint(*self.min_max_for_field(field)))]
 
-    def extracted_items(
-        self, model: type[AnyExtractedModel]
-    ) -> list[AnyExtractedModel]:
-        """Get a list of extracted items for the given model class."""
-        models = []
-        for identity in cast(list[Identity], self.generator.identities(model)):
-            # manually set identity related fields
-            payload: dict[str, Any] = {
-                "identifier": identity.identifier,
-                "hadPrimarySource": identity.hadPrimarySource,
-                "identifierInPrimarySource": identity.identifierInPrimarySource,
-                "stableTargetId": identity.stableTargetId,
-                "entityType": model.__name__,
-            }
-            # dynamically populate all other fields
-            for name, field in model.model_fields.items():
-                if name not in payload:
-                    payload[name] = self.field_value(field, identity)
-            models.append(model.model_validate(payload))
-        return models
+    def extracted_items(self, stem_types: Sequence[str]) -> list[AnyExtractedModel]:
+        """Get a list of extracted items for the given model classes."""
+        items = []
+        for stem_type in stem_types:
+            entity_type = ensure_prefix(stem_type, "Extracted")
+            model = EXTRACTED_MODEL_CLASSES_BY_NAME[entity_type]
+            for identity in cast(list[Identity], self.generator.identities(model)):
+                # manually set identity related fields
+                payload: dict[str, Any] = {
+                    "identifier": identity.identifier,
+                    "hadPrimarySource": identity.hadPrimarySource,
+                    "identifierInPrimarySource": identity.identifierInPrimarySource,
+                    "stableTargetId": identity.stableTargetId,
+                    "entityType": entity_type,
+                }
+                # dynamically populate all other fields
+                for name, field in model.model_fields.items():
+                    if name not in payload:
+                        payload[name] = self.field_value(field, identity)
+                items.append(model.model_validate(payload))
+        return items
 
 
 class IdentityProvider(BaseFakerProvider):

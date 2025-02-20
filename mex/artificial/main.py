@@ -1,18 +1,15 @@
+from collections.abc import Sequence
 from pathlib import Path
 from typing import Annotated
 
 import typer
 
-from mex.artificial.helpers import create_factories, create_faker
-from mex.artificial.identity import create_identities
-from mex.artificial.load import write_merged_items
-from mex.artificial.settings import ArtificialSettings
+from mex.artificial.helpers import generate_artificial_merged_items, write_merged_items
 from mex.common.logging import logger
-from mex.common.merged.main import create_merged_item
 from mex.common.models import EXTRACTED_MODEL_CLASSES
 
 
-def artificial(
+def artificial(  # noqa: PLR0913
     count: Annotated[
         int,
         typer.Option(
@@ -29,6 +26,30 @@ def artificial(
             max=100,
         ),
     ] = 10,
+    seed: Annotated[
+        int,
+        typer.Option(
+            help="The seed value for faker randomness.",
+        ),
+    ] = 0,
+    locale: Annotated[
+        Sequence[str],
+        typer.Option(
+            help="The locale to use for faker.",
+        ),
+    ] = (
+        "de_DE",
+        "en_US",
+    ),
+    models: Annotated[
+        Sequence[str],
+        typer.Option(
+            help="The names of models to use for faker.",
+        ),
+    ] = (
+        "de_DE",
+        "en_US",
+    ),
     path: Annotated[
         Path | None,
         typer.Option(
@@ -42,22 +63,11 @@ def artificial(
     ] = None,
 ) -> None:  # pragma: no cover
     """Generate merged artificial items."""
-    settings = ArtificialSettings.get()
-    settings.count = count
-    settings.chattiness = chattiness
-    settings.work_dir = path or Path.cwd()
     logger.info("starting artificial data generation")
-    faker = create_faker(settings.locale, settings.seed)
-    identities = create_identities(faker, settings.count)
-    factories = create_factories(faker, identities)
-    extracted_items = [
-        m for c in EXTRACTED_MODEL_CLASSES for m in factories.extracted_items(c)
-    ]
-    merged_items = [
-        create_merged_item(m.stableTargetId, [m], None, validate_cardinality=True)
-        for m in extracted_items
-    ]
-    write_merged_items(merged_items)
+    write_merged_items(
+        generate_artificial_merged_items(locale, seed, count, chattiness, models),
+        path or Path.cwd(),
+    )
     logger.info("artificial data generation done")
 
 

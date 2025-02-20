@@ -2,14 +2,13 @@ from binascii import crc32
 
 from faker import Faker
 
+from mex.artificial.types import IdentityMap
 from mex.common.identity import Identity, get_provider
 from mex.common.models import (
     EXTRACTED_MODEL_CLASSES,
     MEX_PRIMARY_SOURCE_STABLE_TARGET_ID,
 )
 from mex.common.types import MergedPrimarySourceIdentifier
-
-IdentityMap = dict[str, list[Identity]]
 
 
 def get_offset_int(cls: type) -> int:
