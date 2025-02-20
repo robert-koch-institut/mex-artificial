@@ -1,6 +1,14 @@
-from mex.extractors.pipeline import run_job_in_process
+from pytest import LogCaptureFixture
+from typer import Typer
+from typer.testing import CliRunner
+
+from mex.artificial.main import artificial
 
 
-def test_job() -> None:
-    result = run_job_in_process("merged_artificial")
-    assert result.success
+def test_main(caplog: LogCaptureFixture) -> None:
+    runner = CliRunner()
+    app = Typer()
+    app.command()(artificial)
+    result = runner.invoke(app, ["--count", "30"])
+    assert result.exit_code == 0
+    assert "artificial data generation done" in caplog.text

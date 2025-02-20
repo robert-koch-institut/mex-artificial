@@ -2,56 +2,31 @@ from pathlib import Path
 from typing import Annotated
 
 import typer
-from faker import Faker
 
-from mex.common.backend_api.models import ExtractedItemsRequest, MergedItemsResponse
+from mex.artificial.helpers import generate_artificial_merged_items, write_merged_items
 from mex.common.logging import logger
-from mex.common.merged.main import create_merged_item
 from mex.common.models import EXTRACTED_MODEL_CLASSES
-from mex.extractors.artificial.identity import IdentityMap, restore_identities
-from mex.extractors.pipeline import asset, run_job_in_process
-from mex.extractors.publisher.filter import filter_merged_items
-from mex.extractors.publisher.load import write_merged_items
-from mex.extractors.settings import Settings
+
+DEFAULT_LOCALE = [
+    "de_DE",
+    "en_US",
+]
+DEFAULT_MODELS = [
+    "AccessPlatform",
+    "Activity",
+    "BibliographicResource",
+    "ContactPoint",
+    "Distribution",
+    "Organization",
+    "OrganizationalUnit",
+    "Person",
+    "Resource",
+    "Variable",
+    "VariableGroup",
+]
 
 
-@asset(group_name="merged_artificial")
-def extracted_items(factories: Faker, identities: IdentityMap) -> ExtractedItemsRequest:
-    """Create artificial extracted items."""
-    restore_identities(identities)  # restore state of memory identity provider
-    return ExtractedItemsRequest(
-        items=[m for c in EXTRACTED_MODEL_CLASSES for m in factories.extracted_items(c)]
-    )
-
-
-@asset(group_name="merged_artificial")
-def merged_items(extracted_items: ExtractedItemsRequest) -> MergedItemsResponse:
-    """Transform artificial extracted items into merged items."""
-    return MergedItemsResponse(
-        items=[
-            create_merged_item(m.stableTargetId, [m], None, validate_cardinality=True)
-            for m in extracted_items.items
-        ],
-        total=len(extracted_items.items),
-    )
-
-
-@asset(group_name="merged_artificial")
-def filtered_items(merged_items: MergedItemsResponse) -> MergedItemsResponse:
-    """Filter to be published items by allow list."""
-    return MergedItemsResponse(
-        items=list(filter_merged_items(merged_items.items)),
-        total=len(merged_items.items),
-    )
-
-
-@asset(group_name="merged_artificial")
-def load(filtered_items: MergedItemsResponse) -> None:
-    """Write the filtered items into a new-line delimited JSON file."""
-    write_merged_items(filtered_items.items)
-
-
-def artificial(
+def artificial(  # noqa: PLR0913
     count: Annotated[
         int,
         typer.Option(
@@ -68,6 +43,26 @@ def artificial(
             max=100,
         ),
     ] = 10,
+    seed: Annotated[
+        int,
+        typer.Option(
+            help="The seed value for faker randomness.",
+        ),
+    ] = 0,
+    locale: Annotated[
+        list[str] | None,
+        typer.Option(
+            help="The locale to use for faker.",
+            show_default=DEFAULT_LOCALE,
+        ),
+    ] = None,
+    models: Annotated[
+        list[str] | None,
+        typer.Option(
+            help="The names of models to use for faker.",
+            show_default=DEFAULT_MODELS,
+        ),
+    ] = None,
     path: Annotated[
         Path | None,
         typer.Option(
@@ -81,15 +76,15 @@ def artificial(
     ] = None,
 ) -> None:  # pragma: no cover
     """Generate merged artificial items."""
-    settings = Settings.get()
-    settings.artificial.count = count
-    settings.artificial.chattiness = chattiness
-    settings.work_dir = path or Path.cwd()
     logger.info("starting artificial data generation")
-    run_job_in_process("merged_artificial")
+    path = path or Path.cwd()
+    locale = locale or DEFAULT_LOCALE
+    models = models or DEFAULT_MODELS
+    items = generate_artificial_merged_items(locale, seed, count, chattiness, models)
+    write_merged_items(items, path)
     logger.info("artificial data generation done")
 
 
-def cli() -> None:  # pragma: no cover
-    """Wrap cli in typer."""
+def main() -> None:  # pragma: no cover
+    """Wrap entrypoint in typer."""
     typer.run(artificial)
