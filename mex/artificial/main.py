@@ -1,4 +1,3 @@
-from collections.abc import Sequence
 from pathlib import Path
 from typing import Annotated
 
@@ -7,6 +6,24 @@ import typer
 from mex.artificial.helpers import generate_artificial_merged_items, write_merged_items
 from mex.common.logging import logger
 from mex.common.models import EXTRACTED_MODEL_CLASSES
+
+DEFAULT_LOCALE = [
+    "de_DE",
+    "en_US",
+]
+DEFAULT_MODELS = [
+    "AccessPlatform",
+    "Activity",
+    "BibliographicResource",
+    "ContactPoint",
+    "Distribution",
+    "Organization",
+    "OrganizationalUnit",
+    "Person",
+    "Resource",
+    "Variable",
+    "VariableGroup",
+]
 
 
 def artificial(  # noqa: PLR0913
@@ -33,32 +50,19 @@ def artificial(  # noqa: PLR0913
         ),
     ] = 0,
     locale: Annotated[
-        Sequence[str],
+        list[str] | None,
         typer.Option(
             help="The locale to use for faker.",
+            show_default=DEFAULT_LOCALE,
         ),
-    ] = (
-        "de_DE",
-        "en_US",
-    ),
+    ] = None,
     models: Annotated[
-        Sequence[str],
+        list[str] | None,
         typer.Option(
             help="The names of models to use for faker.",
+            show_default=DEFAULT_MODELS,
         ),
-    ] = (
-        "AccessPlatform",
-        "Activity",
-        "BibliographicResource",
-        "ContactPoint",
-        "Distribution",
-        "Organization",
-        "OrganizationalUnit",
-        "Person",
-        "Resource",
-        "Variable",
-        "VariableGroup",
-    ),
+    ] = None,
     path: Annotated[
         Path | None,
         typer.Option(
@@ -73,10 +77,11 @@ def artificial(  # noqa: PLR0913
 ) -> None:  # pragma: no cover
     """Generate merged artificial items."""
     logger.info("starting artificial data generation")
-    write_merged_items(
-        generate_artificial_merged_items(locale, seed, count, chattiness, models),
-        path or Path.cwd(),
-    )
+    path = path or Path.cwd()
+    locale = locale or DEFAULT_LOCALE
+    models = models or DEFAULT_MODELS
+    items = generate_artificial_merged_items(locale, seed, count, chattiness, models)
+    write_merged_items(items, path)
     logger.info("artificial data generation done")
 
 
