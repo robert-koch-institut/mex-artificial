@@ -8,7 +8,7 @@ license = { file = "LICENSE" }
 urls = { Repository = "https://github.com/robert-koch-institut/mex-artificial" }
 requires-python = ">=3.11,<3.13"
 dependencies = [
-    "mex-common @ git+https://github.com/robert-koch-institut/mex-common.git@0.52.2",
+    "mex-common @ git+https://github.com/robert-koch-institut/mex-common.git@0.51.0",
     "mex-extractors @ git+https://github.com/robert-koch-institut/mex-extractors.git@0.27.0",
     "typer>=0.13,<1"
 ]
