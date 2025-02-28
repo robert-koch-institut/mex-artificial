@@ -13,7 +13,6 @@ from pydantic import BaseModel
 from pydantic.fields import FieldInfo
 
 from mex.artificial.types import IdentityMap
-from mex.artificial.utils import ensure_list
 from mex.common.identity import Identity
 from mex.common.models import EXTRACTED_MODEL_CLASSES_BY_NAME, AnyExtractedModel
 from mex.common.transform import ensure_prefix
@@ -59,6 +58,14 @@ class BuilderProvider(PythonFakerProvider):
             max_items = 1
         return min_items, max_items
 
+    def ensure_list(self, values: object) -> list[object]:
+        """Wrap single object in list, replace None with [] and return list as is."""
+        if values is None:
+            return []
+        if isinstance(values, list):
+            return values
+        return [values]
+
     def get_random_field_info(self, field: FieldInfo) -> RandomFieldInfo:
         """Randomly pick a matching type and patterns for a given field."""
         # determine field type and unpack unions, lists, and other types with args
@@ -75,7 +82,7 @@ class BuilderProvider(PythonFakerProvider):
             inner_type=field.annotation,
             numerify_patterns=[
                 re.sub(r"[0-9]", "#", e)
-                for e in ensure_list(field.examples)
+                for e in self.ensure_list(field.examples)
                 if isinstance(e, str)
             ],
             regex_patterns=[m.pattern for m in field.metadata if hasattr(m, "pattern")],
