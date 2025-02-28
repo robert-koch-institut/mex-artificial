@@ -7,13 +7,15 @@ from faker import Faker
 from pydantic import BaseModel, Field
 from pydantic.fields import FieldInfo
 
-from mex.common.models import ExtractedContactPoint, ExtractedPrimarySource
+from mex.artificial.provider import RandomFieldInfo
+from mex.common.models import ExtractedPrimarySource
 from mex.common.testing import Joker
 from mex.common.types import (
     APIType,
     Email,
     Identifier,
     Link,
+    LinkLanguage,
     MergedPrimarySourceIdentifier,
     TemporalEntity,
     TemporalEntityPrecision,
@@ -34,7 +36,11 @@ class DummyModel(BaseModel):
         Annotated[
             str,
             Field(
-                pattern=r"^https://www\.wikidata\.org/entity/[PQ0-9]{2,64}$",
+                pattern=r"^https://wikidata\.org/entity/[PQ0-9]{2,64}$",
+                examples=[
+                    "http://wikidata.org/entity/Q679041",
+                    "http://wikidata.org/entity/P123",
+                ],
             ),
         ]
         | None
@@ -43,7 +49,8 @@ class DummyModel(BaseModel):
         Annotated[
             str,
             Field(
-                pattern=r"^https://gepris\.dfg\.de/gepris/institution/[0-9]{1,64}$",
+                pattern=r"^https://dfg\.de/foobar/[0-9]{1,64}$",
+                examples=["https://dfg.de/foobar/10179"],
             ),
         ]
     ] = []
@@ -67,27 +74,32 @@ def test_builder_provider_min_max_for_field(faker: Faker) -> None:
     }
 
 
-def test_builder_provider_inner_type_and_pattern(faker: Faker) -> None:
-    inner_types = {
-        name: faker.inner_type_and_pattern(field)
+def test_builder_provider_get_random_field_info(faker: Faker) -> None:
+    random_field_info = {
+        name: faker.get_random_field_info(field)
         for name, field in DummyModel.model_fields.items()
     }
-    assert inner_types == {
-        "has_min": (bytes, None),
-        "has_max": (bytes, None),
-        "is_inner_union": (int, None),
-        "is_nested_pattern": (
-            str,
-            "^https://gepris\\.dfg\\.de/gepris/institution/[0-9]{1,64}$",
+    assert random_field_info == {
+        "no_min": RandomFieldInfo(inner_type=str),
+        "has_min": RandomFieldInfo(inner_type=bytes),
+        "has_max": RandomFieldInfo(inner_type=bytes),
+        "is_required": RandomFieldInfo(inner_type=int),
+        "is_optional": RandomFieldInfo(inner_type=bool),
+        "is_union": RandomFieldInfo(inner_type=float),
+        "is_inner_union": RandomFieldInfo(inner_type=int),
+        "is_union_with_pattern": RandomFieldInfo(
+            inner_type=str,
+            numerify_patterns=[
+                "http://wikidata.org/entity/Q######",
+                "http://wikidata.org/entity/P###",
+            ],
+            regex_patterns=[r"^https://wikidata\.org/entity/[PQ0-9]{2,64}$"],
         ),
-        "is_optional": (bool, None),
-        "is_required": (int, None),
-        "is_union": (float, None),
-        "is_union_with_pattern": (
-            str,
-            "^https://www\\.wikidata\\.org/entity/[PQ0-9]{2,64}$",
+        "is_nested_pattern": RandomFieldInfo(
+            inner_type=str,
+            numerify_patterns=["https://dfg.de/foobar/#####"],
+            regex_patterns=[r"^https://dfg\.de/foobar/[0-9]{1,64}$"],
         ),
-        "no_min": (str, None),
     }
 
 
@@ -97,7 +109,9 @@ def test_builder_provider_inner_type_and_pattern(faker: Faker) -> None:
         (
             Link,
             [
-                Link(language=None, title="Pratt", url="https://turner.com/"),
+                Link(
+                    language=LinkLanguage.DE, title="Pratt", url="https://turner.com/"
+                ),
             ],
         ),
         (Email, ["lindathomas@example.net"]),
@@ -110,44 +124,46 @@ def test_builder_provider_inner_type_and_pattern(faker: Faker) -> None:
                 )
             ],
         ),
-        (TemporalEntity, [TemporalEntity("1998-07-11T09:38:23Z")]),
+        (TemporalEntity, [TemporalEntity("2003-06-21T16:11:41Z")]),
         (APIType, [APIType["SOAP"]]),
         (
-            Annotated[Pattern, Field(pattern=r"^https://ror\.org/[a-z0-9]{9}$")],
-            ["https://ror.org/160975351"],
+            Annotated[
+                Pattern,
+                Field(
+                    pattern=r"^https://foo\.example/[a-z0-9]{9}$",
+                    examples=["https://foo.example/01k5qnb77"],
+                ),
+            ],
+            ["https://foo.example/87k1qnb15"],
         ),
         (
             Annotated[
-                str, Field(pattern=(r"^http://id\.nlm\.nih\.gov/mesh/[A-Z0-9]{2,64}$"))
+                str,
+                Field(
+                    pattern=r"^http://bar\.batz/[A-Z0-9]{2,64}$",
+                    examples=["http://bar.batz/D001604"],
+                ),
             ],
-            ["http://id.nlm.nih.gov/mesh/D328711"],
+            ["http://bar.batz/D871158"],
         ),
         (
-            list[
-                Annotated[
-                    str,
-                    Field(
-                        pattern=r"^https://gepris\.dfg\.de/gepris/institution/[0-9]{1,64}$",
-                    ),
-                ]
-            ],
-            ["https://gepris.dfg.de/gepris/institution/0975351"],
+            str,
+            ["suggest"],
         ),
-        (str, ["suggest"]),
     ],
 )
 def test_builder_provider_field_value(
     faker: Faker, annotation: Any, expected: Any
 ) -> None:
     field = FieldInfo.from_annotation(annotation)
-    identity = Mock(stableTargetId="baaiaaaaaaaboi")
+    identity = Mock(stableTargetId="00000000001234")
 
     assert faker.field_value(field, identity) == expected
 
 
 def test_builder_provider_field_value_reference(faker: Faker) -> None:
     field = FieldInfo.from_annotation(MergedPrimarySourceIdentifier)
-    identity = Mock(stableTargetId="baaiaaaaaaaboi")
+    identity = Mock(stableTargetId="00000000001234")
     reference = faker.field_value(field, identity)
 
     assert set(reference) < {
@@ -157,19 +173,16 @@ def test_builder_provider_field_value_reference(faker: Faker) -> None:
 
 def test_builder_provider_field_value_error(faker: Faker) -> None:
     field = FieldInfo.from_annotation(object)
-    identity = Mock(stableTargetId="baaiaaaaaaaboi")
+    identity = Mock(stableTargetId="00000000001234")
 
     with pytest.raises(RuntimeError, match="Cannot create fake data"):
         faker.field_value(field, identity)
 
 
-def test_builder_provider_extracted_data(faker: Faker) -> None:
-    models = faker.extracted_data(ExtractedContactPoint)
+def test_builder_provider_extracted_items(faker: Faker) -> None:
+    models = faker.extracted_items(["ContactPoint"])
     assert models[0].model_dump(exclude_defaults=True) == {
-        "email": [
-            "salazarmaria@example.com",
-            "jessicapadilla@example.org",
-        ],
+        "email": ["udavis@example.net"],
         "hadPrimarySource": Joker(),
         "identifier": Joker(),
         "identifierInPrimarySource": "ContactPoint-4181830114",
@@ -221,16 +234,3 @@ def test_text_provider_text(faker: Faker) -> None:
         ),
         language=TextLanguage.EN,
     )
-
-
-def test_pattern_provider(faker: Faker) -> None:
-    pattern = faker.pattern(r"^https://ror\.org/[a-z0-9]{9}$")
-    assert pattern == "https://ror.org/933287115"
-
-    pattern = faker.pattern(
-        "^(((http)|(https))://(dx.)?doi.org/)(10.\\d{4,9}/[-._;()/:A-Z0-9]+)$"
-    )
-    assert pattern == "https://dx.doi.org/10.8242/1948924"
-
-    pattern = faker.pattern(r"^http://id\.nlm\.nih\.gov/mesh/[A-Z0-9]{2,64}$")
-    assert pattern == "http://id.nlm.nih.gov/mesh/D877840"

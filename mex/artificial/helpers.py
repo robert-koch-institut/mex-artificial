@@ -10,9 +10,9 @@ from faker.typing import SeedType
 from mex.artificial.identity import create_identities
 from mex.artificial.provider import (
     BuilderProvider,
+    FuzzyNumerifyProvider,
     IdentityProvider,
     LinkProvider,
-    PatternProvider,
     TemporalEntityProvider,
     TextProvider,
 )
@@ -35,7 +35,7 @@ def register_factories(faker: Faker, identities: IdentityMap, chattiness: int) -
     for factory in faker.factories:
         factory.add_provider(IdentityProvider(factory, identities))
         factory.add_provider(LinkProvider(factory))
-        factory.add_provider(PatternProvider(factory))
+        factory.add_provider(FuzzyNumerifyProvider(factory))
         factory.add_provider(BuilderProvider(factory))
         factory.add_provider(TextProvider(factory, chattiness))
         factory.add_provider(TemporalEntityProvider(factory))

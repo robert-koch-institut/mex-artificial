@@ -9,9 +9,11 @@ from annotated_types import MaxLen, MinLen
 from faker.providers import BaseProvider as BaseFakerProvider
 from faker.providers.internet import Provider as InternetFakerProvider
 from faker.providers.python import Provider as PythonFakerProvider
+from pydantic import BaseModel
 from pydantic.fields import FieldInfo
 
 from mex.artificial.types import IdentityMap
+from mex.artificial.utils import ensure_list
 from mex.common.identity import Identity
 from mex.common.models import EXTRACTED_MODEL_CLASSES_BY_NAME, AnyExtractedModel
 from mex.common.transform import ensure_prefix
@@ -26,6 +28,14 @@ from mex.common.types import (
     TemporalEntityPrecision,
     Text,
 )
+
+
+class RandomFieldInfo(BaseModel):
+    """Randomized pick of matching inner type and patterns for a field."""
+
+    inner_type: Any
+    numerify_patterns: list[str] = []
+    regex_patterns: list[str] = []
 
 
 class BuilderProvider(PythonFakerProvider):
@@ -49,27 +59,27 @@ class BuilderProvider(PythonFakerProvider):
             max_items = 1
         return min_items, max_items
 
-    def inner_type_and_pattern(self, field: FieldInfo) -> tuple[Any, str | None]:
-        """Return the inner type and pattern of a field.
-
-        If the Field arguments, randomly pick an argument.
-        """
+    def get_random_field_info(self, field: FieldInfo) -> RandomFieldInfo:
+        """Randomly pick a matching type and patterns for a given field."""
         # determine field type and unpack unions, lists, and other types with args
         if args := get_args(field.annotation):
             # mixed types are not yet supported
             return self.random_element(
                 [
-                    self.inner_type_and_pattern(field.from_annotation(type_))
+                    self.get_random_field_info(field.from_annotation(type_))
                     for type_ in args
                     if type_ is not type(None)
                 ]
             )
-        pattern = None
-        if pattern_metadata_entries := [
-            m for m in field.metadata if hasattr(m, "pattern")
-        ]:
-            pattern = pattern_metadata_entries[0].pattern
-        return field.annotation, pattern
+        return RandomFieldInfo(
+            inner_type=field.annotation,
+            numerify_patterns=[
+                re.sub(r"[0-9]", "#", e)
+                for e in ensure_list(field.examples)
+                if isinstance(e, str)
+            ],
+            regex_patterns=[m.pattern for m in field.metadata if hasattr(m, "pattern")],
+        )
 
     def field_value(
         self,
@@ -77,31 +87,42 @@ class BuilderProvider(PythonFakerProvider):
         identity: Identity,
     ) -> list[Any]:
         """Get a single artificial value for the given field and identity."""
-        inner_type, pattern = self.inner_type_and_pattern(field)
-        if pattern:
-            factory = partial(self.generator.pattern, pattern)
-        elif issubclass(inner_type, Identifier):
-            factory = partial(self.generator.reference, inner_type, exclude=identity)
-        elif issubclass(inner_type, Link):
-            factory = self.generator.link
-        elif issubclass(inner_type, Email):
-            factory = self.generator.email
-        elif issubclass(inner_type, Text):
-            factory = self.generator.text_object
-        elif issubclass(inner_type, TemporalEntity):
+        field_info = self.get_random_field_info(field)
+        if field_info.regex_patterns and field_info.numerify_patterns:
             factory = partial(
-                self.generator.temporal_entity, inner_type.ALLOWED_PRECISION_LEVELS
+                self.generator.fuzzy_numerify,
+                field_info.numerify_patterns,
+                field_info.regex_patterns,
             )
-        elif issubclass(inner_type, Enum):
-            factory = partial(self.random_element, inner_type)
-        elif issubclass(inner_type, str):
+        elif issubclass(field_info.inner_type, Identifier):
+            factory = partial(
+                self.generator.reference, field_info.inner_type, exclude=identity
+            )
+        elif issubclass(field_info.inner_type, Link):
+            factory = self.generator.link
+        elif issubclass(field_info.inner_type, Email):
+            factory = self.generator.email
+        elif issubclass(field_info.inner_type, Text):
+            factory = self.generator.text_object
+        elif issubclass(field_info.inner_type, TemporalEntity):
+            factory = partial(
+                self.generator.temporal_entity,
+                field_info.inner_type.ALLOWED_PRECISION_LEVELS,
+            )
+        elif issubclass(field_info.inner_type, Enum):
+            factory = partial(self.random_element, field_info.inner_type)
+        elif issubclass(field_info.inner_type, str):
             factory = self.generator.text_string
-        elif issubclass(inner_type, int):
+        elif issubclass(field_info.inner_type, int):
             factory = self.generator.random_int
         else:
             msg = f"Cannot create fake data for {field}"
             raise RuntimeError(msg)
-        return [factory() for _ in range(self.pyint(*self.min_max_for_field(field)))]
+        return [
+            value
+            for _ in range(self.pyint(*self.min_max_for_field(field)))
+            if (value := factory()) is not None
+        ]
 
     def extracted_items(self, stem_types: Sequence[str]) -> list[AnyExtractedModel]:
         """Get a list of extracted items for the given model classes."""
@@ -205,23 +226,19 @@ class TextProvider(PythonFakerProvider):
         return Text(value=self.generator.paragraph(self.pyint(1, self._chattiness)))
 
 
-class PatternProvider(BaseFakerProvider):
-    """Faker provider to create strings matching given patterns."""
+class FuzzyNumerifyProvider(PythonFakerProvider):
+    """Faker provider that tries to fill a numerify pattern until it matches a regex."""
 
-    # TODO(ND): Try to avoid hardcoding the numerify patterns
-    REGEX_TO_NUMERIFY = {
-        r"^http://id\.nlm\.nih\.gov/mesh/[A-Z0-9]{2,64}$": "http://id.nlm.nih.gov/mesh/D######",
-        r"^https://d-nb\.info/gnd/[-X0-9]{3,10}$": "https://d-nb.info/gnd/3########",
-        r"^https://gepris\.dfg\.de/gepris/institution/[0-9]{1,64}$": "https://gepris.dfg.de/gepris/institution/#######",
-        r"^https://isni\.org/isni/[X0-9]{16}$": "https://isni.org/isni/################",
-        r"^https://loinc.org/([a-zA-z]*)|(([0-9]*(-[0-9])*))$": "https://loinc.org/#####-#",
-        r"^https://orcid\.org/[-X0-9]{9,21}$": "https://orcid.org/0000-####-####-###X",
-        r"^https://ror\.org/[a-z0-9]{9}$": "https://ror.org/#########",
-        r"^https://viaf\.org/viaf/[0-9]{2,22}$": "https://viaf.org/viaf/#########",
-        r"^https://www\.wikidata\.org/entity/[PQ0-9]{2,64}$": "https://www.wikidata.org/entity/P######",
-        r"^(((http)|(https))://(dx.)?doi.org/)(10.\d{4,9}/[-._;()/:A-Za-z0-9]+)$": "https://dx.doi.org/10.####/#######",
-    }
-
-    def pattern(self, regex: str) -> str:
-        """Return a randomized string matching the given pattern."""
-        return self.numerify(self.REGEX_TO_NUMERIFY[str(regex)])
+    def fuzzy_numerify(
+        self,
+        numerify_patterns: list[str],
+        regex_patterns: list[str],
+    ) -> str | None:
+        """Try to fuzz a numerified value in 10 turns, or bail out."""
+        for _ in range(10):
+            numerify_pattern = self.random_element(numerify_patterns)
+            regex_pattern = self.random_element(regex_patterns)
+            numerified = self.numerify(numerify_pattern)
+            if re.match(regex_pattern, numerified):
+                return numerified
+        return None
