@@ -7,9 +7,7 @@ from mex.artificial.identity import (
     create_numeric_ids,
     get_offset_int,
 )
-from mex.common.models import (
-    EXTRACTED_MODEL_CLASSES,
-)
+from mex.common.models import EXTRACTED_MODEL_CLASSES
 from mex.common.testing import Joker
 
 
