@@ -48,6 +48,7 @@ image:
 	docker build \
 		--tag rki/mex-artificial:${LATEST} \
 		--tag rki/mex-artificial:latest .; \
+	rm locked-requirements.txt; \
 
 run: image
 	# run the service as a docker container
