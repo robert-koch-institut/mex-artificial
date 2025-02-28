@@ -97,7 +97,7 @@ class BuilderProvider(PythonFakerProvider):
         field_info = self.get_random_field_info(field)
         if field_info.regex_patterns and field_info.numerify_patterns:
             factory = partial(
-                self.generator.fuzzy_numerify,
+                self.generator.numerify_patterns,
                 field_info.numerify_patterns,
                 field_info.regex_patterns,
             )
@@ -233,15 +233,15 @@ class TextProvider(PythonFakerProvider):
         return Text(value=self.generator.paragraph(self.pyint(1, self._chattiness)))
 
 
-class FuzzyNumerifyProvider(PythonFakerProvider):
-    """Faker provider that tries to fill a numerify pattern until it matches a regex."""
+class NumerifyPatternsProvider(PythonFakerProvider):
+    """Faker provider that tries to numerify a pattern until it matches a regex."""
 
-    def fuzzy_numerify(
+    def numerify_patterns(
         self,
         numerify_patterns: list[str],
         regex_patterns: list[str],
     ) -> str | None:
-        """Try to fuzz a numerified value in 10 turns, or bail out."""
+        """Try to numerify a pattern in 10 turns until it validates, or bail out."""
         for _ in range(10):
             numerify_pattern = self.random_element(numerify_patterns)
             regex_pattern = self.random_element(regex_patterns)
