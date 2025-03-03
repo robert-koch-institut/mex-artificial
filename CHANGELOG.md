@@ -9,13 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- added `--seed`, `--locale` and `--models` command line arguments
+
 ### Changes
 
-- use merging from common
+- use merging logic from mex-common, instead of mex-backend
+- implement artificial data generation without mex-extractors dependency
 
 ### Deprecated
 
 ### Removed
+
+- meshIds are not derived from asciimesh file anymore
 
 ### Fixed
 
