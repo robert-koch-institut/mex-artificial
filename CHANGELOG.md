@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changes
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [0.4.0] - 2025-04-14
+
+### Added
+
 - added `--seed`, `--locale` and `--models` command line arguments
 
 ### Changes
@@ -16,15 +30,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - use merging logic from mex-common, instead of mex-backend
 - implement artificial data generation without mex-extractors dependency
 
-### Deprecated
-
 ### Removed
 
 - meshIds are not derived from asciimesh file anymore
-
-### Fixed
-
-### Security
 
 ## [0.3.0] - 2024-12-18
 
