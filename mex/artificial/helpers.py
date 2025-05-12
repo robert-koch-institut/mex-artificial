@@ -62,7 +62,7 @@ def generate_artificial_extracted_items(
     faker = create_faker(locale, seed)
     identities = create_identities(faker, count)
     register_factories(faker, identities, chattiness)
-    return cast(list[AnyExtractedModel], faker.extracted_items(stem_types))
+    return cast("list[AnyExtractedModel]", faker.extracted_items(stem_types))
 
 
 def generate_artificial_merged_items(

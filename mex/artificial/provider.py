@@ -137,7 +137,7 @@ class BuilderProvider(PythonFakerProvider):
         for stem_type in stem_types:
             entity_type = ensure_prefix(stem_type, "Extracted")
             model = EXTRACTED_MODEL_CLASSES_BY_NAME[entity_type]
-            for identity in cast(list[Identity], self.generator.identities(model)):
+            for identity in cast("list[Identity]", self.generator.identities(model)):
                 # manually set identity related fields
                 payload: dict[str, Any] = {
                     "identifier": identity.identifier,
