@@ -153,7 +153,9 @@ def test_builder_provider_get_random_field_info(faker: Faker) -> None:
     ],
 )
 def test_builder_provider_field_value(
-    faker: Faker, annotation: Any, expected: Any
+    faker: Faker,
+    annotation: Any,  # noqa: ANN401
+    expected: Any,  # noqa: ANN401
 ) -> None:
     field = FieldInfo.from_annotation(annotation)
     identity = Mock(stableTargetId="00000000001234")

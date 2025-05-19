@@ -8,21 +8,21 @@ license = { file = "LICENSE" }
 urls = { Repository = "https://github.com/robert-koch-institut/mex-artificial" }
 requires-python = ">=3.11,<3.13"
 dependencies = [
-    "annotated-types<=0.7,<1",
+    "annotated-types<=0.7",
     "faker>=37,<38",
-    "mex-common @ git+https://github.com/robert-koch-institut/mex-common.git@0.59.2",
-    "pydantic>=2,<3",
-    "typer>=0.13,<1",
+    "mex-common @ git+https://github.com/robert-koch-institut/mex-common.git@0.61.1",
+    "pydantic>=2",
+    "typer>=0.13",
 ]
 optional-dependencies.dev = [
-    "ipdb>=0.13,<1",
-    "mypy>=1,<2",
-    "pytest-cov>=6,<7",
-    "pytest-random-order>=1,<2",
-    "pytest-xdist>=3,<4",
-    "pytest>=8,<9",
-    "ruff>=0.11,<1",
-    "sphinx>=8,<9",
+    "ipdb>=0.13",
+    "mypy>=1",
+    "pytest-cov>=6",
+    "pytest-random-order>=1",
+    "pytest-xdist>=3",
+    "pytest>=8",
+    "ruff>=0.11",
+    "sphinx>=8",
 ]
 
 [project.scripts]

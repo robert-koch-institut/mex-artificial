@@ -84,9 +84,9 @@ def write_merged_items(
 ) -> None:
     """Write the incoming items into a new-line delimited JSON file."""
     logging_counter = 0
-    with open(Path(out_path) / "publisher.ndjson", "w", encoding="utf-8") as file:
+    with (Path(out_path) / "publisher.ndjson").open("w", encoding="utf-8") as fh:
         for item in items:
             line = json.dumps(item, ensure_ascii=False, sort_keys=True, cls=MExEncoder)
-            file.write(f"{line}\n")
+            fh.write(f"{line}\n")
             logging_counter += 1
     logger.info("%s merged items were written", logging_counter)

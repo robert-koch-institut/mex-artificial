@@ -6,6 +6,7 @@ from functools import partial
 from typing import Any, cast, get_args, get_origin
 
 from annotated_types import MaxLen, MinLen
+from faker import Generator as FakerFactory
 from faker.providers import BaseProvider as BaseFakerProvider
 from faker.providers.internet import Provider as InternetFakerProvider
 from faker.providers.python import Provider as PythonFakerProvider
@@ -157,7 +158,7 @@ class BuilderProvider(PythonFakerProvider):
 class IdentityProvider(BaseFakerProvider):
     """Faker provider that creates identities and helps with referencing them."""
 
-    def __init__(self, factory: Any, identities: IdentityMap) -> None:
+    def __init__(self, factory: FakerFactory, identities: IdentityMap) -> None:
         """Create and persist identities for all entity types."""
         super().__init__(factory)
         self._identities = identities
@@ -219,7 +220,7 @@ class TemporalEntityProvider(PythonFakerProvider):
 class TextProvider(PythonFakerProvider):
     """Faker provider that handles custom text related requirements."""
 
-    def __init__(self, factory: Any, chattiness: int) -> None:
+    def __init__(self, factory: FakerFactory, chattiness: int) -> None:
         """Configure the chattiness of generated text."""
         super().__init__(factory)
         self._chattiness = chattiness
