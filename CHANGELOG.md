@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- fix pypi url
+
 ### Security
 
 ## [0.4.3] - 2025-06-17
