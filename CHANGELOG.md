@@ -11,8 +11,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changes
 
-- update mex-common to 0.62.1
-
 ### Deprecated
 
 ### Removed
@@ -20,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Security
+
+## [0.5.1] - 2025-07-07
+
+### Changes
+
+- update mex-common to 0.62.1
 
 ## [0.5.0] - 2025-06-17
 
