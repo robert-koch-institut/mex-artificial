@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changes
 
+- update mex-common to 1.0
+- bump cookiecutter template to b18156
+
 ### Deprecated
 
 ### Removed
