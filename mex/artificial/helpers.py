@@ -21,6 +21,7 @@ from mex.common.logging import logger
 from mex.common.merged.main import create_merged_item
 from mex.common.models import AnyExtractedModel, AnyMergedModel
 from mex.common.transform import MExEncoder
+from mex.common.types import Validation
 
 
 def create_faker(locale: LocaleType | list[str], seed: SeedType) -> Faker:
@@ -46,8 +47,16 @@ def create_merged_items(
 ) -> list[AnyMergedModel]:
     """Create merged items for a list of extracted items."""
     return [
-        create_merged_item(m.stableTargetId, [m], None, validate_cardinality=True)
-        for m in extracted_items
+        merged_item
+        for extracted_item in extracted_items
+        if (
+            merged_item := create_merged_item(
+                extracted_item.stableTargetId,
+                [extracted_item],
+                None,
+                validation=Validation.IGNORE,
+            )
+        )
     ]
 
 
