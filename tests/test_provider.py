@@ -93,11 +93,16 @@ def test_builder_provider_get_random_field_info(faker: Faker) -> None:
                 "http://wikidata.org/entity/P###",
             ],
             regex_patterns=[r"^https://wikidata\.org/entity/[PQ0-9]{2,64}$"],
+            examples=[
+                "http://wikidata.org/entity/Q679041",
+                "http://wikidata.org/entity/P123",
+            ],
         ),
         "is_nested_pattern": RandomFieldInfo(
             inner_type=str,
             numerify_patterns=["https://dfg.de/foobar/#####"],
             regex_patterns=[r"^https://dfg\.de/foobar/[0-9]{1,64}$"],
+            examples=["https://dfg.de/foobar/10179"],
         ),
     }
 
@@ -121,7 +126,8 @@ def test_builder_provider_get_random_field_info(faker: Faker) -> None:
                     pattern="^[^@ \\t\\r\\n]+@[^@ \\t\\r\\n]+\\.[^@ \\t\\r\\n]+$",
                     json_schema_extra={"format": "email"},
                 ),
-            ]["info@rki.de"]
+            ],
+            ["info@rki.de"],
         ),
         (
             Text,

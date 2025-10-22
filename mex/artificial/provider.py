@@ -20,6 +20,7 @@ from mex.common.transform import ensure_prefix
 from mex.common.types import (
     TEMPORAL_ENTITY_FORMATS_BY_PRECISION,
     UTC,
+    AnyPrimitiveType,
     Identifier,
     Link,
     LinkLanguage,
@@ -35,6 +36,7 @@ class RandomFieldInfo(BaseModel):
     inner_type: Any
     numerify_patterns: list[str] = []
     regex_patterns: list[str] = []
+    examples: list[AnyPrimitiveType | dict[str, AnyPrimitiveType]] = []
 
 
 class BuilderProvider(PythonFakerProvider):
@@ -83,9 +85,10 @@ class BuilderProvider(PythonFakerProvider):
             numerify_patterns=[
                 re.sub(r"[0-9]", "#", e)
                 for e in self.ensure_list(field.examples)
-                if isinstance(e, str)
+                if isinstance(e, str) and not any(char in e for char in "#%$!@")
             ],
             regex_patterns=[m.pattern for m in field.metadata if hasattr(m, "pattern")],
+            examples=self.ensure_list(field.examples),
         )
 
     def field_value(
@@ -101,6 +104,8 @@ class BuilderProvider(PythonFakerProvider):
                 field_info.numerify_patterns,
                 field_info.regex_patterns,
             )
+        elif field_info.regex_patterns and field_info.examples:
+            factory = partial(self.random_element, field_info.examples)
         elif issubclass(field_info.inner_type, Identifier):
             factory = partial(
                 self.generator.reference, field_info.inner_type, exclude=identity
