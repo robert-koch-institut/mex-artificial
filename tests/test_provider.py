@@ -12,7 +12,6 @@ from mex.common.models import ExtractedPrimarySource
 from mex.common.testing import Joker
 from mex.common.types import (
     APIType,
-    Email,
     Identifier,
     Link,
     LinkLanguage,
@@ -94,11 +93,16 @@ def test_builder_provider_get_random_field_info(faker: Faker) -> None:
                 "http://wikidata.org/entity/P###",
             ],
             regex_patterns=[r"^https://wikidata\.org/entity/[PQ0-9]{2,64}$"],
+            examples=[
+                "http://wikidata.org/entity/Q679041",
+                "http://wikidata.org/entity/P123",
+            ],
         ),
         "is_nested_pattern": RandomFieldInfo(
             inner_type=str,
             numerify_patterns=["https://dfg.de/foobar/#####"],
             regex_patterns=[r"^https://dfg\.de/foobar/[0-9]{1,64}$"],
+            examples=["https://dfg.de/foobar/10179"],
         ),
     }
 
@@ -114,7 +118,17 @@ def test_builder_provider_get_random_field_info(faker: Faker) -> None:
                 ),
             ],
         ),
-        (Email, ["lindathomas@example.net"]),
+        (
+            Annotated[
+                str,
+                Field(
+                    examples=["info@rki.de"],
+                    pattern="^[^@ \\t\\r\\n]+@[^@ \\t\\r\\n]+\\.[^@ \\t\\r\\n]+$",
+                    json_schema_extra={"format": "email"},
+                ),
+            ],
+            ["info@rki.de"],
+        ),
         (
             Text,
             [
@@ -184,7 +198,7 @@ def test_builder_provider_field_value_error(faker: Faker) -> None:
 def test_builder_provider_extracted_items(faker: Faker) -> None:
     models = faker.extracted_items(["ContactPoint"])
     assert models[0].model_dump(exclude_defaults=True) == {
-        "email": ["udavis@example.net"],
+        "email": ["info@rki.de"],
         "hadPrimarySource": Joker(),
         "identifier": Joker(),
         "identifierInPrimarySource": "ContactPoint-4181830114",
