@@ -20,7 +20,6 @@ from mex.common.transform import ensure_prefix
 from mex.common.types import (
     TEMPORAL_ENTITY_FORMATS_BY_PRECISION,
     UTC,
-    Email,
     Identifier,
     Link,
     LinkLanguage,
@@ -108,8 +107,6 @@ class BuilderProvider(PythonFakerProvider):
             )
         elif issubclass(field_info.inner_type, Link):
             factory = self.generator.link
-        elif issubclass(field_info.inner_type, Email):
-            factory = self.generator.email
         elif issubclass(field_info.inner_type, Text):
             factory = self.generator.text_object
         elif issubclass(field_info.inner_type, TemporalEntity):

@@ -12,7 +12,6 @@ from mex.common.models import ExtractedPrimarySource
 from mex.common.testing import Joker
 from mex.common.types import (
     APIType,
-    Email,
     Identifier,
     Link,
     LinkLanguage,
@@ -114,7 +113,16 @@ def test_builder_provider_get_random_field_info(faker: Faker) -> None:
                 ),
             ],
         ),
-        (Email, ["lindathomas@example.net"]),
+        (
+            Annotated[
+                str,
+                Field(
+                    examples=["info@rki.de"],
+                    pattern="^[^@ \\t\\r\\n]+@[^@ \\t\\r\\n]+\\.[^@ \\t\\r\\n]+$",
+                    json_schema_extra={"format": "email"},
+                ),
+            ]["info@rki.de"]
+        ),
         (
             Text,
             [
@@ -184,7 +192,7 @@ def test_builder_provider_field_value_error(faker: Faker) -> None:
 def test_builder_provider_extracted_items(faker: Faker) -> None:
     models = faker.extracted_items(["ContactPoint"])
     assert models[0].model_dump(exclude_defaults=True) == {
-        "email": ["udavis@example.net"],
+        "email": ["info@rki.de"],
         "hadPrimarySource": Joker(),
         "identifier": Joker(),
         "identifierInPrimarySource": "ContactPoint-4181830114",
