@@ -1,3 +1,4 @@
+from itertools import islice
 from pathlib import Path
 from typing import Annotated
 
@@ -80,8 +81,8 @@ def artificial(  # noqa: PLR0913
     path = path or Path.cwd()
     locale = locale or DEFAULT_LOCALE
     models = models or DEFAULT_MODELS
-    items = generate_artificial_merged_items(locale, seed, count, chattiness, models)
-    write_merged_items(items, path)
+    item_gen = generate_artificial_merged_items(locale, seed, chattiness, models)
+    write_merged_items(islice(item_gen, count), path)
     logger.info("artificial data generation done")
 
 
