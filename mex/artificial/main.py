@@ -1,4 +1,3 @@
-from itertools import islice
 from pathlib import Path
 from typing import Annotated
 
@@ -6,7 +5,6 @@ import typer
 
 from mex.artificial.helpers import generate_artificial_merged_items, write_merged_items
 from mex.common.logging import logger
-from mex.common.models import EXTRACTED_MODEL_CLASSES
 
 DEFAULT_LOCALE = [
     "de_DE",
@@ -32,7 +30,7 @@ def artificial(  # noqa: PLR0913
         int,
         typer.Option(
             help="Number of artificial items to approximately create.",
-            min=len(EXTRACTED_MODEL_CLASSES) * 2,
+            min=1,
             max=int(10e6 - 1),
         ),
     ] = 100,
@@ -82,7 +80,7 @@ def artificial(  # noqa: PLR0913
     locale = locale or DEFAULT_LOCALE
     models = models or DEFAULT_MODELS
     item_gen = generate_artificial_merged_items(locale, seed, chattiness, models)
-    write_merged_items(islice(item_gen, count), path)
+    write_merged_items(item_gen, count, path)
     logger.info("artificial data generation done")
 
 

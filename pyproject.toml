@@ -12,6 +12,7 @@ dependencies = [
     "faker>=37,<38",
     "mex-common>=1.8.1,<2",
     "pydantic",
+    "rich",
     "typer>=0.19",
 ]
 optional-dependencies.dev = [

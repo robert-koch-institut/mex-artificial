@@ -1,13 +1,14 @@
 import json
 from collections import defaultdict
 from collections.abc import Generator, Iterable, Mapping, Sequence
-from itertools import count
+from itertools import count, islice
 from os import PathLike
 from pathlib import Path
 from typing import cast
 
 from faker import Faker
 from faker.typing import SeedType
+from rich.progress import track
 
 from mex.artificial.provider import (
     BuilderProvider,
@@ -18,7 +19,6 @@ from mex.artificial.provider import (
     TextProvider,
 )
 from mex.artificial.types import LocaleType
-from mex.common.logging import logger
 from mex.common.merged.main import create_merged_item
 from mex.common.models import (
     MEX_PRIMARY_SOURCE_IDENTIFIER,
@@ -135,13 +135,11 @@ def generate_artificial_merged_items(
 
 def write_merged_items(
     items: Iterable[AnyMergedModel],
+    count: int,
     out_path: PathLike[str],
 ) -> None:
-    """Write the incoming items into a new-line delimited JSON file."""
-    logging_counter = 0
+    """Write the desired number of items from the incoming stream to an NDJSON file."""
     with (Path(out_path) / "publisher.ndjson").open("w", encoding="utf-8") as fh:
-        for item in items:
+        for item in track(islice(items, count), total=count, description="working..."):
             line = json.dumps(item, ensure_ascii=False, sort_keys=True, cls=MExEncoder)
             fh.write(f"{line}\n")
-            logging_counter += 1
-    logger.info("%s merged items were written", logging_counter)
