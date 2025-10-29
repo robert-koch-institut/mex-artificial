@@ -1,7 +1,7 @@
 import pytest
 from faker import Faker
 
-from mex.artificial.helpers import create_faker, register_factories
+from mex.artificial.helpers import create_faker
 from mex.common.models import BASE_MODEL_CLASSES
 
 pytest_plugins = ("mex.common.testing.plugin",)
@@ -10,9 +10,7 @@ pytest_plugins = ("mex.common.testing.plugin",)
 @pytest.fixture(name="faker")
 def init_faker() -> Faker:
     """Return a fully configured faker instance."""
-    faker = create_faker(["en_US"], 0)
-    register_factories(faker, 5)
-    return faker
+    return create_faker(["en_US"], 0, 5)
 
 
 @pytest.fixture

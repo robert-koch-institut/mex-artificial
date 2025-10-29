@@ -14,6 +14,11 @@ from faker.providers.python import Provider as PythonFakerProvider
 from pydantic import ValidationError
 from pydantic.fields import FieldInfo
 
+from mex.artificial.constants import (
+    DEFAULT_GENERATION_ATTEMPTS,
+    DEFAULT_RULE_VALUE_PROBABILITY,
+    DEFAULT_SEED,
+)
 from mex.artificial.models import RandomFieldInfo
 from mex.common.fields import LITERAL_FIELDS_BY_CLASS_NAME
 from mex.common.identity import get_provider
@@ -152,7 +157,7 @@ class BuilderProvider(PythonFakerProvider):
         stem_types: Sequence[str],
         ids_by_type: Mapping[str, Collection[AnyMergedIdentifier]],
         *,
-        _attempts_left: int = 10,
+        _attempts_left: int = DEFAULT_GENERATION_ATTEMPTS,
     ) -> AnyExtractedModel:
         """Generate a single extracted items for the given stem types."""
         stem_type = self.random_element(stem_types)
@@ -189,7 +194,7 @@ class BuilderProvider(PythonFakerProvider):
         stem_type: str,
         ids_by_type: Mapping[str, Collection[AnyMergedIdentifier]],
         *,
-        value_probability: float = 0.33,
+        value_probability: float = DEFAULT_RULE_VALUE_PROBABILITY,
     ) -> AnyAdditiveModel:
         """Generate an artificial additive rule."""
         class_name = ensure_prefix(stem_type, "Additive")
@@ -206,7 +211,7 @@ class BuilderProvider(PythonFakerProvider):
         self,
         extracted_item: AnyExtractedModel,
         *,
-        value_probability: float = 0.33,
+        value_probability: float = DEFAULT_RULE_VALUE_PROBABILITY,
     ) -> AnySubtractiveModel:
         """Generate an artificial subtractive rule."""
         class_name = ensure_prefix(extracted_item.stemType, "Subtractive")
@@ -233,7 +238,7 @@ class BuilderProvider(PythonFakerProvider):
         self,
         extracted_item: AnyExtractedModel,
         *,
-        value_probability: float = 0.33,
+        value_probability: float = DEFAULT_RULE_VALUE_PROBABILITY,
     ) -> AnyPreventiveModel:
         """Generate an artificial preventive rule."""
         class_name = ensure_prefix(extracted_item.stemType, "Preventive")
@@ -255,10 +260,10 @@ class BuilderProvider(PythonFakerProvider):
         self,
         stem_types: Sequence[str],
         ids_by_type: Mapping[str, Collection[AnyMergedIdentifier]],
-        identifier_seed: int = 0,
+        identifier_seed: int = DEFAULT_SEED,
         *,
-        value_probability: float = 0.33,
-        _attempts_left: int = 10,
+        value_probability: float = DEFAULT_RULE_VALUE_PROBABILITY,
+        _attempts_left: int = DEFAULT_GENERATION_ATTEMPTS,
     ) -> AnyRuleSetResponse:
         """Generate a single standalone rule-set."""
         # manually set provenance fields
@@ -296,8 +301,8 @@ class BuilderProvider(PythonFakerProvider):
         extracted_item: AnyExtractedModel,
         ids_by_type: Mapping[str, Collection[AnyMergedIdentifier]],
         *,
-        value_probability: float = 0.33,
-        _attempts_left: int = 10,
+        value_probability: float = DEFAULT_RULE_VALUE_PROBABILITY,
+        _attempts_left: int = DEFAULT_GENERATION_ATTEMPTS,
     ) -> AnyRuleSetResponse:
         """Generate a single rule-set for the given extracted item."""
         # manually set provenance fields
@@ -388,7 +393,8 @@ class TemporalEntityProvider(PythonFakerProvider):
     """Faker provider that can return a custom TemporalEntity with random precision."""
 
     def temporal_entity(
-        self, allowed_precision_levels: list[TemporalEntityPrecision]
+        self,
+        allowed_precision_levels: list[TemporalEntityPrecision],
     ) -> TemporalEntity:
         """Return a custom temporal entity with random date, time and precision."""
         return TemporalEntity(

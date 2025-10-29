@@ -9,7 +9,6 @@ DEFAULT_LOCALE = [
     "de_DE",
     "en_US",
 ]
-
 DEFAULT_MODELS = [
     "AccessPlatform",
     "Activity",
@@ -23,6 +22,11 @@ DEFAULT_MODELS = [
     "Variable",
     "VariableGroup",
 ]
+DEFAULT_SEED = 0
+DEFAULT_CHATTINESS = 10
+DEFAULT_COUNT = 100
+DEFAULT_RULE_VALUE_PROBABILITY = 0.33
+DEFAULT_GENERATION_ATTEMPTS = 10
 
 MEX_PRIMARY_SOURCE = ExtractedPrimarySource.model_construct(
     hadPrimarySource=MEX_PRIMARY_SOURCE_STABLE_TARGET_ID,

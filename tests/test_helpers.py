@@ -14,7 +14,6 @@ from mex.artificial.helpers import (
     generate_artificial_extracted_items,
     generate_artificial_items_and_rule_sets,
     generate_artificial_merged_items,
-    register_factories,
     write_merged_items,
 )
 from mex.artificial.types import LocaleType
@@ -23,8 +22,7 @@ TEST_DATA_PATH = Path(__file__).parent / "test_data"
 
 
 def test_faker() -> None:
-    faker = create_faker(["en_US", "de_DE"], 42)
-    register_factories(faker, 1)
+    faker = create_faker(["en_US", "de_DE"], 42, 1)
     assert isinstance(faker, Faker)
     assert faker.locales == ["en_US", "de_DE"]
     assert faker.text_string() == "site"

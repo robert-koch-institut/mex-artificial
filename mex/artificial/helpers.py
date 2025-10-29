@@ -10,7 +10,14 @@ from faker import Faker
 from faker.typing import SeedType
 from rich.progress import track
 
-from mex.artificial.constants import MEX_PRIMARY_SOURCE
+from mex.artificial.constants import (
+    DEFAULT_CHATTINESS,
+    DEFAULT_COUNT,
+    DEFAULT_LOCALE,
+    DEFAULT_MODELS,
+    DEFAULT_SEED,
+    MEX_PRIMARY_SOURCE,
+)
 from mex.artificial.models import ExtractedItemAndRuleSet
 from mex.artificial.provider import (
     BuilderProvider,
@@ -27,14 +34,14 @@ from mex.common.transform import MExEncoder
 from mex.common.types import AnyMergedIdentifier, Validation
 
 
-def create_faker(locale: LocaleType | list[str], seed: SeedType) -> Faker:
-    """Create and initialize a new faker instance with the given locale and seed."""
+def create_faker(
+    locale: LocaleType = DEFAULT_LOCALE,
+    seed: SeedType = DEFAULT_SEED,
+    chattiness: int = DEFAULT_CHATTINESS,
+) -> Faker:
+    """Create and initialize a new faker instance with the given settings."""
     Faker.seed(seed)
-    return Faker(locale=locale)
-
-
-def register_factories(faker: Faker, chattiness: int) -> None:
-    """Create faker providers and register them on each factory."""
+    faker = Faker(locale=locale)
     for factory in faker.factories:
         factory.add_provider(ReferenceProvider(factory))
         factory.add_provider(LinkProvider(factory))
@@ -42,17 +49,17 @@ def register_factories(faker: Faker, chattiness: int) -> None:
         factory.add_provider(BuilderProvider(factory))
         factory.add_provider(TextProvider(factory, chattiness))
         factory.add_provider(TemporalEntityProvider(factory))
+    return faker
 
 
 def generate_artificial_extracted_items(
-    locale: LocaleType,
-    seed: SeedType,
-    chattiness: int,
-    stem_types: Sequence[str],
+    locale: LocaleType = DEFAULT_LOCALE,
+    seed: SeedType = DEFAULT_SEED,
+    chattiness: int = DEFAULT_CHATTINESS,
+    stem_types: Sequence[str] = DEFAULT_MODELS,
 ) -> Generator[AnyExtractedModel, None, None]:
     """Generate artificial extracted items for the given settings."""
-    faker = create_faker(locale, seed)
-    register_factories(faker, chattiness)
+    faker = create_faker(locale, seed, chattiness)
     ids_by_type: Mapping[str, OrderedDict[AnyMergedIdentifier, None]] = defaultdict(
         OrderedDict,
         {
@@ -69,14 +76,13 @@ def generate_artificial_extracted_items(
 
 
 def generate_artificial_items_and_rule_sets(
-    locale: LocaleType,
-    seed: SeedType,
-    chattiness: int,
-    stem_types: Sequence[str],
+    locale: LocaleType = DEFAULT_LOCALE,
+    seed: SeedType = DEFAULT_SEED,
+    chattiness: int = DEFAULT_CHATTINESS,
+    stem_types: Sequence[str] = DEFAULT_MODELS,
 ) -> Generator[ExtractedItemAndRuleSet, None, None]:
     """Generate artificial extracted items and rule-sets for the settings."""
-    faker = create_faker(locale, seed)
-    register_factories(faker, chattiness)
+    faker = create_faker(locale, seed, chattiness)
     ids_by_type: Mapping[str, OrderedDict[AnyMergedIdentifier, None]] = defaultdict(
         OrderedDict,
         {
@@ -102,43 +108,40 @@ def generate_artificial_items_and_rule_sets(
                 yield ExtractedItemAndRuleSet(extracted_item=item, rule_set=rule_set)
 
 
-def create_artificial_merged_item(
-    item_combination: ExtractedItemAndRuleSet,
-) -> AnyMergedModel | None:
-    """Create a merged item from the given extracted item and rule-set."""
-    return create_merged_item(
-        next(
-            i.stableTargetId
-            for i in (item_combination.extracted_item, item_combination.rule_set)
-            if i
-        ),
-        [item_combination.extracted_item] if item_combination.extracted_item else [],
-        item_combination.rule_set,
-        validation=Validation.IGNORE,
-    )
-
-
 def generate_artificial_merged_items(
-    locale: LocaleType,
-    seed: SeedType,
-    chattiness: int,
-    stem_types: Sequence[str],
+    locale: LocaleType = DEFAULT_LOCALE,
+    seed: SeedType = DEFAULT_SEED,
+    chattiness: int = DEFAULT_CHATTINESS,
+    stem_types: Sequence[str] = DEFAULT_MODELS,
 ) -> Generator[AnyMergedModel, None, None]:
     """Generate artificial merged items for the given settings."""
     for item_combination in generate_artificial_items_and_rule_sets(
         locale, seed, chattiness, stem_types
     ):
-        if merged_item := create_artificial_merged_item(item_combination):
+        identifier = next(
+            i.stableTargetId
+            for i in (item_combination.extracted_item, item_combination.rule_set)
+            if i
+        )
+        if merged_item := create_merged_item(
+            identifier,
+            [item_combination.extracted_item]
+            if item_combination.extracted_item
+            else [],
+            item_combination.rule_set,
+            validation=Validation.IGNORE,
+        ):
             yield merged_item
 
 
 def write_merged_items(
     items: Iterable[AnyMergedModel],
-    count: int,
-    out_path: PathLike[str],
+    count: int = DEFAULT_COUNT,
+    out_path: PathLike[str] | None = None,
 ) -> None:
     """Write the desired number of items from the incoming stream to an NDJSON file."""
-    with (Path(out_path) / "publisher.ndjson").open("w", encoding="utf-8") as fh:
+    file_path = Path(out_path or Path.cwd()) / "publisher.ndjson"
+    with file_path.open("w", encoding="utf-8") as fh:
         for item in track(islice(items, count), total=count, description="working..."):
             line = json.dumps(item, ensure_ascii=False, sort_keys=True, cls=MExEncoder)
             fh.write(f"{line}\n")
