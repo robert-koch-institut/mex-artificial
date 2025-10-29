@@ -6,13 +6,10 @@ from pydantic import BaseModel, Field
 from pydantic.fields import FieldInfo
 
 from mex.artificial.models import RandomFieldInfo
-from mex.common.models import (
-    ExtractedPrimarySource,
-)
 from mex.common.types import (
     APIType,
-    Identifier,
     Link,
+    MergedOrganizationIdentifier,
     MergedPrimarySourceIdentifier,
     TemporalEntity,
     TemporalEntityPrecision,
@@ -299,36 +296,31 @@ def test_builder_provider_standalone_rule_set(
     }
 
 
-def test_identity_provider_reference(faker: Faker) -> None:
-    identities = list(faker.identities(ExtractedPrimarySource))
-
-    for identity in identities:
-        reference = faker.reference(MergedPrimarySourceIdentifier, identity)
-        assert reference != identity.stableTargetId
-        assert reference in [i.stableTargetId for i in identities]
-
-    assert faker.reference([], Identifier("00000000000000")) is None
+def test_reference_provider(faker: Faker, ids_by_type: dict[str, list[str]]) -> None:
+    inner_type = list[MergedPrimarySourceIdentifier | MergedOrganizationIdentifier]
+    assert faker.reference(inner_type, ids_by_type) == "Organization000000005"
+    assert faker.reference(dict[str, str], ids_by_type) is None
 
 
 def test_link_provider(faker: Faker) -> None:
-    assert faker.link() == Link(language=None, title=None, url="http://www.pratt.com/")
+    assert faker.link() == Link(
+        language=None, title="Williams Sheppard", url="https://howard-snow.com/"
+    )
 
 
 def test_temporal_entity_provider(faker: Faker) -> None:
     assert faker.temporal_entity([TemporalEntityPrecision.DAY]) == TemporalEntity(
-        "2014-08-30"
+        "2024-01-31"
     )
 
 
 def test_text_provider_string(faker: Faker) -> None:
-    assert faker.text_string() == "doctor edge suggest"
+    assert faker.text_string() == "son voice"
 
 
 def test_text_provider_text(faker: Faker) -> None:
     assert faker.text_object() == Text(
-        value=(
-            "Sound central myself before year. Your majority feeling fact by four two. "
-            "White owner onto knowledge other. First drug contain start almost wonder."
-        ),
+        value="Else memory if. Whose group through despite cause. Sense peace economy "
+        "travel. Total financial role together range line beyond its.",
         language=TextLanguage.EN,
     )
