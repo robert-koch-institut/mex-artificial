@@ -210,15 +210,8 @@ def test_builder_provider_additive_rule(
     assert rule.model_dump(exclude_defaults=True) == {
         "affiliation": ["Organization000000008"],
         "email": ["info@rki.de"],
-        "familyName": ["force", "season take play"],
-        "givenName": ["me level tree"],
-        "isniId": ["https://isni.org/isni/9753513933287115"],
-        "memberOf": ["OrganizationalUnit002", "OrganizationalUnit006"],
-        "orcidId": [
-            "https://orcid.org/8339-6947-7515-9179",
-            "https://orcid.org/3304-1352-5601-2309",
-            "https://orcid.org/4232-0947-1122-0186",
-        ],
+        "familyName": ["season take play"],
+        "isniId": ["https://isni.org/isni/7840801609753513"],
     }
 
 
@@ -231,12 +224,16 @@ def test_builder_provider_subtractive_rule(
         value_probability=1,
     )
     assert rule.model_dump(exclude_defaults=True) == {
-        "affiliation": ["Organization000000005"],
-        "familyName": ["show", "way"],
-        "fullName": ["support", "whole address better"],
-        "givenName": ["gas score truth"],
-        "isniId": ["https://isni.org/isni/8711587148418583"],
-        "memberOf": ["OrganizationalUnit006"],
+        "affiliation": [
+            "Organization000000008",
+            "Organization000000005",
+            "Organization000000007",
+        ],
+        "email": ["info@rki.de"],
+        "fullName": ["show"],
+        "givenName": ["me level tree"],
+        "memberOf": ["OrganizationalUnit008", "OrganizationalUnit001"],
+        "orcidId": ["https://orcid.org/8711-5871-4841-858X"],
     }
 
 
@@ -249,8 +246,11 @@ def test_builder_provider_preventive_rule(
         value_probability=0.75,
     )
     assert rule.model_dump(exclude_defaults=True) == {
+        "email": ["PrimarySource00000007"],
         "familyName": ["PrimarySource00000007"],
-        "fullName": ["PrimarySource00000007"],
+        "givenName": ["PrimarySource00000007"],
+        "isniId": ["PrimarySource00000007"],
+        "orcidId": ["PrimarySource00000007"],
     }
 
 
@@ -271,25 +271,21 @@ def test_builder_provider_standalone_rule_set(
                 "Organization000000008",
             ],
             "email": ["info@rki.de"],
-            "familyName": [
-                "push while democratic",
-                "ever assume support",
+            "familyName": ["season take play", "force"],
+            "fullName": [
                 "opportunity blood",
                 "leader four",
+                "push while democratic",
                 "me level tree",
+                "ever assume support",
             ],
-            "givenName": [
-                "truth at cut",
-                "doctor edge suggest",
-                "line benefit be",
-                "suggest",
-                "type movie",
-            ],
-            "memberOf": [
-                "OrganizationalUnit007",
-                "OrganizationalUnit008",
-                "OrganizationalUnit002",
-                "OrganizationalUnit005",
+            "isniId": [
+                "https://isni.org/isni/9753513933287115",
+                "https://isni.org/isni/1484185839894719",
+                "https://isni.org/isni/9342320947112201",
+                "https://isni.org/isni/8483396947751591",
+                "https://isni.org/isni/3304135256012309",
+                "https://isni.org/isni/0139916151090321",
             ],
         },
         "stableTargetId": "b3wrW78ASMOyBrXF6ikQAO",
