@@ -9,7 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- add helper to generate extracted items along with an associated rule-set
+- add helper to generate standalone rule-sets
+
 ### Changes
+
+- change `generate_artificial_merged_items` to an item generator
+- change merged item generation to use extracted and rule items
+- change reference generation so that items can be ingested in generated order
+- improve CLI with progress bar and progressive generation/file-writing
 
 ### Deprecated
 
