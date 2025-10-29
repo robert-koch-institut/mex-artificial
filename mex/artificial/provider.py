@@ -11,9 +11,10 @@ from faker import Generator as FakerFactory
 from faker.providers import BaseProvider as BaseFakerProvider
 from faker.providers.internet import Provider as InternetFakerProvider
 from faker.providers.python import Provider as PythonFakerProvider
-from pydantic import BaseModel, ValidationError
+from pydantic import ValidationError
 from pydantic.fields import FieldInfo
 
+from mex.artificial.models import RandomFieldInfo
 from mex.common.fields import LITERAL_FIELDS_BY_CLASS_NAME
 from mex.common.identity import get_provider
 from mex.common.models import (
@@ -36,7 +37,6 @@ from mex.common.types import (
     TEMPORAL_ENTITY_FORMATS_BY_PRECISION,
     UTC,
     AnyMergedIdentifier,
-    AnyPrimitiveType,
     Identifier,
     Link,
     LinkLanguage,
@@ -45,15 +45,6 @@ from mex.common.types import (
     Text,
 )
 from mex.common.utils import ensure_list
-
-
-class RandomFieldInfo(BaseModel):
-    """Randomized pick of matching inner type and patterns for a field."""
-
-    inner_type: Any
-    numerify_patterns: list[str] = []
-    regex_patterns: list[str] = []
-    examples: list[AnyPrimitiveType | dict[str, AnyPrimitiveType]] = []
 
 
 class BuilderProvider(PythonFakerProvider):

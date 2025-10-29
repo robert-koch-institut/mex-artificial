@@ -7,7 +7,7 @@ from faker import Faker
 from pydantic import BaseModel, Field
 from pydantic.fields import FieldInfo
 
-from mex.artificial.provider import RandomFieldInfo
+from mex.artificial.models import RandomFieldInfo
 from mex.common.models import ExtractedPrimarySource
 from mex.common.testing import Joker
 from mex.common.types import (

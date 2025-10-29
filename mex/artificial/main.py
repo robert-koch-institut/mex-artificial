@@ -3,26 +3,9 @@ from typing import Annotated
 
 import typer
 
+from mex.artificial.constants import DEFAULT_LOCALE, DEFAULT_MODELS
 from mex.artificial.helpers import generate_artificial_merged_items, write_merged_items
 from mex.common.logging import logger
-
-DEFAULT_LOCALE = [
-    "de_DE",
-    "en_US",
-]
-DEFAULT_MODELS = [
-    "AccessPlatform",
-    "Activity",
-    "BibliographicResource",
-    "ContactPoint",
-    "Distribution",
-    "Organization",
-    "OrganizationalUnit",
-    "Person",
-    "Resource",
-    "Variable",
-    "VariableGroup",
-]
 
 
 def artificial(  # noqa: PLR0913

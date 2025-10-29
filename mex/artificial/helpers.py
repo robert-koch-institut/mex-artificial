@@ -10,6 +10,7 @@ from faker import Faker
 from faker.typing import SeedType
 from rich.progress import track
 
+from mex.artificial.constants import MEX_PRIMARY_SOURCE
 from mex.artificial.provider import (
     BuilderProvider,
     LinkProvider,
@@ -20,24 +21,9 @@ from mex.artificial.provider import (
 )
 from mex.artificial.types import LocaleType
 from mex.common.merged.main import create_merged_item
-from mex.common.models import (
-    MEX_PRIMARY_SOURCE_IDENTIFIER,
-    MEX_PRIMARY_SOURCE_IDENTIFIER_IN_PRIMARY_SOURCE,
-    MEX_PRIMARY_SOURCE_STABLE_TARGET_ID,
-    AnyExtractedModel,
-    AnyMergedModel,
-    AnyRuleSetResponse,
-    ExtractedPrimarySource,
-)
+from mex.common.models import AnyExtractedModel, AnyMergedModel, AnyRuleSetResponse
 from mex.common.transform import MExEncoder
 from mex.common.types import AnyMergedIdentifier, Validation
-
-MEX_PRIMARY_SOURCE = ExtractedPrimarySource.model_construct(
-    hadPrimarySource=MEX_PRIMARY_SOURCE_STABLE_TARGET_ID,
-    identifier=MEX_PRIMARY_SOURCE_IDENTIFIER,
-    identifierInPrimarySource=MEX_PRIMARY_SOURCE_IDENTIFIER_IN_PRIMARY_SOURCE,
-    stableTargetId=MEX_PRIMARY_SOURCE_STABLE_TARGET_ID,
-)
 
 
 def create_faker(locale: LocaleType | list[str], seed: SeedType) -> Faker:
