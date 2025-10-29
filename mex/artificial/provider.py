@@ -135,16 +135,16 @@ class BuilderProvider(PythonFakerProvider):
         self,
         field: FieldInfo,
         ids_by_type: Mapping[str, Collection[AnyMergedIdentifier]],
-    ) -> list[Any]:
+    ) -> Sequence[Any]:
         """Get a list of artificial values for the given field and identity."""
         field_info = self.get_random_field_info(field)
         factory = self.field_value_factory(field_info, ids_by_type)
-        values = [
+        values = {
             value
             for _ in range(self.pyint(*self.min_max_for_field(field)))
             if (value := factory()) is not None
-        ]
-        return list(set(values))
+        }
+        return self.random_sample(sorted(values), len(values))
 
     def extracted_item(
         self,
@@ -168,9 +168,11 @@ class BuilderProvider(PythonFakerProvider):
             "entityType": entity_type,
         }
         # dynamically populate all other fields
-        for name, field in model_class.model_fields.items():
+        for name in sorted(model_class.model_fields):
             if name not in raw_data:
-                raw_data[name] = self.field_value(field, ids_by_type)
+                raw_data[name] = self.field_value(
+                    model_class.model_fields[name], ids_by_type
+                )
         try:
             model = model_class.model_validate(raw_data)
         except ValidationError:
@@ -185,50 +187,55 @@ class BuilderProvider(PythonFakerProvider):
         self,
         stem_type: str,
         ids_by_type: Mapping[str, Collection[AnyMergedIdentifier]],
+        *,
+        value_probability: float = 0.33,
     ) -> AnyAdditiveModel:
         """Generate an artificial additive rule."""
         class_name = ensure_prefix(stem_type, "Additive")
         additive_class = ADDITIVE_MODEL_CLASSES_BY_NAME[class_name]
-        return additive_class.model_validate(
-            {
-                name: self.field_value(field, ids_by_type)
-                for name, field in additive_class.model_fields.items()
-                if name not in LITERAL_FIELDS_BY_CLASS_NAME[class_name]
-            }
-        )
+        raw_data = {
+            name: self.field_value(additive_class.model_fields[name], ids_by_type)
+            for name in sorted(additive_class.model_fields)
+            if name not in LITERAL_FIELDS_BY_CLASS_NAME[class_name]
+            and self.random_int() < value_probability * 1e4
+        }
+        return additive_class.model_validate(raw_data)
 
     def subtractive_rule(
         self,
-        stem_type: str,
         extracted_item: AnyExtractedModel,
+        *,
         value_probability: float = 0.33,
     ) -> AnySubtractiveModel:
         """Generate an artificial subtractive rule."""
-        class_name = ensure_prefix(stem_type, "Subtractive")
+        class_name = ensure_prefix(extracted_item.stemType, "Subtractive")
         subtractive_class = SUBTRACTIVE_MODEL_CLASSES_BY_NAME[class_name]
-        return subtractive_class.model_validate(
-            {
-                name: self.random_sample(
-                    extracted_values,
-                    length=self.pyint(
-                        1, min(len(extracted_values), self.min_max_for_field(field)[1])
+        raw_data = {
+            name: self.random_sample(
+                extracted_values,
+                length=self.pyint(
+                    1,
+                    min(
+                        len(extracted_values),
+                        self.min_max_for_field(subtractive_class.model_fields[name])[1],
                     ),
-                )
-                for name, field in subtractive_class.model_fields.items()
-                if name not in LITERAL_FIELDS_BY_CLASS_NAME[class_name]
-                and self.random_int() < value_probability * 1e4
-                and (extracted_values := ensure_list(getattr(extracted_item, name)))
-            }
-        )
+                ),
+            )
+            for name in sorted(subtractive_class.model_fields)
+            if name not in LITERAL_FIELDS_BY_CLASS_NAME[class_name]
+            and self.random_int() < value_probability * 1e4
+            and (extracted_values := ensure_list(getattr(extracted_item, name)))
+        }
+        return subtractive_class.model_validate(raw_data)
 
     def preventive_rule(
         self,
-        stem_type: str,
         extracted_item: AnyExtractedModel,
+        *,
         value_probability: float = 0.33,
     ) -> AnyPreventiveModel:
         """Generate an artificial preventive rule."""
-        class_name = ensure_prefix(stem_type, "Preventive")
+        class_name = ensure_prefix(extracted_item.stemType, "Preventive")
         preventive_class = PREVENTIVE_MODEL_CLASSES_BY_NAME[class_name]
         weighted_options = OrderedDict(
             {
@@ -236,20 +243,20 @@ class BuilderProvider(PythonFakerProvider):
                 (extracted_item.hadPrimarySource,): value_probability,
             }
         )
-        return preventive_class.model_validate(
-            {
-                name: list(self.random_element(weighted_options))
-                for name in preventive_class.model_fields
-                if name not in LITERAL_FIELDS_BY_CLASS_NAME[class_name]
-            }
-        )
+        raw_data = {
+            name: list(self.random_element(weighted_options))
+            for name in preventive_class.model_fields
+            if name not in LITERAL_FIELDS_BY_CLASS_NAME[class_name]
+        }
+        return preventive_class.model_validate(raw_data)
 
     def standalone_rule_set(
         self,
         stem_types: Sequence[str],
-        identifier_seed: int,
         ids_by_type: Mapping[str, Collection[AnyMergedIdentifier]],
+        identifier_seed: int = 0,
         *,
+        value_probability: float = 0.33,
         _attempts_left: int = 10,
     ) -> AnyRuleSetResponse:
         """Generate a single standalone rule-set."""
@@ -267,15 +274,17 @@ class BuilderProvider(PythonFakerProvider):
             "entityType": ensure_postfix(stem_type, "RuleSetResponse"),
         }
         # dynamically populate additive fields
-        raw_data["additive"] = self.additive_rule(stem_type, ids_by_type)
+        raw_data["additive"] = self.additive_rule(
+            stem_type, ids_by_type, value_probability=value_probability
+        )
         try:
             model = rule_set_class.model_validate(raw_data)
         except ValidationError:
             if _attempts_left > 0:  # if again you don't succeed, try, try again
                 return self.standalone_rule_set(
                     stem_types,
-                    identifier_seed,
                     ids_by_type,
+                    identifier_seed,
                     _attempts_left=_attempts_left - 1,
                 )
             raise
@@ -286,6 +295,7 @@ class BuilderProvider(PythonFakerProvider):
         extracted_item: AnyExtractedModel,
         ids_by_type: Mapping[str, Collection[AnyMergedIdentifier]],
         *,
+        value_probability: float = 0.33,
         _attempts_left: int = 10,
     ) -> AnyRuleSetResponse:
         """Generate a single rule-set for the given extracted item."""
@@ -303,15 +313,28 @@ class BuilderProvider(PythonFakerProvider):
             [
                 (
                     "additive",
-                    partial(self.additive_rule, stem_type, ids_by_type),
+                    partial(
+                        self.additive_rule,
+                        stem_type,
+                        ids_by_type,
+                        value_probability=value_probability,
+                    ),
                 ),
                 (
                     "preventive",
-                    partial(self.preventive_rule, stem_type, extracted_item),
+                    partial(
+                        self.preventive_rule,
+                        extracted_item,
+                        value_probability=value_probability,
+                    ),
                 ),
                 (
                     "subtractive",
-                    partial(self.subtractive_rule, stem_type, extracted_item),
+                    partial(
+                        self.subtractive_rule,
+                        extracted_item,
+                        value_probability=value_probability,
+                    ),
                 ),
             ]
         )

@@ -96,7 +96,7 @@ def generate_artificial_items_and_rule_sets(
                 ids_by_type[item.stemType].add(item.stableTargetId)
                 yield (item, None)
             case 1:
-                rule_set = faker.standalone_rule_set(stem_types, index, ids_by_type)
+                rule_set = faker.standalone_rule_set(stem_types, ids_by_type, index)
                 ids_by_type[rule_set.stemType].add(rule_set.stableTargetId)
                 yield (None, rule_set)
             case 2:

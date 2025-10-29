@@ -2,6 +2,7 @@ import pytest
 from faker import Faker
 
 from mex.artificial.helpers import create_faker, register_factories
+from mex.common.models import BASE_MODEL_CLASSES
 
 pytest_plugins = ("mex.common.testing.plugin",)
 
@@ -12,3 +13,15 @@ def init_faker() -> Faker:
     faker = create_faker(["en_US"], 0)
     register_factories(faker, 5)
     return faker
+
+
+@pytest.fixture
+def ids_by_type() -> dict[str, list[str]]:
+    """Return a mapping of stemTypes to lists of dummy identifiers."""
+    return {
+        model.stemType: [
+            f"{model.stemType}{str(i).zfill(21 - len(model.stemType))}"
+            for i in range(1, 9)
+        ]
+        for model in BASE_MODEL_CLASSES
+    }
