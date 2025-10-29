@@ -139,12 +139,13 @@ class BuilderProvider(PythonFakerProvider):
         """Get a list of artificial values for the given field and identity."""
         field_info = self.get_random_field_info(field)
         factory = self.field_value_factory(field_info, ids_by_type)
-        values = {
-            value
-            for _ in range(self.pyint(*self.min_max_for_field(field)))
-            if (value := factory()) is not None
-        }
-        return self.random_sample(sorted(values), len(values))
+        return list(
+            dict.fromkeys(
+                value
+                for _ in range(self.pyint(*self.min_max_for_field(field)))
+                if (value := factory()) is not None
+            )
+        )
 
     def extracted_item(
         self,

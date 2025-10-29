@@ -1,0 +1,623 @@
+[
+    {
+        "alternativeTitle": [],
+        "contact": [],
+        "description": [],
+        "documentation": [],
+        "entityType": "ExtractedPrimarySource",
+        "hadPrimarySource": "00000000000000",
+        "identifier": "00000000000001",
+        "identifierInPrimarySource": "mex",
+        "locatedAt": [],
+        "stableTargetId": "00000000000000",
+        "title": [],
+        "unitInCharge": [],
+        "version": null
+    },
+    {
+        "alternativeTitle": [],
+        "contact": [],
+        "description": [
+            {
+                "language": "de",
+                "value": "Etwas lesen anfangen endlich."
+            },
+            {
+                "language": "de",
+                "value": "Kein Fußball voll Sohn dir. Glück die Wohnung glauben Boden braun. Nichts Tante sein Mann Zeitung heraus. Gar oft war hart Eis Beispiel rot. Zur verstecken Vogel Herr Kind."
+            },
+            {
+                "language": "de",
+                "value": "Halbe Sache schreiben Schiff beißen Onkel. Sein Dorf Herr zusammen Papa mit schlafen."
+            }
+        ],
+        "endpointDescription": null,
+        "endpointType": "https://mex.rki.de/item/api-type-4",
+        "endpointURL": null,
+        "entityType": "ExtractedAccessPlatform",
+        "hadPrimarySource": "00000000000000",
+        "identifier": "bRbWmV2RJvGjsmM2qWvqQr",
+        "identifierInPrimarySource": "AccessPlatform_0",
+        "landingPage": [
+            {
+                "language": null,
+                "title": "Solzer",
+                "url": "https://www.etzold.net/"
+            },
+            {
+                "language": null,
+                "title": null,
+                "url": "https://kuhl.com/"
+            },
+            {
+                "language": "de",
+                "title": "Pechel",
+                "url": "http://www.freudenberger.biz/"
+            },
+            {
+                "language": null,
+                "title": null,
+                "url": "http://schenk.com/"
+            },
+            {
+                "language": null,
+                "title": null,
+                "url": "http://www.reising.com/"
+            }
+        ],
+        "stableTargetId": "bSwVgRBcGIR1qLB4IdsDmo",
+        "technicalAccessibility": "https://mex.rki.de/item/technical-accessibility-1",
+        "title": [
+            {
+                "language": "de",
+                "value": "Zeit Sommer letzte Bruder offen. Nimmt dick Sommer Meer springen mal ab."
+            }
+        ],
+        "unitInCharge": []
+    },
+    {
+        "alternativeName": [],
+        "entityType": "ExtractedOrganization",
+        "geprisId": [
+            "https://gepris.dfg.de/gepris/institution/27824"
+        ],
+        "gndId": [
+            "https://d-nb.info/gnd/4657871-3",
+            "https://d-nb.info/gnd/50983-9"
+        ],
+        "hadPrimarySource": "00000000000000",
+        "identifier": "d622kD2Ea3xzVZkzyuuYHR",
+        "identifierInPrimarySource": "Organization_0",
+        "isniId": [],
+        "officialName": [
+            {
+                "language": "de",
+                "value": "Lieb Fußball laufen Meer."
+            }
+        ],
+        "rorId": [
+            "https://ror.org/11s6v5h66"
+        ],
+        "shortName": [],
+        "stableTargetId": "bYqslOHQ1jxbEP8qD3f6OM",
+        "viafId": [
+            "https://viaf.org/viaf/133387262"
+        ],
+        "wikidataId": [
+            "http://www.wikidata.org/entity/Q810801"
+        ]
+    },
+    {
+        "alternativeName": [
+            {
+                "language": "de",
+                "value": "Kommen Ball ließ oben Lehrerin kann bald. Mich wichtig kalt schon dann. Nimmt fest dir Milch Milch Boden zwischen weiß."
+            }
+        ],
+        "entityType": "ExtractedOrganization",
+        "geprisId": [],
+        "gndId": [
+            "https://d-nb.info/gnd/6773782-6",
+            "https://d-nb.info/gnd/14658-4",
+            "https://d-nb.info/gnd/49972-7",
+            "https://d-nb.info/gnd/5588675-3"
+        ],
+        "hadPrimarySource": "00000000000000",
+        "identifier": "cEj9YZnke6rvCDA4uL2DxA",
+        "identifierInPrimarySource": "Organization_1",
+        "isniId": [
+            "https://isni.org/isni/0576627028951718",
+            "https://isni.org/isni/2621745961586578",
+            "https://isni.org/isni/3431611724005045"
+        ],
+        "officialName": [
+            {
+                "language": "de",
+                "value": "Mutter Stein drei Bett vom ob. Lehrerin Name fehlen packen kochen."
+            },
+            {
+                "language": "de",
+                "value": "Scheinen dir kam groß nass."
+            }
+        ],
+        "rorId": [
+            "https://ror.org/36s7v1h36",
+            "https://ror.org/94t4en064",
+            "https://ror.org/97k4qnb39",
+            "https://ror.org/39s4v2h10"
+        ],
+        "shortName": [],
+        "stableTargetId": "bT1U0MUY7LlPxzAWgMYhHx",
+        "viafId": [
+            "https://viaf.org/viaf/562328588",
+            "https://viaf.org/viaf/474517123"
+        ],
+        "wikidataId": [
+            "http://www.wikidata.org/entity/Q048175",
+            "http://www.wikidata.org/entity/Q965137"
+        ]
+    },
+    {
+        "alternativeTitle": [
+            {
+                "language": "de",
+                "value": "Bald sie lustig sieht Land."
+            },
+            {
+                "language": "de",
+                "value": "Böse lernen wissen auf Stadt Vogel los klettern. Baum lange Hund. Leben weiter bekommen Bett."
+            }
+        ],
+        "contact": [],
+        "description": [
+            {
+                "language": "de",
+                "value": "Herz nennen Garten lesen jeder Stelle. Verlieren rechnen sonst sechs. Jeder warten ihn tun holen. Genau genau Frage wohl. Bein Tür Boden brauchen sich tief mit. Wohnung Monate Sache ihm von wird ins wenig."
+            },
+            {
+                "language": "de",
+                "value": "Genau Brot letzte die las Vater gut mit."
+            },
+            {
+                "language": "de",
+                "value": "Familie Jahr Monate sonst oben schauen mit."
+            },
+            {
+                "language": "de",
+                "value": "Eigentlich schreien gelb. Gut eigentlich denken rennen Beispiel sicher. Blume mal her. Glück heiß sechs sprechen Mädchen bis bald."
+            },
+            {
+                "language": "de",
+                "value": "Schaffen fröhlich rot. Nie ihn Essen Licht groß da scheinen."
+            }
+        ],
+        "endpointDescription": {
+            "language": "de",
+            "title": "Kroker",
+            "url": "http://wilms.com/"
+        },
+        "endpointType": "https://mex.rki.de/item/api-type-1",
+        "endpointURL": {
+            "language": null,
+            "title": null,
+            "url": "https://www.kramer.com/"
+        },
+        "entityType": "ExtractedAccessPlatform",
+        "hadPrimarySource": "00000000000000",
+        "identifier": "gMCsalU25rRNFOdYkBdVtu",
+        "identifierInPrimarySource": "AccessPlatform_1",
+        "landingPage": [
+            {
+                "language": null,
+                "title": null,
+                "url": "http://mies.com/"
+            }
+        ],
+        "stableTargetId": "c51IFvSjrAEUB579dh8bCp",
+        "technicalAccessibility": "https://mex.rki.de/item/technical-accessibility-2",
+        "title": [],
+        "unitInCharge": []
+    },
+    {
+        "affiliation": [
+            "bYqslOHQ1jxbEP8qD3f6OM",
+            "bT1U0MUY7LlPxzAWgMYhHx"
+        ],
+        "email": [
+            "info@rki.de"
+        ],
+        "entityType": "ExtractedPerson",
+        "familyName": [],
+        "fullName": [
+            "Himmel",
+            "heraus"
+        ],
+        "givenName": [
+            "Vater"
+        ],
+        "hadPrimarySource": "00000000000000",
+        "identifier": "b5Gzf5E14PMhjFsLurbLJh",
+        "identifierInPrimarySource": "Person_0",
+        "isniId": [],
+        "memberOf": [],
+        "orcidId": [
+            "https://orcid.org/1043-2898-6143-4103",
+            "https://orcid.org/1179-8089-3246-0953",
+            "https://orcid.org/2185-1888-8806-7065",
+            "https://orcid.org/5153-1952-0585-2772",
+            "https://orcid.org/7043-0305-4868-740X",
+            "https://orcid.org/4505-4156-6765-2775",
+            "https://orcid.org/1616-9284-5115-4479"
+        ],
+        "stableTargetId": "dtxpM0s8BoqKWe7by0AzoG"
+    },
+    {
+        "abstract": [],
+        "accessRestriction": "https://mex.rki.de/item/access-restriction-2",
+        "alternateIdentifier": [],
+        "alternativeTitle": [
+            {
+                "language": "en",
+                "value": "Song quickly well central parent sit alone. Door population gun we. Painting quickly we. Know baby case happen fire everything."
+            },
+            {
+                "language": "en",
+                "value": "Material hit no energy."
+            },
+            {
+                "language": "en",
+                "value": "You experience trouble make but. Later together knowledge because. Property remember nearly face feel church."
+            },
+            {
+                "language": "en",
+                "value": "Difference world society door management guess occur. Sound necessary partner beat finally yourself rest."
+            },
+            {
+                "language": "en",
+                "value": "Statement available win politics last quite. Campaign stop necessary onto should can. Treat area buy check clearly follow remember. Way million exist bad cultural what. By field move maybe collection."
+            },
+            {
+                "language": "en",
+                "value": "Probably result painting successful. American tell ball we side enough decision. Indicate police marriage phone face what lot."
+            },
+            {
+                "language": "en",
+                "value": "Authority art keep machine daughter parent fine. Safe team wish candidate have no. Drop business last cell anything war."
+            },
+            {
+                "language": "en",
+                "value": "While total spend value return. Several marriage method material final. Bed hotel lead. Democrat good anything manager think. Experience account blue care enough hand idea."
+            },
+            {
+                "language": "en",
+                "value": "Now crime network."
+            },
+            {
+                "language": "en",
+                "value": "Late near stay perhaps particularly campaign benefit."
+            }
+        ],
+        "bibliographicResourceType": [
+            "https://mex.rki.de/item/bibliographic-resource-type-13",
+            "https://mex.rki.de/item/bibliographic-resource-type-3"
+        ],
+        "contributingUnit": [],
+        "creator": [
+            "dtxpM0s8BoqKWe7by0AzoG"
+        ],
+        "distribution": [],
+        "doi": "https://doi.org/29.8259/j.vaccine.5269.49.588",
+        "edition": "team adult",
+        "editor": [],
+        "editorOfSeries": [
+            "dtxpM0s8BoqKWe7by0AzoG"
+        ],
+        "entityType": "ExtractedBibliographicResource",
+        "hadPrimarySource": "00000000000000",
+        "identifier": "b6ndA6lX0aRe2r439qFmAr",
+        "identifierInPrimarySource": "BibliographicResource_0",
+        "isbnIssn": [
+            "drive set approach",
+            "media conference need",
+            "set president stage",
+            "choose term",
+            "eight almost page",
+            "break cut after",
+            "former kid",
+            "itself",
+            "Democrat item more"
+        ],
+        "issue": null,
+        "issued": null,
+        "journal": [
+            {
+                "language": "en",
+                "value": "What least mouth national put test. Particular court east newspaper different. Side relate real major look. Value somebody event business quality here woman. West source fact explain research get."
+            },
+            {
+                "language": "en",
+                "value": "Degree still even no even body scientist. Drug prove most point appear. Form line race case who within."
+            },
+            {
+                "language": "en",
+                "value": "Local current white fly position traditional become. Discussion school sure also TV individual study."
+            },
+            {
+                "language": "en",
+                "value": "Control see the face also fear owner."
+            },
+            {
+                "language": "en",
+                "value": "Writer myself management voice surface life cover. Former room possible responsibility."
+            },
+            {
+                "language": "en",
+                "value": "Nothing serious compare task today."
+            },
+            {
+                "language": "en",
+                "value": "Beautiful protect continue cell food easy. Himself land environment form old. Activity president realize artist brother fill if. Type thousand show real police wait happen. Despite card check security paper."
+            }
+        ],
+        "keyword": [
+            {
+                "language": "en",
+                "value": "Seven quite other skin moment. Region back nor article natural measure of. Clearly take kind quite. Major together knowledge argue car indeed nor next. Rich how staff second official."
+            },
+            {
+                "language": "en",
+                "value": "Red must art thus worry line."
+            },
+            {
+                "language": "en",
+                "value": "Shoulder she within position. Hear through large true help bag. Card team budget year hotel camera without."
+            },
+            {
+                "language": null,
+                "value": "Leg rest interest here discover."
+            },
+            {
+                "language": "en",
+                "value": "Every visit right both. Past view threat drive attack order. Our reflect any scientist I doctor describe. Cell year doctor trouble."
+            },
+            {
+                "language": "en",
+                "value": "Our pull fly few century produce determine. Every news option same compare. New another general poor high modern. Impact feel contain Mrs drive different. South trip none whose."
+            },
+            {
+                "language": "en",
+                "value": "Home effort form bad. Suggest begin right couple environmental purpose owner. Could seven right next. Decade trade field training deep couple scientist. Trial receive region however dream focus executive. Move grow end mention market better wonder."
+            },
+            {
+                "language": "en",
+                "value": "Have including none determine certainly. Network once result far cultural. Here street material pressure range. Shake major rich science leave."
+            }
+        ],
+        "language": [],
+        "license": null,
+        "pages": null,
+        "publicationPlace": null,
+        "publicationYear": "2000",
+        "publisher": [
+            "bYqslOHQ1jxbEP8qD3f6OM"
+        ],
+        "repositoryURL": [],
+        "section": "according",
+        "stableTargetId": "hC0dtgoHwfcaE9kv6VOT07",
+        "subtitle": [],
+        "title": [
+            {
+                "language": "en",
+                "value": "South travel blood benefit chance court."
+            },
+            {
+                "language": "en",
+                "value": "Environment however health image north wrong. Feel stock ball yard practice. Behavior here need. Pm reflect bar suddenly."
+            },
+            {
+                "language": "en",
+                "value": "Thus try discover top. Little another avoid understand tonight nor allow. Administration debate certain star start up."
+            }
+        ],
+        "titleOfBook": [
+            {
+                "language": "en",
+                "value": "Quality music himself science so ready. May window approach join."
+            },
+            {
+                "language": "en",
+                "value": "Shoulder western however similar ahead event yeah make."
+            }
+        ],
+        "titleOfSeries": [
+            {
+                "language": "en",
+                "value": "Produce beat peace something require bank child Republican. Science first blood accept. Know seven bill beautiful issue."
+            },
+            {
+                "language": "en",
+                "value": "Impact ago government behavior our foot history. Including single right nice yeah. Occur college herself catch feeling. Certainly cold every feel site guess want. Many pattern leader career according how success here. Key issue statement prepare organization feel."
+            },
+            {
+                "language": "en",
+                "value": "Fire who why fact reason make office. For exactly skill half usually. Or nation race nearly well. Wall decide something story attorney summer some."
+            }
+        ],
+        "volume": null,
+        "volumeOfSeries": null
+    },
+    {
+        "alternativeTitle": [
+            {
+                "language": "en",
+                "value": "Ability live car difficult. Act receive stage write institution car."
+            },
+            {
+                "language": "en",
+                "value": "Become south billion happen federal him."
+            },
+            {
+                "language": "en",
+                "value": "Most across practice key."
+            }
+        ],
+        "contact": [],
+        "description": [
+            {
+                "language": "en",
+                "value": "To cause but role. White fire cause everybody base network. Return expect wait agree suggest then day parent."
+            },
+            {
+                "language": "en",
+                "value": "Position six soldier dream history. Matter order month within would."
+            },
+            {
+                "language": "en",
+                "value": "Team nothing half raise several west. Admit attack energy always."
+            },
+            {
+                "language": "en",
+                "value": "Expert Republican short interest I policy Mrs."
+            },
+            {
+                "language": "en",
+                "value": "Finally memory data space."
+            }
+        ],
+        "endpointDescription": {
+            "language": null,
+            "title": null,
+            "url": "http://kim.com/"
+        },
+        "endpointType": "https://mex.rki.de/item/api-type-1",
+        "endpointURL": null,
+        "entityType": "ExtractedAccessPlatform",
+        "hadPrimarySource": "00000000000000",
+        "identifier": "bPZRqwRoBJdIn4fT58fGIx",
+        "identifierInPrimarySource": "AccessPlatform_2",
+        "landingPage": [
+            {
+                "language": null,
+                "title": null,
+                "url": "http://www.zimmerman.com/"
+            },
+            {
+                "language": null,
+                "title": "Benton Mills",
+                "url": "https://www.martinez-norman.com/"
+            },
+            {
+                "language": null,
+                "title": null,
+                "url": "http://www.roman-nelson.com/"
+            },
+            {
+                "language": null,
+                "title": "Proctor",
+                "url": "https://www.villarreal-jackson.com/"
+            },
+            {
+                "language": null,
+                "title": "Shannon",
+                "url": "http://www.hicks.com/"
+            },
+            {
+                "language": "de",
+                "title": "Cox Mora",
+                "url": "https://www.wright-moon.com/"
+            },
+            {
+                "language": null,
+                "title": "Duncan",
+                "url": "http://www.brock.biz/"
+            },
+            {
+                "language": "fr",
+                "title": "Cline Ayala",
+                "url": "http://wood.org/"
+            },
+            {
+                "language": null,
+                "title": "Dean",
+                "url": "http://www.smith.com/"
+            },
+            {
+                "language": "de",
+                "title": "Reed",
+                "url": "https://harris.biz/"
+            }
+        ],
+        "stableTargetId": "fjypayNdVbFfp3FEutEK8v",
+        "technicalAccessibility": "https://mex.rki.de/item/technical-accessibility-1",
+        "title": [
+            {
+                "language": "en",
+                "value": "Today mind red head window."
+            },
+            {
+                "language": "en",
+                "value": "Measure PM hour option."
+            },
+            {
+                "language": null,
+                "value": "Door end fire song."
+            },
+            {
+                "language": "en",
+                "value": "Evening avoid dark sister once choice clearly. Finish building group show later leg system. Citizen rather step recent."
+            }
+        ],
+        "unitInCharge": []
+    },
+    {
+        "email": [
+            "info@rki.de"
+        ],
+        "entityType": "ExtractedContactPoint",
+        "hadPrimarySource": "00000000000000",
+        "identifier": "eQdiNmv6aAXRNcX3bb7Cj",
+        "identifierInPrimarySource": "ContactPoint_0",
+        "stableTargetId": "f46Wu5L9TNsq8YTd46LBRC"
+    },
+    {
+        "accessRestriction": "https://mex.rki.de/item/access-restriction-2",
+        "accessService": null,
+        "accessURL": [
+            {
+                "language": null,
+                "title": null,
+                "url": "https://www.schaaf.com/"
+            },
+            {
+                "language": "de",
+                "title": "Weiss",
+                "url": "https://www.rudolph.com/"
+            },
+            {
+                "language": null,
+                "title": "Hecker",
+                "url": "http://lange.net/"
+            }
+        ],
+        "downloadURL": [],
+        "entityType": "ExtractedDistribution",
+        "hadPrimarySource": "00000000000000",
+        "identifier": "gjJMpThhCXJguwNPKLp55j",
+        "identifierInPrimarySource": "Distribution_0",
+        "issued": "2017",
+        "license": null,
+        "mediaType": "https://mex.rki.de/item/mime-type-9",
+        "modified": "2024",
+        "stableTargetId": "dYxRaD5kLl36ZpTmmoRw4H",
+        "title": [
+            {
+                "language": "de",
+                "value": "Treffen hoch bringen Licht rot unten helfen. Nimmt Geburtstag Buch beide zusammen Papa viel frei. Einigen ließ fest bauen verstehen."
+            },
+            {
+                "language": "de",
+                "value": "Schicken sechs reiten über Frau immer. Setzen Name öffnen Tisch glücklich Schwester. Packen Land wir halten gefährlich drei rennen. Eigentlich braun darin Frau Tante Sommer ein. Reich Fahrrad fallen vom in warm."
+            }
+        ]
+    }
+]

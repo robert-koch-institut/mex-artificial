@@ -1,0 +1,833 @@
+[
+    {
+        "extracted_item": {
+            "alternativeTitle": [],
+            "contact": [],
+            "description": [],
+            "documentation": [],
+            "entityType": "ExtractedPrimarySource",
+            "hadPrimarySource": "00000000000000",
+            "identifier": "00000000000001",
+            "identifierInPrimarySource": "mex",
+            "locatedAt": [],
+            "stableTargetId": "00000000000000",
+            "title": [],
+            "unitInCharge": [],
+            "version": null
+        },
+        "rule_set": null
+    },
+    {
+        "extracted_item": {
+            "email": [
+                "info@rki.de"
+            ],
+            "entityType": "ExtractedContactPoint",
+            "hadPrimarySource": "00000000000000",
+            "identifier": "eQdiNmv6aAXRNcX3bb7Cj",
+            "identifierInPrimarySource": "ContactPoint_0",
+            "stableTargetId": "f46Wu5L9TNsq8YTd46LBRC"
+        },
+        "rule_set": null
+    },
+    {
+        "extracted_item": {
+            "email": [
+                "info@rki.de"
+            ],
+            "entityType": "ExtractedContactPoint",
+            "hadPrimarySource": "00000000000000",
+            "identifier": "faNFq6tXMXj0SuvBylHpnu",
+            "identifierInPrimarySource": "ContactPoint_1",
+            "stableTargetId": "uz1YdX8Rr4w7yRonYhZRM"
+        },
+        "rule_set": null
+    },
+    {
+        "extracted_item": {
+            "alternativeTitle": [
+                {
+                    "language": "en",
+                    "value": "Bill here grow gas enough analysis."
+                },
+                {
+                    "language": "en",
+                    "value": "Win her need stop. Those gun court attorney product significant world talk. Herself law street class. Decide environment view possible participant commercial. Clear here writer policy news."
+                }
+            ],
+            "contact": [],
+            "description": [
+                {
+                    "language": "en",
+                    "value": "Tree note responsibility defense material. Central cause seat much section investment on."
+                },
+                {
+                    "language": "en",
+                    "value": "Meeting before another body. Civil quite others his other life edge network."
+                },
+                {
+                    "language": "en",
+                    "value": "Seem shoulder future fall citizen about reveal."
+                }
+            ],
+            "endpointDescription": null,
+            "endpointType": "https://mex.rki.de/item/api-type-7",
+            "endpointURL": null,
+            "entityType": "ExtractedAccessPlatform",
+            "hadPrimarySource": "00000000000000",
+            "identifier": "bRbWmV2RJvGjsmM2qWvqQr",
+            "identifierInPrimarySource": "AccessPlatform_0",
+            "landingPage": [
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "http://smith-hickman.com/"
+                },
+                {
+                    "language": "de",
+                    "title": "Allen",
+                    "url": "https://www.cannon.net/"
+                }
+            ],
+            "stableTargetId": "bSwVgRBcGIR1qLB4IdsDmo",
+            "technicalAccessibility": "https://mex.rki.de/item/technical-accessibility-2",
+            "title": [
+                {
+                    "language": "en",
+                    "value": "Yet practice just military building different."
+                },
+                {
+                    "language": "en",
+                    "value": "Network open according remain arrive attack all form."
+                }
+            ],
+            "unitInCharge": []
+        },
+        "rule_set": {
+            "additive": {
+                "alternativeTitle": [],
+                "contact": [],
+                "description": [
+                    {
+                        "language": "de",
+                        "value": "Krank sein schaffen zum braun Hunger. Stunde böse Eis Mann den einfach. Fisch werfen kann viel Milch baden überall."
+                    }
+                ],
+                "endpointDescription": null,
+                "endpointType": "https://mex.rki.de/item/api-type-4",
+                "endpointURL": null,
+                "entityType": "AdditiveAccessPlatform",
+                "landingPage": [],
+                "technicalAccessibility": "https://mex.rki.de/item/technical-accessibility-1",
+                "title": [],
+                "unitInCharge": []
+            },
+            "entityType": "AccessPlatformRuleSetResponse",
+            "preventive": {
+                "alternativeTitle": [
+                    "00000000000000"
+                ],
+                "contact": [
+                    "00000000000000"
+                ],
+                "description": [
+                    "00000000000000"
+                ],
+                "endpointDescription": [
+                    "00000000000000"
+                ],
+                "endpointType": [],
+                "endpointURL": [],
+                "entityType": "PreventiveAccessPlatform",
+                "landingPage": [
+                    "00000000000000"
+                ],
+                "technicalAccessibility": [],
+                "title": [],
+                "unitInCharge": []
+            },
+            "stableTargetId": "bSwVgRBcGIR1qLB4IdsDmo",
+            "subtractive": {
+                "alternativeTitle": [],
+                "contact": [],
+                "description": [
+                    {
+                        "language": "en",
+                        "value": "Seem shoulder future fall citizen about reveal."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Tree note responsibility defense material. Central cause seat much section investment on."
+                    }
+                ],
+                "endpointDescription": [],
+                "endpointType": [],
+                "endpointURL": [],
+                "entityType": "SubtractiveAccessPlatform",
+                "landingPage": [
+                    {
+                        "language": null,
+                        "title": null,
+                        "url": "http://smith-hickman.com/"
+                    }
+                ],
+                "technicalAccessibility": [],
+                "title": [
+                    {
+                        "language": "en",
+                        "value": "Yet practice just military building different."
+                    }
+                ],
+                "unitInCharge": []
+            }
+        }
+    },
+    {
+        "extracted_item": {
+            "accessRestriction": "https://mex.rki.de/item/access-restriction-1",
+            "accessService": null,
+            "accessURL": [
+                {
+                    "language": "de",
+                    "title": "Stewart Walton",
+                    "url": "https://www.medina.com/"
+                },
+                {
+                    "language": "fr",
+                    "title": "Ibarra Suarez",
+                    "url": "http://warner.net/"
+                },
+                {
+                    "language": "fr",
+                    "title": "Montoya",
+                    "url": "http://www.tran.com/"
+                },
+                {
+                    "language": "de",
+                    "title": "Walters",
+                    "url": "https://smith.com/"
+                },
+                {
+                    "language": "de",
+                    "title": "Ramos",
+                    "url": "http://www.aguilar-hernandez.com/"
+                },
+                {
+                    "language": "fr",
+                    "title": "Diaz Fitzpatrick",
+                    "url": "http://www.garcia.biz/"
+                },
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "http://www.cherry.biz/"
+                },
+                {
+                    "language": null,
+                    "title": "Doyle",
+                    "url": "http://cobb.biz/"
+                },
+                {
+                    "language": null,
+                    "title": "Walker Velasquez",
+                    "url": "https://walker.com/"
+                },
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "https://rasmussen.com/"
+                }
+            ],
+            "downloadURL": [
+                {
+                    "language": "ru",
+                    "title": "Wilson",
+                    "url": "https://www.carlson.com/"
+                },
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "http://lee.net/"
+                },
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "http://jones-beck.com/"
+                },
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "https://www.mccullough.com/"
+                },
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "https://www.fisher.com/"
+                },
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "https://bass.org/"
+                },
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "https://ramos-lewis.info/"
+                },
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "http://www.robertson-schultz.com/"
+                }
+            ],
+            "entityType": "ExtractedDistribution",
+            "hadPrimarySource": "00000000000000",
+            "identifier": "gjJMpThhCXJguwNPKLp55j",
+            "identifierInPrimarySource": "Distribution_0",
+            "issued": "2018-03-30T11:20:48Z",
+            "license": null,
+            "mediaType": null,
+            "modified": null,
+            "stableTargetId": "dYxRaD5kLl36ZpTmmoRw4H",
+            "title": [
+                {
+                    "language": "en",
+                    "value": "Offer responsibility himself hundred challenge reach throughout team. Sing despite sound receive. Anyone eat summer lead soon property write. Fish sense kind spring throughout interview trade knowledge."
+                }
+            ]
+        },
+        "rule_set": {
+            "additive": {
+                "accessRestriction": null,
+                "accessService": null,
+                "accessURL": [],
+                "downloadURL": [
+                    {
+                        "language": null,
+                        "title": null,
+                        "url": "http://albers.biz/"
+                    },
+                    {
+                        "language": null,
+                        "title": null,
+                        "url": "http://heydrich.info/"
+                    },
+                    {
+                        "language": null,
+                        "title": "Kallert",
+                        "url": "http://scholtz.com/"
+                    }
+                ],
+                "entityType": "AdditiveDistribution",
+                "issued": null,
+                "license": null,
+                "mediaType": null,
+                "modified": "1999-12-20T16:10:10Z",
+                "title": [
+                    {
+                        "language": "de",
+                        "value": "Gesund sollen Herr sitzen Tür Flasche Bild. Sind bald Woche."
+                    },
+                    {
+                        "language": "en",
+                        "value": "So wo er."
+                    },
+                    {
+                        "language": "de",
+                        "value": "Fertig lachen dabei Wissen."
+                    }
+                ]
+            },
+            "entityType": "DistributionRuleSetResponse",
+            "preventive": {
+                "accessRestriction": [],
+                "accessService": [
+                    "00000000000000"
+                ],
+                "accessURL": [
+                    "00000000000000"
+                ],
+                "downloadURL": [],
+                "entityType": "PreventiveDistribution",
+                "issued": [
+                    "00000000000000"
+                ],
+                "license": [
+                    "00000000000000"
+                ],
+                "mediaType": [],
+                "modified": [
+                    "00000000000000"
+                ],
+                "title": []
+            },
+            "stableTargetId": "dYxRaD5kLl36ZpTmmoRw4H",
+            "subtractive": {
+                "accessRestriction": [],
+                "accessService": [],
+                "accessURL": [],
+                "downloadURL": [],
+                "entityType": "SubtractiveDistribution",
+                "issued": [
+                    "2018-03-30T11:20:48Z"
+                ],
+                "license": [],
+                "mediaType": [],
+                "modified": [],
+                "title": [
+                    {
+                        "language": "en",
+                        "value": "Offer responsibility himself hundred challenge reach throughout team. Sing despite sound receive. Anyone eat summer lead soon property write. Fish sense kind spring throughout interview trade knowledge."
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "extracted_item": {
+            "alternativeName": [
+                {
+                    "language": "en",
+                    "value": "Up office traditional."
+                }
+            ],
+            "entityType": "ExtractedOrganization",
+            "geprisId": [
+                "https://gepris.dfg.de/gepris/institution/14919"
+            ],
+            "gndId": [
+                "https://d-nb.info/gnd/1850671-6",
+                "https://d-nb.info/gnd/2628498-7",
+                "https://d-nb.info/gnd/9453147-3"
+            ],
+            "hadPrimarySource": "00000000000000",
+            "identifier": "d622kD2Ea3xzVZkzyuuYHR",
+            "identifierInPrimarySource": "Organization_0",
+            "isniId": [
+                "https://isni.org/isni/5075273545494808",
+                "https://isni.org/isni/3678377701436349",
+                "https://isni.org/isni/8856855744431351",
+                "https://isni.org/isni/3374989413435240"
+            ],
+            "officialName": [
+                {
+                    "language": "en",
+                    "value": "Recently call than make their."
+                }
+            ],
+            "rorId": [
+                "https://ror.org/20s4v7h11",
+                "https://ror.org/19s0v2h29",
+                "https://ror.org/31s8v6h99"
+            ],
+            "shortName": [
+                {
+                    "language": "en",
+                    "value": "Team wrong figure perform participant. Way debate decision produce. Dream necessary choose impact. Like allow explain executive teacher author do enough."
+                },
+                {
+                    "language": "en",
+                    "value": "Boy different chance enter central arrive. Organization station TV keep light. Record wall matter management ball. Threat same page."
+                },
+                {
+                    "language": "en",
+                    "value": "While structure offer week yourself."
+                }
+            ],
+            "stableTargetId": "bYqslOHQ1jxbEP8qD3f6OM",
+            "viafId": [],
+            "wikidataId": [
+                "http://www.wikidata.org/entity/Q429671",
+                "http://www.wikidata.org/entity/Q655125",
+                "http://www.wikidata.org/entity/Q468071",
+                "http://www.wikidata.org/entity/Q516808"
+            ]
+        },
+        "rule_set": {
+            "additive": {
+                "alternativeName": [],
+                "entityType": "AdditiveOrganization",
+                "geprisId": [],
+                "gndId": [],
+                "isniId": [],
+                "officialName": [
+                    {
+                        "language": "en",
+                        "value": "Building win participant dream citizen nearly need. Different success box water. Marriage respond meeting event."
+                    }
+                ],
+                "rorId": [],
+                "shortName": [],
+                "viafId": [],
+                "wikidataId": []
+            },
+            "entityType": "OrganizationRuleSetResponse",
+            "preventive": {
+                "alternativeName": [],
+                "entityType": "PreventiveOrganization",
+                "geprisId": [],
+                "gndId": [],
+                "isniId": [],
+                "officialName": [],
+                "rorId": [],
+                "shortName": [],
+                "viafId": [],
+                "wikidataId": []
+            },
+            "stableTargetId": "bYqslOHQ1jxbEP8qD3f6OM",
+            "subtractive": {
+                "alternativeName": [],
+                "entityType": "SubtractiveOrganization",
+                "geprisId": [
+                    "https://gepris.dfg.de/gepris/institution/14919"
+                ],
+                "gndId": [
+                    "https://d-nb.info/gnd/2628498-7",
+                    "https://d-nb.info/gnd/9453147-3"
+                ],
+                "isniId": [
+                    "https://isni.org/isni/8856855744431351",
+                    "https://isni.org/isni/3374989413435240",
+                    "https://isni.org/isni/3678377701436349"
+                ],
+                "officialName": [
+                    {
+                        "language": "en",
+                        "value": "Recently call than make their."
+                    }
+                ],
+                "rorId": [],
+                "shortName": [],
+                "viafId": [],
+                "wikidataId": []
+            }
+        }
+    },
+    {
+        "extracted_item": null,
+        "rule_set": {
+            "additive": {
+                "email": [],
+                "entityType": "AdditiveContactPoint"
+            },
+            "entityType": "ContactPointRuleSetResponse",
+            "preventive": {
+                "email": [],
+                "entityType": "PreventiveContactPoint"
+            },
+            "stableTargetId": "Cyzy5gAgoMK3T5L0h9Vl8",
+            "subtractive": {
+                "email": [],
+                "entityType": "SubtractiveContactPoint"
+            }
+        }
+    },
+    {
+        "extracted_item": {
+            "alternativeTitle": [
+                {
+                    "language": "en",
+                    "value": "Who call whole forward beyond suddenly between. Address century that wide avoid sit enter. Realize power system system teacher here first responsibility."
+                },
+                {
+                    "language": "en",
+                    "value": "Pay doctor range. Young section its better plant. Kitchen really tough animal. Fall hear certainly most. Radio conference company participant him raise marriage."
+                },
+                {
+                    "language": "en",
+                    "value": "Leave effect effort act source. Quality citizen kid generation onto. Real lead few yourself table blood."
+                },
+                {
+                    "language": "en",
+                    "value": "Offer yeah far within probably ever. Ten sing wind treat seat strategy total. Parent good PM per question. Pick tough position final. Almost half capital travel force indeed."
+                },
+                {
+                    "language": "en",
+                    "value": "Theory hand maybe evening clearly trial want."
+                },
+                {
+                    "language": "en",
+                    "value": "Life away senior difficult. Whose source hand so add Mr. Happy see energy herself police he push."
+                }
+            ],
+            "contact": [],
+            "description": [
+                {
+                    "language": "en",
+                    "value": "Power bring animal also you."
+                }
+            ],
+            "endpointDescription": null,
+            "endpointType": null,
+            "endpointURL": {
+                "language": null,
+                "title": "Avery",
+                "url": "http://garcia.com/"
+            },
+            "entityType": "ExtractedAccessPlatform",
+            "hadPrimarySource": "00000000000000",
+            "identifier": "bRbWmV2RJvGjsmM2qWvqQr",
+            "identifierInPrimarySource": "AccessPlatform_0",
+            "landingPage": [
+                {
+                    "language": "de",
+                    "title": "Wallace Young",
+                    "url": "https://sanders.com/"
+                },
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "http://www.fowler.com/"
+                },
+                {
+                    "language": "ru",
+                    "title": "Buchanan",
+                    "url": "http://www.murphy.org/"
+                },
+                {
+                    "language": "ru",
+                    "title": "Garrison Thomas",
+                    "url": "https://www.guerrero.com/"
+                },
+                {
+                    "language": "de",
+                    "title": "Tyler Young",
+                    "url": "http://martinez.net/"
+                }
+            ],
+            "stableTargetId": "bSwVgRBcGIR1qLB4IdsDmo",
+            "technicalAccessibility": "https://mex.rki.de/item/technical-accessibility-1",
+            "title": [
+                {
+                    "language": "en",
+                    "value": "Later develop past road. Feeling poor all your suggest international blue. Available ball part assume every plan. Republican herself our far measure involve soldier. Table prepare shoulder result. Involve thousand including still human."
+                },
+                {
+                    "language": "en",
+                    "value": "Fine effort well rather listen before."
+                }
+            ],
+            "unitInCharge": []
+        },
+        "rule_set": null
+    },
+    {
+        "extracted_item": {
+            "alternativeTitle": [
+                {
+                    "language": "en",
+                    "value": "Statement easy get every visit right. Allow produce past view. Drive attack order. Our reflect any scientist I doctor describe. Cell year doctor trouble."
+                },
+                {
+                    "language": "en",
+                    "value": "Our pull fly few century produce determine. Every news option same compare. New another general poor high modern. Impact feel contain Mrs drive different. South trip none whose."
+                },
+                {
+                    "language": "en",
+                    "value": "Home effort form bad. Suggest begin right couple environmental purpose owner. Could seven right next. Decade trade field training deep couple scientist. Trial receive region however dream focus executive. Move grow end mention market better wonder."
+                },
+                {
+                    "language": "en",
+                    "value": "Have including none determine certainly. Network once result far cultural. Here street material pressure range. Shake major rich science leave."
+                },
+                {
+                    "language": null,
+                    "value": "Result major true my. Model stuff avoid stand."
+                },
+                {
+                    "language": "en",
+                    "value": "Case piece attack character despite lay."
+                },
+                {
+                    "language": "en",
+                    "value": "Tree process administration mother in admit reveal movie."
+                },
+                {
+                    "language": "en",
+                    "value": "Spend purpose south travel blood benefit chance."
+                }
+            ],
+            "contact": [],
+            "description": [
+                {
+                    "language": "en",
+                    "value": "During recently feel stock ball yard practice. Behavior here need. Pm reflect bar suddenly. Not teach believe month amount deep."
+                }
+            ],
+            "endpointDescription": {
+                "language": null,
+                "title": "Cohen",
+                "url": "http://www.smith-clark.com/"
+            },
+            "endpointType": null,
+            "endpointURL": null,
+            "entityType": "ExtractedAccessPlatform",
+            "hadPrimarySource": "00000000000000",
+            "identifier": "gMCsalU25rRNFOdYkBdVtu",
+            "identifierInPrimarySource": "AccessPlatform_1",
+            "landingPage": [
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "https://taylor.net/"
+                },
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "https://www.kim.com/"
+                },
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "https://walters.info/"
+                }
+            ],
+            "stableTargetId": "c51IFvSjrAEUB579dh8bCp",
+            "technicalAccessibility": "https://mex.rki.de/item/technical-accessibility-2",
+            "title": [
+                {
+                    "language": "en",
+                    "value": "Sign far east available. Child Republican plant science first. Before wall know seven. Car cost large never. Billion bed never others six tell."
+                }
+            ],
+            "unitInCharge": []
+        },
+        "rule_set": {
+            "additive": {
+                "alternativeTitle": [],
+                "contact": [],
+                "description": [],
+                "endpointDescription": null,
+                "endpointType": null,
+                "endpointURL": null,
+                "entityType": "AdditiveAccessPlatform",
+                "landingPage": [],
+                "technicalAccessibility": null,
+                "title": [],
+                "unitInCharge": []
+            },
+            "entityType": "AccessPlatformRuleSetResponse",
+            "preventive": {
+                "alternativeTitle": [],
+                "contact": [],
+                "description": [],
+                "endpointDescription": [],
+                "endpointType": [],
+                "endpointURL": [],
+                "entityType": "PreventiveAccessPlatform",
+                "landingPage": [],
+                "technicalAccessibility": [],
+                "title": [],
+                "unitInCharge": []
+            },
+            "stableTargetId": "c51IFvSjrAEUB579dh8bCp",
+            "subtractive": {
+                "alternativeTitle": [],
+                "contact": [],
+                "description": [],
+                "endpointDescription": [],
+                "endpointType": [],
+                "endpointURL": [],
+                "entityType": "SubtractiveAccessPlatform",
+                "landingPage": [
+                    {
+                        "language": null,
+                        "title": null,
+                        "url": "https://www.kim.com/"
+                    },
+                    {
+                        "language": null,
+                        "title": null,
+                        "url": "https://walters.info/"
+                    }
+                ],
+                "technicalAccessibility": [],
+                "title": [
+                    {
+                        "language": "en",
+                        "value": "Sign far east available. Child Republican plant science first. Before wall know seven. Car cost large never. Billion bed never others six tell."
+                    }
+                ],
+                "unitInCharge": []
+            }
+        }
+    },
+    {
+        "extracted_item": null,
+        "rule_set": {
+            "additive": {
+                "abstract": [],
+                "activityType": [],
+                "alternativeTitle": [],
+                "contact": [],
+                "documentation": [],
+                "end": [
+                    "1995-08"
+                ],
+                "entityType": "AdditiveActivity",
+                "externalAssociate": [],
+                "funderOrCommissioner": [],
+                "fundingProgram": [],
+                "involvedPerson": [],
+                "involvedUnit": [],
+                "isPartOfActivity": [],
+                "publication": [],
+                "responsibleUnit": [],
+                "shortName": [],
+                "start": [],
+                "succeeds": [],
+                "theme": [],
+                "title": [],
+                "website": []
+            },
+            "entityType": "ActivityRuleSetResponse",
+            "preventive": {
+                "abstract": [],
+                "activityType": [],
+                "alternativeTitle": [],
+                "contact": [],
+                "documentation": [],
+                "end": [],
+                "entityType": "PreventiveActivity",
+                "externalAssociate": [],
+                "funderOrCommissioner": [],
+                "fundingProgram": [],
+                "involvedPerson": [],
+                "involvedUnit": [],
+                "isPartOfActivity": [],
+                "publication": [],
+                "responsibleUnit": [],
+                "shortName": [],
+                "start": [],
+                "succeeds": [],
+                "theme": [],
+                "title": [],
+                "website": []
+            },
+            "stableTargetId": "e7MYEr0XVmFkW1UwNcVEVz",
+            "subtractive": {
+                "abstract": [],
+                "activityType": [],
+                "alternativeTitle": [],
+                "contact": [],
+                "documentation": [],
+                "end": [],
+                "entityType": "SubtractiveActivity",
+                "externalAssociate": [],
+                "funderOrCommissioner": [],
+                "fundingProgram": [],
+                "involvedPerson": [],
+                "involvedUnit": [],
+                "isPartOfActivity": [],
+                "publication": [],
+                "responsibleUnit": [],
+                "shortName": [],
+                "start": [],
+                "succeeds": [],
+                "theme": [],
+                "title": [],
+                "website": []
+            }
+        }
+    }
+]
