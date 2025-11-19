@@ -1,6 +1,6 @@
 {
   "template": "https://github.com/robert-koch-institut/mex-template",
-  "commit": "6009e248d0af40a236c73776716f077c9a9cc313",
+  "commit": "ef034854a9a82d9076a7a8a7e825d19c632c6342",
   "checkout": null,
   "context": {
     "cookiecutter": {
@@ -8,7 +8,7 @@
       "short_summary": "Create artificial data for the MEx project.",
       "long_summary": "Create artificial extracted items, transform them into merged items and write the results into a configured sink.",
       "_template": "https://github.com/robert-koch-institut/mex-template",
-      "_commit": "6009e248d0af40a236c73776716f077c9a9cc313"
+      "_commit": "ef034854a9a82d9076a7a8a7e825d19c632c6342"
     }
   },
   "directory": null
