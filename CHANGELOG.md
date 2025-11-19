@@ -13,9 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add helper to generate standalone rule-sets
 
 ### Changes
-- bumped cookiecutter template to https://github.com/robert-koch-institut/mex-template/commit/ef0348
-- bumped cookiecutter template to https://github.com/robert-koch-institut/mex-template/commit/6009e2
-- bumped cookiecutter template to https://github.com/robert-koch-institut/mex-template/commit/3c389d
+
+- updated template to https://github.com/robert-koch-institut/mex-template/commit/a67c71
+- updated template to https://github.com/robert-koch-institut/mex-template/commit/ef0348
+- updated template to https://github.com/robert-koch-institut/mex-template/commit/6009e2
+- updated template to https://github.com/robert-koch-institut/mex-template/commit/3c389d
 
 - change `generate_artificial_merged_items` to an item generator
 - change merged item generation to use extracted and rule items
