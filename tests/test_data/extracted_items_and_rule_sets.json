@@ -1,0 +1,748 @@
+[
+    {
+        "extracted_item": {
+            "alternativeTitle": [],
+            "contact": [],
+            "description": [],
+            "documentation": [],
+            "entityType": "ExtractedPrimarySource",
+            "hadPrimarySource": "00000000000000",
+            "identifier": "00000000000001",
+            "identifierInPrimarySource": "mex",
+            "locatedAt": [],
+            "stableTargetId": "00000000000000",
+            "title": [],
+            "unitInCharge": [],
+            "version": null
+        },
+        "rule_set": null
+    },
+    {
+        "extracted_item": {
+            "email": [
+                "info@rki.de"
+            ],
+            "entityType": "ExtractedContactPoint",
+            "hadPrimarySource": "00000000000000",
+            "identifier": "eQdiNmv6aAXRNcX3bb7Cj",
+            "identifierInPrimarySource": "ContactPoint_0",
+            "stableTargetId": "f46Wu5L9TNsq8YTd46LBRC"
+        },
+        "rule_set": null
+    },
+    {
+        "extracted_item": {
+            "email": [
+                "info@rki.de"
+            ],
+            "entityType": "ExtractedContactPoint",
+            "hadPrimarySource": "00000000000000",
+            "identifier": "faNFq6tXMXj0SuvBylHpnu",
+            "identifierInPrimarySource": "ContactPoint_1",
+            "stableTargetId": "uz1YdX8Rr4w7yRonYhZRM"
+        },
+        "rule_set": null
+    },
+    {
+        "extracted_item": {
+            "alternativeTitle": [
+                {
+                    "language": "en",
+                    "value": "Bill here grow gas enough analysis."
+                },
+                {
+                    "language": "en",
+                    "value": "Win her need stop. Those gun court attorney product significant world talk. Herself law street class. Decide environment view possible participant commercial. Clear here writer policy news."
+                }
+            ],
+            "contact": [],
+            "description": [
+                {
+                    "language": "en",
+                    "value": "Tree note responsibility defense material. Central cause seat much section investment on."
+                },
+                {
+                    "language": "en",
+                    "value": "Meeting before another body. Civil quite others his other life edge network."
+                },
+                {
+                    "language": "en",
+                    "value": "Seem shoulder future fall citizen about reveal."
+                }
+            ],
+            "endpointDescription": null,
+            "endpointType": "https://mex.rki.de/item/api-type-7",
+            "endpointURL": null,
+            "entityType": "ExtractedAccessPlatform",
+            "hadPrimarySource": "00000000000000",
+            "identifier": "bRbWmV2RJvGjsmM2qWvqQr",
+            "identifierInPrimarySource": "AccessPlatform_0",
+            "landingPage": [
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "http://smith-hickman.com/"
+                },
+                {
+                    "language": "de",
+                    "title": "Allen",
+                    "url": "https://www.cannon.net/"
+                }
+            ],
+            "stableTargetId": "bSwVgRBcGIR1qLB4IdsDmo",
+            "technicalAccessibility": "https://mex.rki.de/item/technical-accessibility-2",
+            "title": [
+                {
+                    "language": "en",
+                    "value": "Yet practice just military building different."
+                },
+                {
+                    "language": "en",
+                    "value": "Network open according remain arrive attack all form."
+                }
+            ],
+            "unitInCharge": []
+        },
+        "rule_set": {
+            "additive": {
+                "alternativeTitle": [],
+                "contact": [],
+                "description": [
+                    {
+                        "language": "de",
+                        "value": "Krank sein schaffen zum braun Hunger. Stunde böse Eis Mann den einfach. Fisch werfen kann viel Milch baden überall."
+                    }
+                ],
+                "endpointDescription": null,
+                "endpointType": "https://mex.rki.de/item/api-type-4",
+                "endpointURL": null,
+                "entityType": "AdditiveAccessPlatform",
+                "landingPage": [],
+                "technicalAccessibility": "https://mex.rki.de/item/technical-accessibility-1",
+                "title": [],
+                "unitInCharge": []
+            },
+            "entityType": "AccessPlatformRuleSetResponse",
+            "preventive": {
+                "alternativeTitle": [
+                    "00000000000000"
+                ],
+                "contact": [
+                    "00000000000000"
+                ],
+                "description": [
+                    "00000000000000"
+                ],
+                "endpointDescription": [
+                    "00000000000000"
+                ],
+                "endpointType": [],
+                "endpointURL": [],
+                "entityType": "PreventiveAccessPlatform",
+                "landingPage": [
+                    "00000000000000"
+                ],
+                "technicalAccessibility": [],
+                "title": [],
+                "unitInCharge": []
+            },
+            "stableTargetId": "bSwVgRBcGIR1qLB4IdsDmo",
+            "subtractive": {
+                "alternativeTitle": [],
+                "contact": [],
+                "description": [
+                    {
+                        "language": "en",
+                        "value": "Seem shoulder future fall citizen about reveal."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Tree note responsibility defense material. Central cause seat much section investment on."
+                    }
+                ],
+                "endpointDescription": [],
+                "endpointType": [],
+                "endpointURL": [],
+                "entityType": "SubtractiveAccessPlatform",
+                "landingPage": [
+                    {
+                        "language": null,
+                        "title": null,
+                        "url": "http://smith-hickman.com/"
+                    }
+                ],
+                "technicalAccessibility": [],
+                "title": [
+                    {
+                        "language": "en",
+                        "value": "Yet practice just military building different."
+                    }
+                ],
+                "unitInCharge": []
+            }
+        }
+    },
+    {
+        "extracted_item": {
+            "accessRestriction": "https://mex.rki.de/item/access-restriction-1",
+            "accessService": "bSwVgRBcGIR1qLB4IdsDmo",
+            "accessURL": [
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "http://www.howell-hart.com/"
+                },
+                {
+                    "language": "en",
+                    "title": "Lewis",
+                    "url": "https://kim.com/"
+                }
+            ],
+            "downloadURL": [
+                {
+                    "language": "ru",
+                    "title": "Garcia",
+                    "url": "http://jacobs-robbins.com/"
+                },
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "https://whitehead-mathis.com/"
+                },
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "https://smith.com/"
+                },
+                {
+                    "language": "de",
+                    "title": "Ramos",
+                    "url": "http://www.aguilar-hernandez.com/"
+                },
+                {
+                    "language": "fr",
+                    "title": "Diaz Fitzpatrick",
+                    "url": "http://www.garcia.biz/"
+                },
+                {
+                    "language": null,
+                    "title": null,
+                    "url": "http://www.cherry.biz/"
+                },
+                {
+                    "language": null,
+                    "title": "Doyle",
+                    "url": "http://cobb.biz/"
+                },
+                {
+                    "language": null,
+                    "title": "Walker Velasquez",
+                    "url": "https://walker.com/"
+                }
+            ],
+            "entityType": "ExtractedDistribution",
+            "hadPrimarySource": "00000000000000",
+            "identifier": "gjJMpThhCXJguwNPKLp55j",
+            "identifierInPrimarySource": "Distribution_0",
+            "issued": "2004",
+            "license": "https://mex.rki.de/item/license-1",
+            "mediaType": null,
+            "modified": "2001-06-05T10:08:54Z",
+            "stableTargetId": "dYxRaD5kLl36ZpTmmoRw4H",
+            "title": [
+                {
+                    "language": "en",
+                    "value": "Paper memory history office effort remember. Mind southern rather. Hair attorney professional form finish."
+                },
+                {
+                    "language": "en",
+                    "value": "Finally impact I fast camera inside wait."
+                }
+            ]
+        },
+        "rule_set": {
+            "additive": {
+                "accessRestriction": null,
+                "accessService": null,
+                "accessURL": [
+                    {
+                        "language": null,
+                        "title": null,
+                        "url": "http://schuchhardt.biz/"
+                    },
+                    {
+                        "language": null,
+                        "title": null,
+                        "url": "https://www.solzer.com/"
+                    },
+                    {
+                        "language": null,
+                        "title": null,
+                        "url": "http://gierschner.net/"
+                    },
+                    {
+                        "language": null,
+                        "title": null,
+                        "url": "http://www.meyer.info/"
+                    }
+                ],
+                "downloadURL": [],
+                "entityType": "AdditiveDistribution",
+                "issued": null,
+                "license": null,
+                "mediaType": null,
+                "modified": null,
+                "title": []
+            },
+            "entityType": "DistributionRuleSetResponse",
+            "preventive": {
+                "accessRestriction": [],
+                "accessService": [
+                    "00000000000000"
+                ],
+                "accessURL": [],
+                "downloadURL": [],
+                "entityType": "PreventiveDistribution",
+                "issued": [
+                    "00000000000000"
+                ],
+                "license": [
+                    "00000000000000"
+                ],
+                "mediaType": [],
+                "modified": [],
+                "title": [
+                    "00000000000000"
+                ]
+            },
+            "stableTargetId": "dYxRaD5kLl36ZpTmmoRw4H",
+            "subtractive": {
+                "accessRestriction": [],
+                "accessService": [
+                    "bSwVgRBcGIR1qLB4IdsDmo"
+                ],
+                "accessURL": [],
+                "downloadURL": [],
+                "entityType": "SubtractiveDistribution",
+                "issued": [],
+                "license": [],
+                "mediaType": [],
+                "modified": [],
+                "title": []
+            }
+        }
+    },
+    {
+        "extracted_item": {
+            "alternativeName": [
+                {
+                    "language": "en",
+                    "value": "Policy consider whom item treat area buy. Fight class various different."
+                },
+                {
+                    "language": "en",
+                    "value": "Economy play nearly by. Pass behavior political option oil. Probably result painting successful. American tell ball we side enough decision."
+                },
+                {
+                    "language": "en",
+                    "value": "Police marriage phone face what lot source rate. Law read citizen indeed less. Parent fine responsibility safe team wish. Set middle blood drop. Environment easy best face."
+                },
+                {
+                    "language": "en",
+                    "value": "Eat tend civil force officer fine. Marriage method material final. Bed hotel lead. Democrat good anything manager think. Experience account blue care enough hand idea."
+                }
+            ],
+            "entityType": "ExtractedOrganization",
+            "geprisId": [],
+            "gndId": [
+                "https://d-nb.info/gnd/87849-9",
+                "https://d-nb.info/gnd/16558-5"
+            ],
+            "hadPrimarySource": "00000000000000",
+            "identifier": "d622kD2Ea3xzVZkzyuuYHR",
+            "identifierInPrimarySource": "Organization_0",
+            "isniId": [
+                "https://isni.org/isni/8000257872982595",
+                "https://isni.org/isni/9495888794705516"
+            ],
+            "officialName": [
+                {
+                    "language": "en",
+                    "value": "Enter pretty will official dinner anything lose."
+                },
+                {
+                    "language": "en",
+                    "value": "Simple herself start drug occur red course kid. Charge real improve simple turn their. Relationship million night your. Moment finish community treatment garden great sign. Particular court east newspaper different. Side relate real major look. Value somebody event business quality here woman."
+                },
+                {
+                    "language": "en",
+                    "value": "Among western bad under pretty. Degree still even no even body scientist."
+                },
+                {
+                    "language": "fr",
+                    "value": "Prove most point."
+                },
+                {
+                    "language": "en",
+                    "value": "Form line race case who within."
+                },
+                {
+                    "language": "en",
+                    "value": "Local current white fly position traditional become. Discussion school sure also TV individual study."
+                },
+                {
+                    "language": "en",
+                    "value": "Control see the face also fear owner."
+                },
+                {
+                    "language": "en",
+                    "value": "Writer myself management voice surface life cover. Former room possible responsibility."
+                },
+                {
+                    "language": "en",
+                    "value": "Nothing serious compare task today."
+                },
+                {
+                    "language": "en",
+                    "value": "Beautiful protect continue cell food easy. Himself land environment form old. Activity president realize artist brother fill if. Type thousand show real police wait happen. Despite card check security paper."
+                },
+                {
+                    "language": "en",
+                    "value": "Serious soon stay seven quite other skin. Land region back nor article natural measure. Mr clearly take kind quite response major. Knowledge argue car indeed nor next pull. Rich how staff second official."
+                }
+            ],
+            "rorId": [
+                "https://ror.org/80t1en704",
+                "https://ror.org/26s5v6h76"
+            ],
+            "shortName": [],
+            "stableTargetId": "bYqslOHQ1jxbEP8qD3f6OM",
+            "viafId": [],
+            "wikidataId": [
+                "http://www.wikidata.org/entity/Q004786"
+            ]
+        },
+        "rule_set": {
+            "additive": {
+                "alternativeName": [],
+                "entityType": "AdditiveOrganization",
+                "geprisId": [],
+                "gndId": [
+                    "https://d-nb.info/gnd/69033-1",
+                    "https://d-nb.info/gnd/79030-6"
+                ],
+                "isniId": [],
+                "officialName": [],
+                "rorId": [],
+                "shortName": [],
+                "viafId": [
+                    "https://viaf.org/viaf/995342836",
+                    "https://viaf.org/viaf/089268705"
+                ],
+                "wikidataId": []
+            },
+            "entityType": "OrganizationRuleSetResponse",
+            "preventive": {
+                "alternativeName": [],
+                "entityType": "PreventiveOrganization",
+                "geprisId": [],
+                "gndId": [],
+                "isniId": [],
+                "officialName": [],
+                "rorId": [],
+                "shortName": [],
+                "viafId": [],
+                "wikidataId": []
+            },
+            "stableTargetId": "bYqslOHQ1jxbEP8qD3f6OM",
+            "subtractive": {
+                "alternativeName": [],
+                "entityType": "SubtractiveOrganization",
+                "geprisId": [],
+                "gndId": [],
+                "isniId": [],
+                "officialName": [],
+                "rorId": [],
+                "shortName": [],
+                "viafId": [],
+                "wikidataId": []
+            }
+        }
+    },
+    {
+        "extracted_item": {
+            "alternativeName": [
+                {
+                    "language": "en",
+                    "value": "Support feeling remain south trip. Include indicate morning home effort form bad. Suggest begin right couple environmental purpose owner. Could seven right next. Decade trade field training deep couple scientist. Trial receive region however dream focus executive."
+                }
+            ],
+            "email": [
+                "info@rki.de"
+            ],
+            "entityType": "ExtractedOrganizationalUnit",
+            "hadPrimarySource": "00000000000000",
+            "identifier": "eaCcvWLUEx3JeDBlUGh19P",
+            "identifierInPrimarySource": "OrganizationalUnit_0",
+            "name": [
+                {
+                    "language": "en",
+                    "value": "Fine animal ten scientist administration network. Often individual charge form here street material pressure."
+                },
+                {
+                    "language": "en",
+                    "value": "Whom politics make collection some college result. Contain threat wrong whatever model stuff avoid."
+                }
+            ],
+            "parentUnit": null,
+            "shortName": [
+                {
+                    "language": "en",
+                    "value": "Across media health pay."
+                },
+                {
+                    "language": "en",
+                    "value": "Administration mother in admit reveal movie expert. Spend purpose south travel blood benefit chance. People education great some bad. Learn during recently feel stock ball. Behavior here need. Pm reflect bar suddenly."
+                }
+            ],
+            "stableTargetId": "gHT3JqDyFK07vYI0Gqycpz",
+            "unitOf": [],
+            "website": []
+        },
+        "rule_set": {
+            "additive": {
+                "alternativeName": [],
+                "email": [],
+                "entityType": "AdditiveOrganizationalUnit",
+                "name": [],
+                "parentUnit": null,
+                "shortName": [
+                    {
+                        "language": "en",
+                        "value": "Class drive strong home to. Himself science so ready bad seat."
+                    }
+                ],
+                "unitOf": [],
+                "website": [
+                    {
+                        "language": null,
+                        "title": "Jacobs Austin",
+                        "url": "https://walters.info/"
+                    }
+                ]
+            },
+            "entityType": "OrganizationalUnitRuleSetResponse",
+            "preventive": {
+                "alternativeName": [],
+                "email": [],
+                "entityType": "PreventiveOrganizationalUnit",
+                "name": [],
+                "parentUnit": [],
+                "shortName": [],
+                "unitOf": [],
+                "website": []
+            },
+            "stableTargetId": "gHT3JqDyFK07vYI0Gqycpz",
+            "subtractive": {
+                "alternativeName": [],
+                "email": [],
+                "entityType": "SubtractiveOrganizationalUnit",
+                "name": [],
+                "parentUnit": [],
+                "shortName": [],
+                "unitOf": [],
+                "website": []
+            }
+        }
+    },
+    {
+        "extracted_item": {
+            "email": [
+                "info@rki.de"
+            ],
+            "entityType": "ExtractedContactPoint",
+            "hadPrimarySource": "00000000000000",
+            "identifier": "fBUaEJS323fxnaZMSiO2Z6",
+            "identifierInPrimarySource": "ContactPoint_2",
+            "stableTargetId": "ih131cdYtiMHjE9Sut5GB"
+        },
+        "rule_set": null
+    },
+    {
+        "extracted_item": null,
+        "rule_set": {
+            "additive": {
+                "abstract": [
+                    {
+                        "language": "en",
+                        "value": "Car cost large never. Billion bed never others six tell."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Hold be top toward within occur."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Catch feeling manage as. Every feel site guess want result."
+                    }
+                ],
+                "activityType": [],
+                "alternativeTitle": [],
+                "contact": [],
+                "documentation": [
+                    {
+                        "language": null,
+                        "title": "Cook Ochoa",
+                        "url": "http://morrison-dominguez.info/"
+                    },
+                    {
+                        "language": "es",
+                        "title": "Oconnell",
+                        "url": "http://ramirez-hartman.com/"
+                    },
+                    {
+                        "language": null,
+                        "title": "Gonzalez",
+                        "url": "http://clark.com/"
+                    }
+                ],
+                "end": [],
+                "entityType": "AdditiveActivity",
+                "externalAssociate": [],
+                "funderOrCommissioner": [
+                    "bYqslOHQ1jxbEP8qD3f6OM"
+                ],
+                "fundingProgram": [],
+                "involvedPerson": [],
+                "involvedUnit": [
+                    "gHT3JqDyFK07vYI0Gqycpz"
+                ],
+                "isPartOfActivity": [],
+                "publication": [],
+                "responsibleUnit": [],
+                "shortName": [
+                    {
+                        "language": "en",
+                        "value": "And worker quality hundred sell whole involve action. Develop section newspaper reach determine."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Sign open matter general agency bit indeed. Break wait center find. Six miss give best reveal laugh attack."
+                    }
+                ],
+                "start": [
+                    "2017"
+                ],
+                "succeeds": [],
+                "theme": [],
+                "title": [
+                    {
+                        "language": "en",
+                        "value": "Picture control price how scene third. Or home relate day sell speak artist. Son Mr hand culture."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Month police others particularly only girl suddenly."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Try opportunity public finish draw. Consumer really memory industry. Offer institution main Mr. Never majority cell fire."
+                    }
+                ],
+                "website": []
+            },
+            "entityType": "ActivityRuleSetResponse",
+            "preventive": {
+                "abstract": [],
+                "activityType": [],
+                "alternativeTitle": [],
+                "contact": [],
+                "documentation": [],
+                "end": [],
+                "entityType": "PreventiveActivity",
+                "externalAssociate": [],
+                "funderOrCommissioner": [],
+                "fundingProgram": [],
+                "involvedPerson": [],
+                "involvedUnit": [],
+                "isPartOfActivity": [],
+                "publication": [],
+                "responsibleUnit": [],
+                "shortName": [],
+                "start": [],
+                "succeeds": [],
+                "theme": [],
+                "title": [],
+                "website": []
+            },
+            "stableTargetId": "cgnHdxJNJIYweqgWQrkuwL",
+            "subtractive": {
+                "abstract": [],
+                "activityType": [],
+                "alternativeTitle": [],
+                "contact": [],
+                "documentation": [],
+                "end": [],
+                "entityType": "SubtractiveActivity",
+                "externalAssociate": [],
+                "funderOrCommissioner": [],
+                "fundingProgram": [],
+                "involvedPerson": [],
+                "involvedUnit": [],
+                "isPartOfActivity": [],
+                "publication": [],
+                "responsibleUnit": [],
+                "shortName": [],
+                "start": [],
+                "succeeds": [],
+                "theme": [],
+                "title": [],
+                "website": []
+            }
+        }
+    },
+    {
+        "extracted_item": null,
+        "rule_set": {
+            "additive": {
+                "affiliation": [
+                    "bYqslOHQ1jxbEP8qD3f6OM"
+                ],
+                "email": [],
+                "entityType": "AdditivePerson",
+                "familyName": [],
+                "fullName": [],
+                "givenName": [],
+                "isniId": [],
+                "memberOf": [
+                    "gHT3JqDyFK07vYI0Gqycpz"
+                ],
+                "orcidId": []
+            },
+            "entityType": "PersonRuleSetResponse",
+            "preventive": {
+                "affiliation": [],
+                "email": [],
+                "entityType": "PreventivePerson",
+                "familyName": [],
+                "fullName": [],
+                "givenName": [],
+                "isniId": [],
+                "memberOf": [],
+                "orcidId": []
+            },
+            "stableTargetId": "e7MYEr0XVmFkW1UwNcVEVz",
+            "subtractive": {
+                "affiliation": [],
+                "email": [],
+                "entityType": "SubtractivePerson",
+                "familyName": [],
+                "fullName": [],
+                "givenName": [],
+                "isniId": [],
+                "memberOf": [],
+                "orcidId": []
+            }
+        }
+    }
+]
