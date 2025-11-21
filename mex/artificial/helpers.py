@@ -94,17 +94,18 @@ def generate_artificial_items_and_rule_sets(
     yield ExtractedItemAndRuleSet(extracted_item=MEX_PRIMARY_SOURCE)
     for index in count():
         match faker.random_int(0, 2):
-            case 0:
+            case 0:  # only extracted item
                 item = faker.extracted_item(stem_types, ids_by_type)
                 ids_by_type[item.stemType][item.stableTargetId] = None
                 yield ExtractedItemAndRuleSet(extracted_item=item)
-            case 1:
+            case 1:  # only rule set
                 rule_set = faker.standalone_rule_set(stem_types, ids_by_type, index)
                 ids_by_type[rule_set.stemType][rule_set.stableTargetId] = None
                 yield ExtractedItemAndRuleSet(rule_set=rule_set)
-            case 2:
+            case 2:  # extracted item and rule set
                 item = faker.extracted_item(stem_types, ids_by_type)
                 rule_set = faker.rule_set_for_item(item, ids_by_type)
+                ids_by_type[item.stemType][item.stableTargetId] = None
                 yield ExtractedItemAndRuleSet(extracted_item=item, rule_set=rule_set)
 
 
