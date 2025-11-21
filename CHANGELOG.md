@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - updated template to https://github.com/robert-koch-institut/mex-template/commit/ef0348
 - updated template to https://github.com/robert-koch-institut/mex-template/commit/6009e2
 - updated template to https://github.com/robert-koch-institut/mex-template/commit/3c389d
-- BREAKING: change `generate_artificial_merged_items` to an item generator
+- BREAKING: change `generate_*` helper functions to infinite generators
 - BREAKING: change merged item generation to use extracted and rule items
 - change reference generation so that items can be ingested in generated order
 - improve CLI with progress bar and progressive generation/file-writing
