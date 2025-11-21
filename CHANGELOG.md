@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - add helper to generate extracted items along with an associated rule-set
 - add helper to generate standalone rule-sets
+- add helpers to artificial items as infinite streams or fixed-length lists
 
 ### Changes
 
@@ -18,8 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - updated template to https://github.com/robert-koch-institut/mex-template/commit/ef0348
 - updated template to https://github.com/robert-koch-institut/mex-template/commit/6009e2
 - updated template to https://github.com/robert-koch-institut/mex-template/commit/3c389d
-- change `generate_artificial_merged_items` to an item generator
-- change merged item generation to use extracted and rule items
+- BREAKING: change `generate_artificial_merged_items` to an item generator
+- BREAKING: change merged item generation to use extracted and rule items
 - change reference generation so that items can be ingested in generated order
 - improve CLI with progress bar and progressive generation/file-writing
 - update mex-common to 1.9

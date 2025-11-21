@@ -58,7 +58,7 @@ def generate_artificial_extracted_items(
     chattiness: int = DEFAULT_CHATTINESS,
     stem_types: Sequence[str] = DEFAULT_MODELS,
 ) -> Generator[AnyExtractedModel, None, None]:
-    """Generate artificial extracted items for the given settings."""
+    """Infinitely generate extracted items for the given settings."""
     faker = create_faker(locale, seed, chattiness)
     ids_by_type: Mapping[str, OrderedDict[AnyMergedIdentifier, None]] = defaultdict(
         OrderedDict,
@@ -75,13 +75,29 @@ def generate_artificial_extracted_items(
         yield item
 
 
+def create_artificial_extracted_items(
+    locale: LocaleType = DEFAULT_LOCALE,
+    seed: SeedType = DEFAULT_SEED,
+    chattiness: int = DEFAULT_CHATTINESS,
+    stem_types: Sequence[str] = DEFAULT_MODELS,
+    count: int = DEFAULT_COUNT,
+) -> list[AnyExtractedModel]:
+    """Create a list of extracted items for the given settings."""
+    return list(
+        islice(
+            generate_artificial_extracted_items(locale, seed, chattiness, stem_types),
+            count,
+        )
+    )
+
+
 def generate_artificial_items_and_rule_sets(
     locale: LocaleType = DEFAULT_LOCALE,
     seed: SeedType = DEFAULT_SEED,
     chattiness: int = DEFAULT_CHATTINESS,
     stem_types: Sequence[str] = DEFAULT_MODELS,
 ) -> Generator[ExtractedItemAndRuleSet, None, None]:
-    """Generate artificial extracted items and rule-sets for the settings."""
+    """Infinitely generate artificial extracted items and rule-sets."""
     faker = create_faker(locale, seed, chattiness)
     ids_by_type: Mapping[str, OrderedDict[AnyMergedIdentifier, None]] = defaultdict(
         OrderedDict,
@@ -109,13 +125,31 @@ def generate_artificial_items_and_rule_sets(
                 yield ExtractedItemAndRuleSet(extracted_item=item, rule_set=rule_set)
 
 
+def create_artificial_items_and_rule_sets(
+    locale: LocaleType = DEFAULT_LOCALE,
+    seed: SeedType = DEFAULT_SEED,
+    chattiness: int = DEFAULT_CHATTINESS,
+    stem_types: Sequence[str] = DEFAULT_MODELS,
+    count: int = DEFAULT_COUNT,
+) -> list[ExtractedItemAndRuleSet]:
+    """Create a list of artificial extracted items and rule-sets."""
+    return list(
+        islice(
+            generate_artificial_items_and_rule_sets(
+                locale, seed, chattiness, stem_types
+            ),
+            count,
+        )
+    )
+
+
 def generate_artificial_merged_items(
     locale: LocaleType = DEFAULT_LOCALE,
     seed: SeedType = DEFAULT_SEED,
     chattiness: int = DEFAULT_CHATTINESS,
     stem_types: Sequence[str] = DEFAULT_MODELS,
 ) -> Generator[AnyMergedModel, None, None]:
-    """Generate artificial merged items for the given settings."""
+    """Infinitely generate merged items for the given settings."""
     for item_combination in generate_artificial_items_and_rule_sets(
         locale, seed, chattiness, stem_types
     ):
@@ -133,6 +167,22 @@ def generate_artificial_merged_items(
             validation=Validation.IGNORE,
         ):
             yield merged_item
+
+
+def create_artificial_merged_items(
+    locale: LocaleType = DEFAULT_LOCALE,
+    seed: SeedType = DEFAULT_SEED,
+    chattiness: int = DEFAULT_CHATTINESS,
+    stem_types: Sequence[str] = DEFAULT_MODELS,
+    count: int = DEFAULT_COUNT,
+) -> list[AnyMergedModel]:
+    """Create a list of merged items for the given settings."""
+    return list(
+        islice(
+            generate_artificial_merged_items(locale, seed, chattiness, stem_types),
+            count,
+        )
+    )
 
 
 def write_merged_items(

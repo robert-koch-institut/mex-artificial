@@ -10,6 +10,9 @@ from pydantic import BaseModel
 
 from mex.artificial.constants import DEFAULT_LOCALE, DEFAULT_MODELS
 from mex.artificial.helpers import (
+    create_artificial_extracted_items,
+    create_artificial_items_and_rule_sets,
+    create_artificial_merged_items,
     create_faker,
     generate_artificial_extracted_items,
     generate_artificial_items_and_rule_sets,
@@ -54,6 +57,40 @@ def test_generate_artificial_items(
 ) -> None:
     gen = generator_func(DEFAULT_LOCALE, 42, 5, DEFAULT_MODELS)
     items = list(islice(gen, 10))
+    output = [item.model_dump(mode="json") for item in items]
+
+    expected_path = TEST_DATA_PATH / expected_file
+    with expected_path.open(encoding="utf-8") as fh:
+        expected = json.load(fh)
+
+    assert output == expected
+
+
+@pytest.mark.parametrize(
+    ("creator_func", "expected_file"),
+    [
+        (
+            create_artificial_extracted_items,
+            "extracted_items.json",
+        ),
+        (
+            create_artificial_items_and_rule_sets,
+            "extracted_items_and_rule_sets.json",
+        ),
+        (
+            create_artificial_merged_items,
+            "merged_items.json",
+        ),
+    ],
+    ids=["extracted_items", "items_and_rule_sets", "merged_items"],
+)
+def test_create_artificial_items(
+    creator_func: Callable[
+        [LocaleType, SeedType, int, Sequence[str], int], list[BaseModel]
+    ],
+    expected_file: str,
+) -> None:
+    items = creator_func(DEFAULT_LOCALE, 42, 5, DEFAULT_MODELS, 10)
     output = [item.model_dump(mode="json") for item in items]
 
     expected_path = TEST_DATA_PATH / expected_file
