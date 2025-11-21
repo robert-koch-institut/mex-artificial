@@ -159,7 +159,7 @@ class BuilderProvider(PythonFakerProvider):
         *,
         _attempts_left: int = DEFAULT_GENERATION_ATTEMPTS,
     ) -> AnyExtractedModel:
-        """Generate a single extracted items for the given stem types."""
+        """Generate a single extracted item from the given stem types."""
         stem_type = self.random_element(stem_types)
         entity_type = ensure_prefix(stem_type, "Extracted")
         model_class = EXTRACTED_MODEL_CLASSES_BY_NAME[entity_type]
