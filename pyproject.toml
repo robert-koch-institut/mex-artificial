@@ -12,8 +12,8 @@ dependencies = [
     "faker>=38,<39",
     "mex-common>=1.10,<2",
     "pydantic>=2",
-    "rich>=14",
-    "typer>=0.20",
+    "rich",
+    "typer",
 ]
 optional-dependencies.dev = [
     "ipdb>=0.13",
