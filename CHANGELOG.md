@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BREAKING: change merged item generation to use extracted and rule items
 - change reference generation so that items can be ingested in generated order
 - improve CLI with progress bar and progressive generation/file-writing
-- update mex-common to 1.9
+- update mex-common to 1.10
 
 ### Deprecated
 
