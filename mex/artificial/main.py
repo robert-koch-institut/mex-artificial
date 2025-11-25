@@ -3,27 +3,15 @@ from typing import Annotated
 
 import typer
 
+from mex.artificial.constants import (
+    DEFAULT_CHATTINESS,
+    DEFAULT_COUNT,
+    DEFAULT_LOCALE,
+    DEFAULT_MODELS,
+    DEFAULT_SEED,
+)
 from mex.artificial.helpers import generate_artificial_merged_items, write_merged_items
 from mex.common.logging import logger
-from mex.common.models import EXTRACTED_MODEL_CLASSES
-
-DEFAULT_LOCALE = [
-    "de_DE",
-    "en_US",
-]
-DEFAULT_MODELS = [
-    "AccessPlatform",
-    "Activity",
-    "BibliographicResource",
-    "ContactPoint",
-    "Distribution",
-    "Organization",
-    "OrganizationalUnit",
-    "Person",
-    "Resource",
-    "Variable",
-    "VariableGroup",
-]
 
 
 def artificial(  # noqa: PLR0913
@@ -31,10 +19,10 @@ def artificial(  # noqa: PLR0913
         int,
         typer.Option(
             help="Number of artificial items to approximately create.",
-            min=len(EXTRACTED_MODEL_CLASSES) * 2,
+            min=1,
             max=int(10e6 - 1),
         ),
-    ] = 100,
+    ] = DEFAULT_COUNT,
     chattiness: Annotated[
         int,
         typer.Option(
@@ -42,13 +30,13 @@ def artificial(  # noqa: PLR0913
             min=2,
             max=100,
         ),
-    ] = 10,
+    ] = DEFAULT_CHATTINESS,
     seed: Annotated[
         int,
         typer.Option(
             help="The seed value for faker randomness.",
         ),
-    ] = 0,
+    ] = DEFAULT_SEED,
     locale: Annotated[
         list[str] | None,
         typer.Option(
@@ -80,8 +68,8 @@ def artificial(  # noqa: PLR0913
     path = path or Path.cwd()
     locale = locale or DEFAULT_LOCALE
     models = models or DEFAULT_MODELS
-    items = generate_artificial_merged_items(locale, seed, count, chattiness, models)
-    write_merged_items(items, path)
+    item_gen = generate_artificial_merged_items(locale, seed, chattiness, models)
+    write_merged_items(item_gen, count, path)
     logger.info("artificial data generation done")
 
 

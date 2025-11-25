@@ -1,0 +1,378 @@
+[
+    {
+        "alternativeTitle": [],
+        "contact": [],
+        "description": [],
+        "documentation": [],
+        "entityType": "MergedPrimarySource",
+        "identifier": "00000000000000",
+        "locatedAt": [],
+        "title": [],
+        "unitInCharge": [],
+        "version": null
+    },
+    {
+        "email": [
+            "info@rki.de"
+        ],
+        "entityType": "MergedContactPoint",
+        "identifier": "f46Wu5L9TNsq8YTd46LBRC"
+    },
+    {
+        "email": [
+            "info@rki.de"
+        ],
+        "entityType": "MergedContactPoint",
+        "identifier": "uz1YdX8Rr4w7yRonYhZRM"
+    },
+    {
+        "alternativeName": [
+            {
+                "language": "en",
+                "value": "Policy consider whom item treat area buy. Fight class various different."
+            },
+            {
+                "language": "en",
+                "value": "Economy play nearly by. Pass behavior political option oil. Probably result painting successful. American tell ball we side enough decision."
+            },
+            {
+                "language": "en",
+                "value": "Police marriage phone face what lot source rate. Law read citizen indeed less. Parent fine responsibility safe team wish. Set middle blood drop. Environment easy best face."
+            },
+            {
+                "language": "en",
+                "value": "Eat tend civil force officer fine. Marriage method material final. Bed hotel lead. Democrat good anything manager think. Experience account blue care enough hand idea."
+            }
+        ],
+        "entityType": "MergedOrganization",
+        "geprisId": [],
+        "gndId": [
+            "https://d-nb.info/gnd/87849-9",
+            "https://d-nb.info/gnd/16558-5",
+            "https://d-nb.info/gnd/69033-1",
+            "https://d-nb.info/gnd/79030-6"
+        ],
+        "identifier": "bYqslOHQ1jxbEP8qD3f6OM",
+        "isniId": [
+            "https://isni.org/isni/8000257872982595",
+            "https://isni.org/isni/9495888794705516"
+        ],
+        "officialName": [
+            {
+                "language": "en",
+                "value": "Enter pretty will official dinner anything lose."
+            },
+            {
+                "language": "en",
+                "value": "Simple herself start drug occur red course kid. Charge real improve simple turn their. Relationship million night your. Moment finish community treatment garden great sign. Particular court east newspaper different. Side relate real major look. Value somebody event business quality here woman."
+            },
+            {
+                "language": "en",
+                "value": "Among western bad under pretty. Degree still even no even body scientist."
+            },
+            {
+                "language": "fr",
+                "value": "Prove most point."
+            },
+            {
+                "language": "en",
+                "value": "Form line race case who within."
+            },
+            {
+                "language": "en",
+                "value": "Local current white fly position traditional become. Discussion school sure also TV individual study."
+            },
+            {
+                "language": "en",
+                "value": "Control see the face also fear owner."
+            },
+            {
+                "language": "en",
+                "value": "Writer myself management voice surface life cover. Former room possible responsibility."
+            },
+            {
+                "language": "en",
+                "value": "Nothing serious compare task today."
+            },
+            {
+                "language": "en",
+                "value": "Beautiful protect continue cell food easy. Himself land environment form old. Activity president realize artist brother fill if. Type thousand show real police wait happen. Despite card check security paper."
+            },
+            {
+                "language": "en",
+                "value": "Serious soon stay seven quite other skin. Land region back nor article natural measure. Mr clearly take kind quite response major. Knowledge argue car indeed nor next pull. Rich how staff second official."
+            }
+        ],
+        "rorId": [
+            "https://ror.org/80t1en704",
+            "https://ror.org/26s5v6h76"
+        ],
+        "shortName": [],
+        "viafId": [
+            "https://viaf.org/viaf/995342836",
+            "https://viaf.org/viaf/089268705"
+        ],
+        "wikidataId": [
+            "http://www.wikidata.org/entity/Q004786"
+        ]
+    },
+    {
+        "alternativeName": [
+            {
+                "language": "en",
+                "value": "Support feeling remain south trip. Include indicate morning home effort form bad. Suggest begin right couple environmental purpose owner. Could seven right next. Decade trade field training deep couple scientist. Trial receive region however dream focus executive."
+            }
+        ],
+        "email": [
+            "info@rki.de"
+        ],
+        "entityType": "MergedOrganizationalUnit",
+        "identifier": "gHT3JqDyFK07vYI0Gqycpz",
+        "name": [
+            {
+                "language": "en",
+                "value": "Fine animal ten scientist administration network. Often individual charge form here street material pressure."
+            },
+            {
+                "language": "en",
+                "value": "Whom politics make collection some college result. Contain threat wrong whatever model stuff avoid."
+            }
+        ],
+        "parentUnit": null,
+        "shortName": [
+            {
+                "language": "en",
+                "value": "Across media health pay."
+            },
+            {
+                "language": "en",
+                "value": "Administration mother in admit reveal movie expert. Spend purpose south travel blood benefit chance. People education great some bad. Learn during recently feel stock ball. Behavior here need. Pm reflect bar suddenly."
+            },
+            {
+                "language": "en",
+                "value": "Class drive strong home to. Himself science so ready bad seat."
+            }
+        ],
+        "unitOf": [],
+        "website": [
+            {
+                "language": null,
+                "title": "Jacobs Austin",
+                "url": "https://walters.info/"
+            }
+        ]
+    },
+    {
+        "email": [
+            "info@rki.de"
+        ],
+        "entityType": "MergedContactPoint",
+        "identifier": "ih131cdYtiMHjE9Sut5GB"
+    },
+    {
+        "affiliation": [
+            "bYqslOHQ1jxbEP8qD3f6OM"
+        ],
+        "email": [],
+        "entityType": "MergedPerson",
+        "familyName": [],
+        "fullName": [],
+        "givenName": [],
+        "identifier": "e7MYEr0XVmFkW1UwNcVEVz",
+        "isniId": [],
+        "memberOf": [
+            "gHT3JqDyFK07vYI0Gqycpz"
+        ],
+        "orcidId": []
+    },
+    {
+        "alternativeName": [
+            {
+                "language": "en",
+                "value": "Deep station scientist service test start."
+            },
+            {
+                "language": "en",
+                "value": "Find medical career surface. Ahead cover strategy student economic lead truth. Ever statement measure play buy. Drop major land."
+            },
+            {
+                "language": "en",
+                "value": "Glass clear thus see read expect hit. Take sister Democrat determine. Question especially important after sister. Listen car community. Difference part wall."
+            },
+            {
+                "language": "en",
+                "value": "Surface learn design few minute perhaps. Bill memory production successful hear positive participant fear. Loss from everybody foot."
+            },
+            {
+                "language": "en",
+                "value": "Could military drive arm tax. Identify floor cause agent market fast trade identify."
+            }
+        ],
+        "entityType": "MergedOrganization",
+        "geprisId": [
+            "https://gepris.dfg.de/gepris/institution/53875842",
+            "https://gepris.dfg.de/gepris/institution/41724825",
+            "https://gepris.dfg.de/gepris/institution/35346554",
+            "https://gepris.dfg.de/gepris/institution/71709991",
+            "https://gepris.dfg.de/gepris/institution/81684"
+        ],
+        "gndId": [],
+        "identifier": "bT1U0MUY7LlPxzAWgMYhHx",
+        "isniId": [
+            "https://isni.org/isni/2521752500743292"
+        ],
+        "officialName": [
+            {
+                "language": "en",
+                "value": "Idea whole himself also current health. Throughout series most. Quality phone eat. Fine bill me fill assume animal. Lay minute model its rather."
+            }
+        ],
+        "rorId": [
+            "https://ror.org/26s0v3h32",
+            "https://ror.org/98k2qnb15",
+            "https://ror.org/64t8en909"
+        ],
+        "shortName": [
+            {
+                "language": "en",
+                "value": "Indicate herself natural listen."
+            }
+        ],
+        "viafId": [
+            "https://viaf.org/viaf/461849926",
+            "https://viaf.org/viaf/411739348"
+        ],
+        "wikidataId": [
+            "http://www.wikidata.org/entity/Q087375",
+            "http://www.wikidata.org/entity/Q011972",
+            "http://www.wikidata.org/entity/Q143744"
+        ]
+    },
+    {
+        "abstract": [
+            {
+                "language": "de",
+                "value": "Verkaufen warum Affe dem. Gewinnen waschen wohnen Freund."
+            },
+            {
+                "language": "de",
+                "value": "Ein Hund Wort fröhlich hier verkaufen."
+            }
+        ],
+        "accessRestriction": "https://mex.rki.de/item/access-restriction-1",
+        "alternateIdentifier": [
+            "Baum zwei Woche",
+            "Bruder"
+        ],
+        "alternativeTitle": [
+            {
+                "language": "de",
+                "value": "Noch spät noch vielleicht. Las laut warten kam. Frei gerade Schuh scheinen. See fallen wohnen von Loch schlagen nämlich. Rot Fisch groß schauen hier uns."
+            },
+            {
+                "language": "de",
+                "value": "Alle Wiese lesen. Verkaufen voll bekommen Leben Feuer zeigen baden. Milch heraus tot besser Katze. Kein verstehen kaufen danach Lehrerin reich Brot. Arbeiten mich trinken Stein wünschen packen. Musik reich klein Glück trinken tot unter."
+            },
+            {
+                "language": "de",
+                "value": "Neun schön Hase Kind braun richtig Abend halbe. Merken helfen Bruder Wasser Leben. Buch noch einigen wie hinein klein."
+            }
+        ],
+        "bibliographicResourceType": [
+            "https://mex.rki.de/item/bibliographic-resource-type-2",
+            "https://mex.rki.de/item/bibliographic-resource-type-13",
+            "https://mex.rki.de/item/bibliographic-resource-type-7",
+            "https://mex.rki.de/item/bibliographic-resource-type-1",
+            "https://mex.rki.de/item/bibliographic-resource-type-11"
+        ],
+        "contributingUnit": [
+            "gHT3JqDyFK07vYI0Gqycpz"
+        ],
+        "creator": [
+            "e7MYEr0XVmFkW1UwNcVEVz"
+        ],
+        "distribution": [
+            "dYxRaD5kLl36ZpTmmoRw4H"
+        ],
+        "doi": "https://doi.org/72.2698/fmicb.4858.333945",
+        "edition": null,
+        "editor": [
+            "e7MYEr0XVmFkW1UwNcVEVz"
+        ],
+        "editorOfSeries": [
+            "e7MYEr0XVmFkW1UwNcVEVz"
+        ],
+        "entityType": "MergedBibliographicResource",
+        "identifier": "fk8kmxdW4OG8wIm3zXzCXH",
+        "isbnIssn": [
+            "Ball"
+        ],
+        "issue": null,
+        "issued": null,
+        "journal": [
+            {
+                "language": "de",
+                "value": "Erklären mehr halten Kind nächste."
+            },
+            {
+                "language": "de",
+                "value": "Himmel Licht stellen Schnee Schluss aus Herz. Wohnung ziehen genau Milch allein Flasche. Voll viel kann Familie Onkel schwarz Haus natürlich. Ende sehen Eltern kein zum bekommen Wort selbst."
+            },
+            {
+                "language": "de",
+                "value": "Jahr mit das."
+            },
+            {
+                "language": "de",
+                "value": "Gibt schwarz die. Wichtig nennen spielen offen. Leben müde halten Stadt Geschenk. Wohnung Loch stark dir mein."
+            }
+        ],
+        "keyword": [
+            {
+                "language": "de",
+                "value": "Gibt gar wo nämlich lachen Monate."
+            }
+        ],
+        "language": [
+            "https://mex.rki.de/item/language-4"
+        ],
+        "license": null,
+        "pages": "werfen suchen",
+        "publicationPlace": "Mensch seit",
+        "publicationYear": null,
+        "publisher": [
+            "bT1U0MUY7LlPxzAWgMYhHx",
+            "bYqslOHQ1jxbEP8qD3f6OM"
+        ],
+        "repositoryURL": [],
+        "section": null,
+        "subtitle": [
+            {
+                "language": "de",
+                "value": "Vier ist Brot Maus schreien. Plötzlich wir sieht dick klettern ging."
+            }
+        ],
+        "title": [
+            {
+                "language": "de",
+                "value": "Beispiel traurig weiter hören kennen hängen gern."
+            }
+        ],
+        "titleOfBook": [
+            {
+                "language": "de",
+                "value": "Beide sieht aus vergessen halten leise gab schlafen. Bis Sonne Junge hinter richtig lachen man dein. Stellen vergessen Garten Onkel Geburtstag warm."
+            }
+        ],
+        "titleOfSeries": [],
+        "volume": null,
+        "volumeOfSeries": "Minute wohnen bis"
+    },
+    {
+        "email": [
+            "info@rki.de"
+        ],
+        "entityType": "MergedContactPoint",
+        "identifier": "g3Z7IILrkC2lnFWqPcez8"
+    }
+]
