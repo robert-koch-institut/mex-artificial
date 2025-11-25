@@ -10,10 +10,10 @@ requires-python = ">=3.11,<3.12"
 dependencies = [
     "annotated-types<=0.7",
     "faker>=38,<39",
-    "mex-common>=1.9,<2",
+    "mex-common>=1.10,<2",
     "pydantic>=2",
     "rich>=14",
-    "typer>=0.19",
+    "typer>=0.20",
 ]
 optional-dependencies.dev = [
     "ipdb>=0.13",
