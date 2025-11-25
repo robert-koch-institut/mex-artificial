@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changes
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.2.0] - 2025-11-25
+
+### Added
+
 - add helper to generate extracted items along with an associated rule-set
 - add helper to generate standalone rule-sets
 - add helpers to artificial items as infinite streams or fixed-length lists
@@ -24,14 +38,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - change reference generation so that items can be ingested in generated order
 - improve CLI with progress bar and progressive generation/file-writing
 - update mex-common to 1.10
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
 
 ## [1.1.0] - 2025-10-22
 
