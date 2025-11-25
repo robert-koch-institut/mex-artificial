@@ -92,8 +92,10 @@ components of the MEx project are open-sourced under the same license as well.
 
 - you can run the latest artificial data generator without building it locally
 - just pull it from the container registry and configure using cli arguments
-- `docker run -v $(pwd):/out ghcr.io/robert-koch-institut/mex-artificial:latest --count=100 --chattiness=10`
-- use `-v $(pwd):/out` to specify an output directory for the resulting `ndjson` file
+- `docker run -it -u $(id -u):$(id -g) -v $(pwd):/out
+   ghcr.io/robert-koch-institut/mex-artificial:latest --count=1000 --chattiness=10`
+- using `-u $(id -u):$(id -g)` to run the process using your local user
+- using `-v $(pwd):/out` to specify an output directory for the resulting `ndjson`
 - `--count` controls the number of items to generate
 - `--chattiness` controls the number of words in textual fields
 
