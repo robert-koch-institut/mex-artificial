@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- remove unrecognized french language in test text type and replace with 'null'
+
 ### Security
 
 ## [1.2.1] - 2025-11-25
