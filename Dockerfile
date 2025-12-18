@@ -47,6 +47,8 @@ RUN adduser \
     --uid "10001" \
     mex
 
+COPY --chown=mex --exclude=*.lock --exclude=requirements.txt . .
+
 RUN mkdir /out
 
 USER mex
