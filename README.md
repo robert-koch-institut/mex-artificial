@@ -101,4 +101,4 @@ components of the MEx project are open-sourced under the same license as well.
 
 ## Commands
 
-- run `pdm run artificial --help` to print instructions
+- run `uv run artificial --help` to print instructions
