@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changes
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.3.0] - 2026-01-22
+
+### Added
+
 - added support for python 3.11 - 3.13
 
 ### Changes
@@ -21,15 +35,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - updated template to https://github.com/robert-koch-institut/mex-template/commit/b87502
 - switch package manager from pdm to uv
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 
 - remove unrecognized french language in test text type and replace with 'null'
-
-### Security
 
 ## [1.2.1] - 2025-11-25
 
