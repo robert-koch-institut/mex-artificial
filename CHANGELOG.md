@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - updated template to https://github.com/robert-koch-institut/mex-template/commit/7c3e75
 - clarify docker run example in README
 - lock file maintenance 2026-01-19: update test data
+- updated template to https://github.com/robert-koch-institut/mex-template/commit/b87502
+- switch package manager from pdm to uv
 
 ### Deprecated
 
