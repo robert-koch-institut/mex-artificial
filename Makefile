@@ -43,15 +43,10 @@ wheel:
 image:
 	# build the docker image
 	@ echo building docker image mex-artificial:${LATEST}; \
-	uv export \
-		--output-file locked-requirements.txt \
-		--no-hashes \
-		--no-dev; \
 	export DOCKER_BUILDKIT=1; \
 	docker build \
 		--tag rki/mex-artificial:${LATEST} \
 		--tag rki/mex-artificial:latest .; \
-	rm locked-requirements.txt; \
 
 run: image
 	# run the service as a docker container
