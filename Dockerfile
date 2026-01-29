@@ -29,8 +29,6 @@ LABEL org.opencontainers.image.vendor="robert-koch-institut"
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONOPTIMIZE=1
 
-WORKDIR /app
-
 COPY --from=builder /build/wheels /wheels
 
 RUN pip install --no-cache-dir \
@@ -46,8 +44,6 @@ RUN adduser \
     --no-create-home \
     --uid "10001" \
     mex
-
-COPY --chown=mex --exclude=*.lock --exclude=requirements.txt . .
 
 RUN mkdir /out
 
