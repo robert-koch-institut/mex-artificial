@@ -11,8 +11,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changes
 
-- updated template to https://github.com/robert-koch-institut/mex-template/commit/7c3e75
-- clarify docker run example in README
 - change the docker build to multi-stage build
 
 ### Deprecated
@@ -21,9 +19,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- remove unrecognized french language in test text type and replace with 'null'
-
 ### Security
+
+## [1.3.3] - 2026-01-23
+
+### Changes
+
+- updated template to https://github.com/robert-koch-institut/mex-template/commit/33ca3a
+- updated mex-common to 1.13.1 and mex-model to 4.9.1
+
+## [1.3.2] - 2026-01-22
+
+### Fixed
+
+- fixed argument syntax of uv export
+
+## [1.3.1] - 2026-01-22
+
+### Fixed
+
+- remove locked-requirements file creation from makefile
+
+## [1.3.0] - 2026-01-22
+
+### Added
+
+- added support for python 3.11 - 3.13
+
+### Changes
+
+- updated template to https://github.com/robert-koch-institut/mex-template/commit/ad26e4
+- updated template to https://github.com/robert-koch-institut/mex-template/commit/203934
+- updated template to https://github.com/robert-koch-institut/mex-template/commit/7c3e75
+- clarify docker run example in README
+- lock file maintenance 2026-01-19: update test data
+- updated template to https://github.com/robert-koch-institut/mex-template/commit/b87502
+- switch package manager from pdm to uv
+
+### Fixed
+
+- remove unrecognized french language in test text type and replace with 'null'
 
 ## [1.2.1] - 2025-11-25
 
