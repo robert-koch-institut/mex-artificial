@@ -12,13 +12,13 @@ ENV PIP_PROGRESS_BAR=off
 COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pdm export --prod --without-hashes > requirements.lock
+RUN uv export --no-dev --no-hashes --output-file requirements.lock
 
 RUN pip wheel --no-cache-dir --wheel-dir /build/wheels -r requirements.lock
 RUN pip wheel --no-cache-dir --wheel-dir /build/wheels --no-deps .
 
 
-FROM python:3.11-slim
+FROM python:3.13-slim
 
 LABEL org.opencontainers.image.authors="mex@rki.de"
 LABEL org.opencontainers.image.description="Create artificial data for the MEx project."
