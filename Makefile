@@ -43,7 +43,6 @@ wheel:
 image:
 	# build the docker image
 	@ echo building docker image mex-artificial:${LATEST}; \
-	export DOCKER_BUILDKIT=1; \
 	docker build \
 		--tag rki/mex-artificial:${LATEST} \
 		--tag rki/mex-artificial:latest .; \
@@ -51,7 +50,14 @@ image:
 run: image
 	# run the service as a docker container
 	@ echo running docker container mex-artificial:${LATEST}; \
-	docker run -v $(pwd):/out rki/mex-artificial:${LATEST}; \
+	mkdir -m722 -p $(PWD)/out; \
+	docker run -v $(PWD)/out:/out rki/mex-artificial:${LATEST}; \
+
+start: image
+	# start the service using docker compose
+	@ echo start mex-artificial:${LATEST} with compose; \
+	mkdir -m722 -p $(PWD)/out; \
+	docker compose up --remove-orphans; \
 
 docs:
 	# use sphinx to auto-generate html docs from code
