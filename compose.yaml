@@ -1,0 +1,7 @@
+services:
+  mex-artificial:
+    build:
+      context: .
+    restart: no
+    volumes:
+      - ./out:/out
