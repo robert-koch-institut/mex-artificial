@@ -9,10 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- python 3.14 support
+
 ### Changes
 
+- upgrade mex-model to 4.10 and mex-common to 1.14
 - updated template to https://github.com/robert-koch-institut/mex-template/commit/81bc5b
-
 - change the docker build to multi-stage build
 
 ### Deprecated
