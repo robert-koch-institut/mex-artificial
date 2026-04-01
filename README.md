@@ -6,7 +6,7 @@ Create artificial data for the MEx project.
 [![cve-scan](https://github.com/robert-koch-institut/mex-artificial/actions/workflows/cve-scan.yml/badge.svg)](https://github.com/robert-koch-institut/mex-artificial/actions/workflows/cve-scan.yml)
 [![documentation](https://github.com/robert-koch-institut/mex-artificial/actions/workflows/documentation.yml/badge.svg)](https://robert-koch-institut.github.io/mex-artificial)
 [![linting](https://github.com/robert-koch-institut/mex-artificial/actions/workflows/linting.yml/badge.svg)](https://github.com/robert-koch-institut/mex-artificial/actions/workflows/linting.yml)
-[![open-code](https://github.com/robert-koch-institut/mex-artificial/actions/workflows/open-code.yml/badge.svg)](https://gitlab.opencode.de/robert-koch-institut/mex/mex-artificial)
+[![opencode](https://github.com/robert-koch-institut/mex-artificial/actions/workflows/opencode.yml/badge.svg)](https://gitlab.opencode.de/robert-koch-institut/mex/mex-artificial)
 [![testing](https://github.com/robert-koch-institut/mex-artificial/actions/workflows/testing.yml/badge.svg)](https://github.com/robert-koch-institut/mex-artificial/actions/workflows/testing.yml)
 
 ## Project
