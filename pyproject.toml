@@ -4,16 +4,16 @@ version = "1.4.0"
 description = "Create artificial data for the MEx project."
 authors = [{ name = "MEx Team", email = "mex@rki.de" }]
 readme = { file = "README.md", content-type = "text/markdown" }
-license = { file = "LICENSE" }
+license = "MIT"
 urls = { Repository = "https://github.com/robert-koch-institut/mex-artificial" }
 requires-python = ">=3.11,<3.15"
 dependencies = [
-    "annotated-types",
+    "annotated-types>=0.7",
     "faker>=40,<41",
-    "mex-common>=1.14,<2",
+    "mex-common>=1.16,<2",
     "pydantic>=2",
-    "rich",
-    "typer",
+    "rich>=14",
+    "typer>=0.23",
 ]
 [dependency-groups]
 dev = [
