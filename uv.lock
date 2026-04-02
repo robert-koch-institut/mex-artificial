@@ -665,8 +665,8 @@ dev = [
     { name = "pytest-cov", specifier = ">=6" },
     { name = "pytest-random-order", specifier = ">=1" },
     { name = "pytest-xdist", specifier = ">=3" },
-    { name = "ruff", specifier = ">=0.14" },
-    { name = "sphinx", specifier = ">=8" },
+    { name = "ruff", specifier = ">=0.15" },
+    { name = "sphinx", specifier = ">=9" },
 ]
 
 [[package]]
