@@ -86,7 +86,7 @@ components of the MEx project are open-sourced under the same license as well.
 ### Container workflow
 
 - build image with `make image`
-- run local version using docker `make run`
+- run directly using docker `make run`
 
 ### Pre-built workflow
 
