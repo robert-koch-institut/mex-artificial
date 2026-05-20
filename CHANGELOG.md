@@ -9,7 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- creation of artificial data for workflow rule
+- BREAKING: creation of artificial data for workflow rule
+  - this rule defines forbidden targets for publishing of merged items
+  - If your repo depends on mex-artificial and mex-common and mex-backend, make
+    sure to update all to versions that include the workflow rule
 
 ### Changes
 
