@@ -254,6 +254,19 @@ def test_builder_provider_preventive_rule(
     }
 
 
+def test_builder_provider_workflow_rule(
+    faker: Faker, ids_by_type: dict[str, list[str]]
+) -> None:
+    rule = faker.workflow_rule(
+        "Person",
+        ids_by_type,
+        value_probability=0.75,
+    )
+    assert rule.model_dump(exclude_defaults=True) == {
+        "forbiddenPublishingTarget": ["datenkompass"],
+    }
+
+
 def test_builder_provider_standalone_rule_set(
     faker: Faker, ids_by_type: dict[str, list[str]]
 ) -> None:

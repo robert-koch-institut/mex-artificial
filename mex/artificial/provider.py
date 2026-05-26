@@ -29,12 +29,14 @@ from mex.common.models import (
     PREVENTIVE_MODEL_CLASSES_BY_NAME,
     RULE_SET_RESPONSE_CLASSES_BY_NAME,
     SUBTRACTIVE_MODEL_CLASSES_BY_NAME,
+    WORKFLOW_MODEL_CLASSES_BY_NAME,
     AnyAdditiveModel,
     AnyExtractedModel,
     AnyPreventiveModel,
     AnyRuleModel,
     AnyRuleSetResponse,
     AnySubtractiveModel,
+    AnyWorkflowModel,
     ExtractedPrimarySource,
 )
 from mex.common.transform import ensure_postfix, ensure_prefix
@@ -256,6 +258,24 @@ class BuilderProvider(PythonFakerProvider):
         }
         return preventive_class.model_validate(raw_data)
 
+    def workflow_rule(
+        self,
+        stem_type: str,
+        ids_by_type: Mapping[str, Collection[AnyMergedIdentifier]],
+        *,
+        value_probability: float = DEFAULT_RULE_VALUE_PROBABILITY,
+    ) -> AnyWorkflowModel:
+        """Generate an artificial workflow rule."""
+        class_name = ensure_prefix(stem_type, "Workflow")
+        workflow_class = WORKFLOW_MODEL_CLASSES_BY_NAME[class_name]
+        raw_data = {
+            name: self.field_value(workflow_class.model_fields[name], ids_by_type)
+            for name in sorted(workflow_class.model_fields)
+            if name not in LITERAL_FIELDS_BY_CLASS_NAME[class_name]
+            and self.random_int() < value_probability * 1e4
+        }
+        return workflow_class.model_validate(raw_data)
+
     def standalone_rule_set(
         self,
         stem_types: Sequence[str],
@@ -339,6 +359,15 @@ class BuilderProvider(PythonFakerProvider):
                     partial(
                         self.subtractive_rule,
                         extracted_item,
+                        value_probability=value_probability,
+                    ),
+                ),
+                (
+                    "workflow",
+                    partial(
+                        self.workflow_rule,
+                        stem_type,
+                        ids_by_type,
                         value_probability=value_probability,
                     ),
                 ),
