@@ -88,6 +88,14 @@ components of the MEx project are open-sourced under the same license as well.
 - build image with `make image`
 - run directly using docker `make run`
 
+### Container verification
+
+Images released to GHCR are signed using [cosign](https://github.com/sigstore/cosign).
+
+To verify an image manually:
+`cosign verify --certificate-identity-regexp "https://github.com/robert-koch-institut/artificial" --certificate-oidc-issuer "https://token.actions.githubusercontent.com" ghcr.io/robert-koch-institut/artificial:<tag>`
+
+
 ### Pre-built workflow
 
 - you can run the latest artificial data generator without building it locally
