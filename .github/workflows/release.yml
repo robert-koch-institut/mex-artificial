@@ -120,7 +120,7 @@ jobs:
       - name: Install cosign
         uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
         with:
-          cosign-release: 'v2.4.1'
+          cosign-release: 'v2.6.4'
 
       - name: Sign Docker image keyless
         env:
@@ -174,4 +174,4 @@ jobs:
           --generate-notes --latest --verify-tag dist/*
 
       - name: Publish distribution to PyPI
-        uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b # v1.14.0
+        uses: pypa/gh-action-pypi-publish@ba38be9e461d3875417946c167d0b5f3d385a247 # v1.14.1
