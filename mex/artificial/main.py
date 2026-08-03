@@ -14,7 +14,7 @@ from mex.artificial.helpers import generate_artificial_merged_items, write_merge
 from mex.common.logging import logger
 
 
-def artificial(  # noqa: PLR0913
+def artificial(  # noqa: PLR0913, PLR0917
     count: Annotated[
         int,
         typer.Option(
