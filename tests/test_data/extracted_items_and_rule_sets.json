@@ -161,71 +161,14 @@
     },
     {
         "extracted_item": {
-            "alternativeName": [],
-            "entityType": "ExtractedOrganization",
-            "geprisId": [
-                "https://gepris.dfg.de/gepris/institution/28098"
-            ],
-            "gndId": [
-                "https://d-nb.info/gnd/6049451-9"
-            ],
-            "hadPrimarySource": "00000000000000",
-            "identifier": "d622kD2Ea3xzVZkzyuuYHR",
-            "identifierInPrimarySource": "Organization_0",
-            "isniId": [
-                "https://isni.org/isni/1585149368998094",
-                "https://isni.org/isni/4455022961201836"
-            ],
-            "officialName": [
-                {
-                    "language": "en",
-                    "value": "Return since nothing be apply. Senior anyone bank kitchen."
-                },
-                {
-                    "language": "en",
-                    "value": "Kind event sense box involve exist question main. Animal house out account feeling. Should share face build market. Compare herself region matter street south."
-                },
-                {
-                    "language": "en",
-                    "value": "Job least back."
-                }
-            ],
-            "rorId": [
-                "https://ror.org/64t1en605",
-                "https://ror.org/51k6qnb13",
-                "https://ror.org/81s6v4h53"
-            ],
-            "shortName": [],
-            "stableTargetId": "bYqslOHQ1jxbEP8qD3f6OM",
-            "viafId": [
-                "https://viaf.org/viaf/523124329",
-                "https://viaf.org/viaf/277997995",
-                "https://viaf.org/viaf/271774490",
-                "https://viaf.org/viaf/477005411"
-            ],
-            "wikidataId": [
-                "http://www.wikidata.org/entity/Q793597",
-                "http://www.wikidata.org/entity/Q071518",
-                "http://www.wikidata.org/entity/Q037788",
-                "http://www.wikidata.org/entity/Q554665"
-            ]
-        },
-        "rule_set": null
-    },
-    {
-        "extracted_item": {
             "alternativeName": [
                 {
                     "language": "en",
-                    "value": "Your ever woman way avoid point guy song."
-                },
-                {
-                    "language": null,
-                    "value": "Support question just call."
+                    "value": "Single baby plan most create simply. Road standard spring door chair culture."
                 },
                 {
                     "language": "en",
-                    "value": "Him note painting quickly we head. Off morning huge power."
+                    "value": "Concern significant management senior. Large under north play person ten physical character. Light place someone option."
                 }
             ],
             "email": [],
@@ -236,375 +179,184 @@
             "name": [
                 {
                     "language": "en",
-                    "value": "Energy employee land you. Really your customer career available. Together knowledge because radio. Property remember nearly face feel church. Soldier meeting building cut."
+                    "value": "Story baby ten talk past medical."
                 },
                 {
                     "language": "en",
-                    "value": "Ago network hard sound necessary partner beat."
+                    "value": "West school American training occur could painting. Character artist billion tonight gas research mean. Always remain yard model. City health executive impact full our smile positive. Form newspaper hit edge."
                 },
                 {
                     "language": "en",
-                    "value": "Moment shoulder statement available win politics last. General there sister policy consider whom item. Story million fight class."
+                    "value": "Bank professional true financial prevent product. Organization visit finally heavy. Spend prove stock school rate money."
                 },
                 {
                     "language": "en",
-                    "value": "Thus suffer economy play nearly by field. Behavior political option oil commercial person top."
-                },
-                {
-                    "language": "en",
-                    "value": "Stay agreement animal. Enough decision occur peace air threat nation. Lot source rate father authority."
+                    "value": "Adult final week game she court. Choice fast small medical. Strong this also from short capital heavy. Congress realize person total. Analysis hair rest wide particular sell."
                 }
             ],
             "parentUnit": null,
             "shortName": [
                 {
                     "language": "en",
-                    "value": "Parent fine responsibility safe team wish. Set middle blood drop. Environment easy best face."
+                    "value": "Worker left example high month whom stage. Catch economic political them never bill suffer surface."
                 },
                 {
                     "language": "en",
-                    "value": "Eat tend civil force officer fine. Marriage method material final. Bed hotel lead. Democrat good anything manager think. Experience account blue care enough hand idea."
+                    "value": "Evening town challenge join. Stage this us increase how."
                 },
                 {
                     "language": "en",
-                    "value": "Now crime network."
+                    "value": "Yes heart agreement us stuff practice. Case expert stop receive."
                 }
             ],
             "stableTargetId": "gHT3JqDyFK07vYI0Gqycpz",
-            "unitOf": [
-                "bYqslOHQ1jxbEP8qD3f6OM"
-            ],
-            "website": [
-                {
-                    "language": null,
-                    "title": "Mcmillan",
-                    "url": "https://www.williams.com/"
-                },
-                {
-                    "language": null,
-                    "title": null,
-                    "url": "https://www.barry.com/"
-                }
-            ]
-        },
-        "rule_set": {
-            "additive": {
-                "alternativeName": [],
-                "email": [],
-                "entityType": "AdditiveOrganizationalUnit",
-                "name": [],
-                "parentUnit": null,
-                "shortName": [
-                    {
-                        "language": "de",
-                        "value": "Wer von setzen bei dem erst gestern rot. Heraus Wohnung kochen man Mensch schauen Vogel. Noch Eis finden mit Familie. Spaß Schuh schlecht laut langsam."
-                    },
-                    {
-                        "language": "de",
-                        "value": "Dann scheinen Herr zu tot. Ganz für schwimmen groß. Reiten sieht essen tun fröhlich Monate. Dein nächste nass Feuer Sache."
-                    },
-                    {
-                        "language": "de",
-                        "value": "Bald ihn schön Brief Spaß. Zahl Zimmer dir. Lange er wünschen Geschichte plötzlich weit bleiben. Fehlen sich verkaufen arbeiten werden im und."
-                    }
-                ],
-                "supersededBy": null,
-                "unitOf": [],
-                "website": []
-            },
-            "entityType": "OrganizationalUnitRuleSetResponse",
-            "preventive": {
-                "alternativeName": [],
-                "email": [],
-                "entityType": "PreventiveOrganizationalUnit",
-                "name": [
-                    "00000000000000"
-                ],
-                "parentUnit": [],
-                "shortName": [
-                    "00000000000000"
-                ],
-                "unitOf": [],
-                "website": []
-            },
-            "stableTargetId": "gHT3JqDyFK07vYI0Gqycpz",
-            "subtractive": {
-                "alternativeName": [],
-                "email": [],
-                "entityType": "SubtractiveOrganizationalUnit",
-                "name": [],
-                "parentUnit": [],
-                "shortName": [],
-                "unitOf": [],
-                "website": [
-                    {
-                        "language": null,
-                        "title": "Mcmillan",
-                        "url": "https://www.williams.com/"
-                    },
-                    {
-                        "language": null,
-                        "title": null,
-                        "url": "https://www.barry.com/"
-                    }
-                ]
-            },
-            "workflow": {
-                "entityType": "WorkflowOrganizationalUnit",
-                "forbiddenPublishingTarget": []
-            }
-        }
-    },
-    {
-        "extracted_item": null,
-        "rule_set": {
-            "additive": {
-                "affiliation": [],
-                "email": [],
-                "entityType": "AdditivePerson",
-                "familyName": [],
-                "fullName": [
-                    "give"
-                ],
-                "givenName": [
-                    "cultural address since",
-                    "street find",
-                    "represent sometimes data",
-                    "popular"
-                ],
-                "isniId": [],
-                "memberOf": [],
-                "orcidId": [],
-                "supersededBy": null
-            },
-            "entityType": "PersonRuleSetResponse",
-            "preventive": {
-                "affiliation": [],
-                "email": [],
-                "entityType": "PreventivePerson",
-                "familyName": [],
-                "fullName": [],
-                "givenName": [],
-                "isniId": [],
-                "memberOf": [],
-                "orcidId": []
-            },
-            "stableTargetId": "Cyzy5gAgoMK3T5L0h9Vl8",
-            "subtractive": {
-                "affiliation": [],
-                "email": [],
-                "entityType": "SubtractivePerson",
-                "familyName": [],
-                "fullName": [],
-                "givenName": [],
-                "isniId": [],
-                "memberOf": [],
-                "orcidId": []
-            },
-            "workflow": {
-                "entityType": "WorkflowPerson",
-                "forbiddenPublishingTarget": []
-            }
-        }
-    },
-    {
-        "extracted_item": null,
-        "rule_set": {
-            "additive": {
-                "abstract": [
-                    {
-                        "language": "de",
-                        "value": "Ferien so wohl gegen See alle."
-                    }
-                ],
-                "accessRestriction": null,
-                "alternateIdentifier": [],
-                "alternativeTitle": [
-                    {
-                        "language": "de",
-                        "value": "Werfen warten Spaß schlecht packen wir Haus. Fahren davon dick sind nie."
-                    },
-                    {
-                        "language": "de",
-                        "value": "Sofort Stück trinken Sommer schenken nennen stehen. Kaufen schreien besser Mutter bei merken lesen. Maus dort verstecken kann schenken schön laut. Katze bauen dauern ihr Musik Monat schaffen. See hinter Tisch sieht Nacht."
-                    }
-                ],
-                "bibliographicResourceType": [],
-                "contributingUnit": [],
-                "creator": [],
-                "distribution": [],
-                "doi": null,
-                "edition": "Weg hier",
-                "editor": [],
-                "editorOfSeries": [],
-                "entityType": "AdditiveBibliographicResource",
-                "isbnIssn": [],
-                "issue": "eigentlich",
-                "issued": null,
-                "journal": [],
-                "keyword": [],
-                "language": [],
-                "license": null,
-                "pages": null,
-                "publicationPlace": null,
-                "publicationYear": null,
-                "publisher": [],
-                "repositoryURL": [],
-                "section": null,
-                "subtitle": [],
-                "supersededBy": null,
-                "title": [],
-                "titleOfBook": [
-                    {
-                        "language": "de",
-                        "value": "Nur will warten Feuer Bein nein."
-                    },
-                    {
-                        "language": "de",
-                        "value": "Finden Auge kalt. Etwas vielleicht bauen lernen gab Tisch seit. Nach Spiel tot fertig vorbei zur. Fahrrad gefährlich Baum Wissen wahr weiß offen. Minutenmir aus Gott Platz Herz Luft."
-                    }
-                ],
-                "titleOfSeries": [],
-                "volume": null,
-                "volumeOfSeries": "Sommer"
-            },
-            "entityType": "BibliographicResourceRuleSetResponse",
-            "preventive": {
-                "abstract": [],
-                "accessRestriction": [],
-                "alternateIdentifier": [],
-                "alternativeTitle": [],
-                "bibliographicResourceType": [],
-                "contributingUnit": [],
-                "creator": [],
-                "distribution": [],
-                "doi": [],
-                "edition": [],
-                "editor": [],
-                "editorOfSeries": [],
-                "entityType": "PreventiveBibliographicResource",
-                "isbnIssn": [],
-                "issue": [],
-                "issued": [],
-                "journal": [],
-                "keyword": [],
-                "language": [],
-                "license": [],
-                "pages": [],
-                "publicationPlace": [],
-                "publicationYear": [],
-                "publisher": [],
-                "repositoryURL": [],
-                "section": [],
-                "subtitle": [],
-                "title": [],
-                "titleOfBook": [],
-                "titleOfSeries": [],
-                "volume": [],
-                "volumeOfSeries": []
-            },
-            "stableTargetId": "5npRiMtzqHNskA6nS64gV",
-            "subtractive": {
-                "abstract": [],
-                "accessRestriction": [],
-                "alternateIdentifier": [],
-                "alternativeTitle": [],
-                "bibliographicResourceType": [],
-                "contributingUnit": [],
-                "creator": [],
-                "distribution": [],
-                "doi": [],
-                "edition": [],
-                "editor": [],
-                "editorOfSeries": [],
-                "entityType": "SubtractiveBibliographicResource",
-                "isbnIssn": [],
-                "issue": [],
-                "issued": [],
-                "journal": [],
-                "keyword": [],
-                "language": [],
-                "license": [],
-                "pages": [],
-                "publicationPlace": [],
-                "publicationYear": [],
-                "publisher": [],
-                "repositoryURL": [],
-                "section": [],
-                "subtitle": [],
-                "title": [],
-                "titleOfBook": [],
-                "titleOfSeries": [],
-                "volume": [],
-                "volumeOfSeries": []
-            },
-            "workflow": {
-                "entityType": "WorkflowBibliographicResource",
-                "forbiddenPublishingTarget": []
-            }
-        }
-    },
-    {
-        "extracted_item": {
-            "accessRestriction": "https://mex.rki.de/item/access-restriction-1",
-            "accessService": "bSwVgRBcGIR1qLB4IdsDmo",
-            "accessURL": [
-                {
-                    "language": "de",
-                    "title": "Seifert",
-                    "url": "http://www.kostolzin.org/"
-                }
-            ],
-            "downloadURL": [],
-            "entityType": "ExtractedDistribution",
-            "hadPrimarySource": "00000000000000",
-            "identifier": "gjJMpThhCXJguwNPKLp55j",
-            "identifierInPrimarySource": "Distribution_0",
-            "issued": "2002-06-17",
-            "license": null,
-            "mediaType": null,
-            "modified": "2026-06-19T12:57:47Z",
-            "stableTargetId": "dYxRaD5kLl36ZpTmmoRw4H",
-            "title": [
-                {
-                    "language": "de",
-                    "value": "Herr man Hand frei Licht. Krank suchen See Sommer Geschichte Erde genau. Musik Fahrrad denn. Minute Nase sechs Garten Ende. Herr Uhr leicht reich schlafen."
-                },
-                {
-                    "language": "de",
-                    "value": "Kochen Seite Haare dem merken einfach warten. Luft uns bekommen tot. Sonne ihn unten."
-                }
-            ]
+            "unitOf": [],
+            "website": []
         },
         "rule_set": null
     },
     {
         "extracted_item": {
-            "alternativeTitle": [],
-            "contact": [
-                "f46Wu5L9TNsq8YTd46LBRC",
-                "uz1YdX8Rr4w7yRonYhZRM"
+            "email": [
+                "info@rki.de"
             ],
+            "entityType": "ExtractedContactPoint",
+            "hadPrimarySource": "00000000000000",
+            "identifier": "fBUaEJS323fxnaZMSiO2Z6",
+            "identifierInPrimarySource": "ContactPoint_2",
+            "stableTargetId": "ih131cdYtiMHjE9Sut5GB"
+        },
+        "rule_set": null
+    },
+    {
+        "extracted_item": {
+            "alternativeName": [
+                {
+                    "language": "de",
+                    "value": "Oma müssen Schüler. Jahr nur fest im rufen. Luft Hand wohl mein. Minute Himmel können Opa Zug fliegen also. Gott Seite oft Spiel. Davon Haare gleich Pferd Tür schlafen."
+                }
+            ],
+            "email": [
+                "info@rki.de"
+            ],
+            "entityType": "ExtractedOrganizationalUnit",
+            "hadPrimarySource": "00000000000000",
+            "identifier": "fBy0EFtczgRMcOnIDQp3mB",
+            "identifierInPrimarySource": "OrganizationalUnit_1",
+            "name": [
+                {
+                    "language": "de",
+                    "value": "Warm gern Geld hoch Tisch."
+                },
+                {
+                    "language": "de",
+                    "value": "Sitzen einmal halbe. Vier ging darauf. Junge holen kalt wohnen gleich einige."
+                }
+            ],
+            "parentUnit": "gHT3JqDyFK07vYI0Gqycpz",
+            "shortName": [
+                {
+                    "language": "de",
+                    "value": "Öffnen eigentlich gar Brot gewinnen Garten kaufen schön."
+                },
+                {
+                    "language": "de",
+                    "value": "Kaufen sehr weiß nur jung Papa. Berg packen Hase Stück."
+                },
+                {
+                    "language": "de",
+                    "value": "Vergessen scheinen kalt darauf."
+                },
+                {
+                    "language": "de",
+                    "value": "Heute Mädchen nichts schenken wo heißen. Müde mal hoch Rad."
+                },
+                {
+                    "language": "de",
+                    "value": "Selbst leicht Hilfe."
+                },
+                {
+                    "language": "de",
+                    "value": "Spielen schreien essen nun Schluss. Er dazu bekommen dumm Schwester über Teller. Rund schwarz mich ganz gefährlich Ding."
+                }
+            ],
+            "stableTargetId": "d967UubWpp678RKnlWAnAP",
+            "unitOf": [],
+            "website": []
+        },
+        "rule_set": null
+    },
+    {
+        "extracted_item": null,
+        "rule_set": {
+            "additive": {
+                "alternativeName": [],
+                "entityType": "AdditiveOrganization",
+                "geprisId": [],
+                "gndId": [],
+                "isniId": [],
+                "officialName": [],
+                "rorId": [
+                    "https://ror.org/86s6v9h12"
+                ],
+                "shortName": [],
+                "supersededBy": null,
+                "viafId": [],
+                "wikidataId": []
+            },
+            "entityType": "OrganizationRuleSetResponse",
+            "preventive": {
+                "alternativeName": [],
+                "entityType": "PreventiveOrganization",
+                "geprisId": [],
+                "gndId": [],
+                "isniId": [],
+                "officialName": [],
+                "rorId": [],
+                "shortName": [],
+                "viafId": [],
+                "wikidataId": []
+            },
+            "stableTargetId": "5npRiMtzqHNskA6nS64gV",
+            "subtractive": {
+                "alternativeName": [],
+                "entityType": "SubtractiveOrganization",
+                "geprisId": [],
+                "gndId": [],
+                "isniId": [],
+                "officialName": [],
+                "rorId": [],
+                "shortName": [],
+                "viafId": [],
+                "wikidataId": []
+            },
+            "workflow": {
+                "entityType": "WorkflowOrganization",
+                "forbiddenPublishingTarget": []
+            }
+        }
+    },
+    {
+        "extracted_item": {
+            "alternativeTitle": [
+                {
+                    "language": "de",
+                    "value": "Luft Feuer ob Flasche."
+                }
+            ],
+            "contact": [],
             "description": [
                 {
                     "language": "de",
-                    "value": "Wenn Luft Feuer ob. Tisch freuen hoch helfen hängen. Fiel schnell gefährlich tun Bett zwei Rad."
+                    "value": "Gefährlich tun Bett zwei Rad. Boden Herr Minute. Opa schreien Bild unter. Mutter verstehen brauchen machen auf es."
                 },
                 {
                     "language": "de",
-                    "value": "Herr Minute bauen Affe drei leicht."
+                    "value": "Aus bekommen Wetter weg Musik. Dürfen verkaufen als. Nass sitzen Schwester hoch besser. Musik Mädchen vergessen scheinen. Ging sofort dem zusammen sehen leicht Zeitung. Braun fehlen Berg."
                 },
                 {
                     "language": "de",
-                    "value": "Zimmer Zeitung waschen wer fast Weg schlimm. Land aus bekommen Wetter weg Musik Apfel. Als erst denn traurig traurig wichtig. Dorf fest um Himmel Wasser."
-                },
-                {
-                    "language": "de",
-                    "value": "Steigen schlecht besser sieben. Ball Junge uns Glück sonst wohnen. Zeigen gesund Onkel Stadt kennen fangen."
-                },
-                {
-                    "language": "de",
-                    "value": "Einige nass Herr Spiel Garten finden. Bild die schwer Onkel. Gern Buch aber gelb Hand Freund. Blau jeder mit Licht. Anfangen haben Boden neu."
+                    "value": "Hoch spielen antworten früh zwischen leben halbe wird. Einige nass Herr Spiel Garten finden. Bild die schwer Onkel. Gern Buch aber gelb Hand Freund. Blau jeder mit Licht. Anfangen haben Boden neu."
                 }
             ],
             "endpointDescription": {
@@ -661,9 +413,262 @@
                 }
             ],
             "unitInCharge": [
-                "gHT3JqDyFK07vYI0Gqycpz"
+                "gHT3JqDyFK07vYI0Gqycpz",
+                "d967UubWpp678RKnlWAnAP"
             ]
         },
-        "rule_set": null
+        "rule_set": {
+            "additive": {
+                "alternativeTitle": [
+                    {
+                        "language": "en",
+                        "value": "Leader energy television month police. Home hotel box goal leader common purpose song. Opportunity public finish draw bring health center home."
+                    }
+                ],
+                "contact": [],
+                "description": [
+                    {
+                        "language": "en",
+                        "value": "Never majority cell fire. People tend weight machine crime himself no. Important man report kitchen cold not somebody. Factor ever Mrs collection leader. Near both box simple statement happen state."
+                    }
+                ],
+                "endpointDescription": null,
+                "endpointType": null,
+                "endpointURL": {
+                    "language": "es",
+                    "title": "Baker Atkins",
+                    "url": "http://www.cochran.com/"
+                },
+                "entityType": "AdditiveAccessPlatform",
+                "landingPage": [],
+                "supersededBy": null,
+                "technicalAccessibility": null,
+                "title": [],
+                "unitInCharge": [
+                    "gHT3JqDyFK07vYI0Gqycpz",
+                    "d967UubWpp678RKnlWAnAP"
+                ]
+            },
+            "entityType": "AccessPlatformRuleSetResponse",
+            "preventive": {
+                "alternativeTitle": [
+                    "00000000000000"
+                ],
+                "contact": [
+                    "00000000000000"
+                ],
+                "description": [],
+                "endpointDescription": [],
+                "endpointType": [
+                    "00000000000000"
+                ],
+                "endpointURL": [
+                    "00000000000000"
+                ],
+                "entityType": "PreventiveAccessPlatform",
+                "landingPage": [
+                    "00000000000000"
+                ],
+                "technicalAccessibility": [],
+                "title": [],
+                "unitInCharge": []
+            },
+            "stableTargetId": "c51IFvSjrAEUB579dh8bCp",
+            "subtractive": {
+                "alternativeTitle": [],
+                "contact": [],
+                "description": [],
+                "endpointDescription": [],
+                "endpointType": [],
+                "endpointURL": [
+                    {
+                        "language": "es",
+                        "title": "Geisel",
+                        "url": "https://klingelhofer.com/"
+                    }
+                ],
+                "entityType": "SubtractiveAccessPlatform",
+                "landingPage": [],
+                "technicalAccessibility": [
+                    "https://mex.rki.de/item/technical-accessibility-2"
+                ],
+                "title": [
+                    {
+                        "language": "de",
+                        "value": "Fliegen die ins heraus kein."
+                    },
+                    {
+                        "language": "de",
+                        "value": "Hund lesen wer schlimm mein steigen Hand Wasser. Nein Welt böse Finger rufen draußen nun. Zum scheinen holen sitzen Zahl jeder alle. Fahrrad sieht mit schlagen Fahrrad. Hin Spiel natürlich leicht Gott andere. Garten wer bis Tür."
+                    }
+                ],
+                "unitInCharge": []
+            },
+            "workflow": {
+                "entityType": "WorkflowAccessPlatform",
+                "forbiddenPublishingTarget": []
+            }
+        }
+    },
+    {
+        "extracted_item": {
+            "alternativeName": [
+                {
+                    "language": "en",
+                    "value": "None particular clearly goal defense security turn."
+                }
+            ],
+            "entityType": "ExtractedOrganization",
+            "geprisId": [],
+            "gndId": [],
+            "hadPrimarySource": "00000000000000",
+            "identifier": "cEj9YZnke6rvCDA4uL2DxA",
+            "identifierInPrimarySource": "Organization_1",
+            "isniId": [
+                "https://isni.org/isni/3413899940438983",
+                "https://isni.org/isni/4037613791805526",
+                "https://isni.org/isni/5827109104300684"
+            ],
+            "officialName": [
+                {
+                    "language": "en",
+                    "value": "Pattern everyone finally memory data space movie."
+                },
+                {
+                    "language": "en",
+                    "value": "Financial join well draw. Beat its law participant finally. Budget remain reduce clearly. Mission situation result cold camera sit. Run brother tonight friend investment."
+                },
+                {
+                    "language": "en",
+                    "value": "Republican office baby lawyer growth. Teacher cold church significant thus purpose boy. Able teach activity animal hair turn condition."
+                },
+                {
+                    "language": null,
+                    "value": "Different eat trouble floor step number."
+                }
+            ],
+            "rorId": [
+                "https://ror.org/38k0qnb61",
+                "https://ror.org/45s1v8h70",
+                "https://ror.org/49s4v9h37",
+                "https://ror.org/38s3v2h06",
+                "https://ror.org/85k0qnb50"
+            ],
+            "shortName": [
+                {
+                    "language": "en",
+                    "value": "Work information which win central evidence analysis."
+                },
+                {
+                    "language": "en",
+                    "value": "Red head window be believe card. Avoid nothing itself who door end."
+                },
+                {
+                    "language": "en",
+                    "value": "Fish evening avoid dark sister once. Black last finish building. Who debate final enter build citizen."
+                },
+                {
+                    "language": "en",
+                    "value": "Democrat task chance. Why how any federal star. All identify laugh security. Behind big soldier building article."
+                }
+            ],
+            "stableTargetId": "bT1U0MUY7LlPxzAWgMYhHx",
+            "viafId": [],
+            "wikidataId": []
+        },
+        "rule_set": {
+            "additive": {
+                "alternativeName": [
+                    {
+                        "language": "en",
+                        "value": "Business walk anything under item right."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Raise common Democrat cost evidence third. Pass pay positive."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Look because him information poor something eat. Some writer site grow name machine tree. Focus establish ago others ahead specific exactly. Morning short yourself wind beyond prevent entire."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Suffer something great stuff suddenly compare or."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Region goal nothing. None could write think. My compare also argue own after long. Truth cut candidate response try such."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Challenge relate center. Suffer team whether health."
+                    },
+                    {
+                        "language": "en",
+                        "value": "From follow wish run. Social whether power company why really. Skin development open compare fill read camera rock. Hot yes whole allow own TV whose. Policy bit many former back."
+                    }
+                ],
+                "entityType": "AdditiveOrganization",
+                "geprisId": [],
+                "gndId": [],
+                "isniId": [
+                    "https://isni.org/isni/7043315410067626",
+                    "https://isni.org/isni/5861793271040541",
+                    "https://isni.org/isni/2621815997062962",
+                    "https://isni.org/isni/5336884443106987",
+                    "https://isni.org/isni/5061497310324171",
+                    "https://isni.org/isni/7741862565270477",
+                    "https://isni.org/isni/4902115869380686",
+                    "https://isni.org/isni/9374160898992172",
+                    "https://isni.org/isni/3206163294511686",
+                    "https://isni.org/isni/4870998616229991"
+                ],
+                "officialName": [
+                    {
+                        "language": "en",
+                        "value": "Pressure occur list common idea peace. Although threat former down second TV. After stage field exactly man receive."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Feel season similar fly."
+                    }
+                ],
+                "rorId": [],
+                "shortName": [],
+                "supersededBy": "5npRiMtzqHNskA6nS64gV",
+                "viafId": [],
+                "wikidataId": []
+            },
+            "entityType": "OrganizationRuleSetResponse",
+            "preventive": {
+                "alternativeName": [],
+                "entityType": "PreventiveOrganization",
+                "geprisId": [],
+                "gndId": [],
+                "isniId": [],
+                "officialName": [],
+                "rorId": [],
+                "shortName": [],
+                "viafId": [],
+                "wikidataId": []
+            },
+            "stableTargetId": "bT1U0MUY7LlPxzAWgMYhHx",
+            "subtractive": {
+                "alternativeName": [],
+                "entityType": "SubtractiveOrganization",
+                "geprisId": [],
+                "gndId": [],
+                "isniId": [],
+                "officialName": [],
+                "rorId": [],
+                "shortName": [],
+                "viafId": [],
+                "wikidataId": []
+            },
+            "workflow": {
+                "entityType": "WorkflowOrganization",
+                "forbiddenPublishingTarget": []
+            }
+        }
     }
 ]
