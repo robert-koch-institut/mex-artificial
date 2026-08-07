@@ -15,7 +15,6 @@ dependencies = [
     "rich>=14",
     "typer>=0.23",
 ]
-
 [dependency-groups]
 dev = [
     "ipdb>=0.13",
@@ -90,6 +89,9 @@ ignore = [
 select = ["ALL"]
 
 [tool.ruff.lint.per-file-ignores]
+"mex/artificial/types.py" = [
+    "A005",     # Allow custom types module to shadow standard-library
+]
 "docs/**" = [
     "INP001",   # Docs folder does not need to be a package
 ]

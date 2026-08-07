@@ -1,12 +1,8 @@
-from typing import TYPE_CHECKING
-
 import pytest
+from faker import Faker
 
 from mex.artificial.helpers import create_faker
 from mex.common.models import BASE_MODEL_CLASSES
-
-if TYPE_CHECKING:
-    from faker import Faker
 
 pytest_plugins = ("mex.common.testing.plugin",)
 

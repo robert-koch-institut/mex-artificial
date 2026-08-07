@@ -1,15 +1,18 @@
 import re
 from collections import OrderedDict
+from collections.abc import Callable, Collection, Mapping, Sequence
 from datetime import datetime
 from enum import Enum
 from functools import partial
-from typing import TYPE_CHECKING, Any, cast, get_args, get_origin
+from typing import Any, cast, get_args, get_origin
 
 from annotated_types import MaxLen, MinLen
+from faker import Generator as FakerFactory
 from faker.providers import BaseProvider as BaseFakerProvider
 from faker.providers.internet import Provider as InternetFakerProvider
 from faker.providers.python import Provider as PythonFakerProvider
 from pydantic import ValidationError
+from pydantic.fields import FieldInfo
 
 from mex.artificial.constants import (
     DEFAULT_GENERATION_ATTEMPTS,
@@ -49,12 +52,6 @@ from mex.common.types import (
     Text,
 )
 from mex.common.utils import ensure_list
-
-if TYPE_CHECKING:
-    from collections.abc import Callable, Collection, Mapping, Sequence
-
-    from faker import Generator as FakerFactory
-    from pydantic.fields import FieldInfo
 
 
 class BuilderProvider(PythonFakerProvider):

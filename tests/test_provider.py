@@ -1,6 +1,7 @@
-from typing import TYPE_CHECKING, Annotated, Any
+from typing import Annotated, Any
 
 import pytest
+from faker import Faker
 from pydantic import BaseModel, Field
 from pydantic.fields import FieldInfo
 
@@ -17,9 +18,6 @@ from mex.common.types import (
     YearMonth,
     YearMonthDay,
 )
-
-if TYPE_CHECKING:
-    from faker import Faker
 
 
 class DummyModel(BaseModel):

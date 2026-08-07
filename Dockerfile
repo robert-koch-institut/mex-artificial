@@ -12,7 +12,11 @@ ENV PIP_PROGRESS_BAR=off
 COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
-RUN uv export --no-dev --no-editable | uv pip install --system --no-deps -r -
+RUN uv export --no-dev --no-hashes --output-file requirements.lock
+
+RUN pip wheel --no-cache-dir --wheel-dir /build/wheels -r requirements.lock
+RUN pip wheel --no-cache-dir --wheel-dir /build/wheels --no-deps .
+
 
 FROM python:3.14-slim
 
@@ -25,15 +29,25 @@ LABEL org.opencontainers.image.vendor="robert-koch-institut"
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONOPTIMIZE=1
 
-ENV MEX_ARTIFICIAL_HOST=0.0.0.0
+COPY --from=builder /build/wheels /wheels
 
-WORKDIR /app
+RUN pip install --no-cache-dir \
+    --no-index \
+    --find-links=/wheels \
+    /wheels/*.whl \
+    && rm -rf /wheels
 
-COPY --from=builder /usr/local/lib/python3.14/site-packages /usr/local/lib/python3.14/site-packages
-COPY --from=builder /usr/local/bin/artificial /usr/local/bin/artificial
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "10001" \
+    mex
 
-USER 10001
+RUN mkdir /out && chown mex:mex /out
 
-EXPOSE 8080
+USER mex
 
-ENTRYPOINT [ "artificial" ]
+ENTRYPOINT [ "artificial", "--path=/out" ]
+CMD [ "--count=100", "--chattiness=10" ]

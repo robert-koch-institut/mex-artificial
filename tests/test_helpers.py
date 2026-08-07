@@ -1,10 +1,12 @@
 import json
+from collections.abc import Callable, Iterable, Sequence
 from itertools import islice
 from pathlib import Path
-from typing import TYPE_CHECKING
 
 import pytest
 from faker import Faker
+from faker.typing import SeedType
+from pydantic import BaseModel
 
 from mex.artificial.constants import DEFAULT_LOCALE, DEFAULT_MODELS
 from mex.artificial.helpers import (
@@ -17,15 +19,7 @@ from mex.artificial.helpers import (
     generate_artificial_merged_items,
     write_merged_items,
 )
-
-if TYPE_CHECKING:
-    from collections.abc import Callable, Iterable, Sequence
-
-    from faker.typing import SeedType
-    from pydantic import BaseModel
-
-    from mex.artificial.types import LocaleType
-
+from mex.artificial.types import LocaleType
 
 TEST_DATA_PATH = Path(__file__).parent / "test_data"
 
