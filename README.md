@@ -87,6 +87,7 @@ components of the MEx project are open-sourced under the same license as well.
 
 - build image with `make image`
 - run directly using docker `make run`
+- start with docker compose `make start`
 
 ### Container verification
 
@@ -95,17 +96,11 @@ Images released to GHCR are signed using [cosign](https://github.com/sigstore/co
 To verify an image manually:
 `cosign verify --certificate-identity-regexp "https://github.com/robert-koch-institut/mex-artificial/.github/workflows/release.yml@refs/heads/main" --certificate-oidc-issuer "https://token.actions.githubusercontent.com" ghcr.io/robert-koch-institut/mex-artificial:<tag>`
 
-### Pre-built workflow
-
-- you can run the latest artificial data generator without building it locally
-- just pull it from the container registry and configure using cli arguments
-- `docker run -it -u $(id -u):$(id -g) -v $(pwd):/out
-   ghcr.io/robert-koch-institut/mex-artificial:latest --count=1000 --chattiness=10`
-- using `-u $(id -u):$(id -g)` to run the process using your local user
-- using `-v $(pwd):/out` to specify an output directory for the resulting `ndjson`
-- `--count` controls the number of items to generate
-- `--chattiness` controls the number of words in textual fields
-
 ## Commands
 
-- run `uv run artificial --help` to print instructions
+- run `uv run {command} --help` to print instructions
+- run `uv run {command} --debug` for interactive debugging
+
+### artificial
+
+- `artificial` starts the artificial service

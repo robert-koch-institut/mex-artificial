@@ -50,14 +50,15 @@ image:
 run: image
 	# run the service as a docker container
 	@ echo running docker container mex-artificial:${LATEST}; \
-	mkdir -m722 -p $(PWD)/out; \
-	docker run -v $(PWD)/out:/out rki/mex-artificial:${LATEST}; \
+	docker run \
+               --env MEX_ARTIFICIAL_HOST=0.0.0.0 \
+               --publish 8080:8080 \
+               rki/mex-artificial:${LATEST}; \
 
-start: image
+start:
 	# start the service using docker compose
 	@ echo start mex-artificial:${LATEST} with compose; \
-	mkdir -m722 -p $(PWD)/out; \
-	docker compose up --remove-orphans; \
+	docker compose up --build --remove-orphans; \
 
 docs:
 	# use sphinx to auto-generate html docs from code

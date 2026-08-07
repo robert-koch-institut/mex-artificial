@@ -1,8 +1,12 @@
-from pytest import LogCaptureFixture
+from typing import TYPE_CHECKING
+
 from typer import Typer
 from typer.testing import CliRunner
 
 from mex.artificial.main import artificial
+
+if TYPE_CHECKING:
+    from pytest import LogCaptureFixture
 
 
 def test_main(caplog: LogCaptureFixture) -> None:

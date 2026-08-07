@@ -2,6 +2,16 @@ services:
   mex-artificial:
     build:
       context: .
-    restart: no
+    ports:
+      - 8080:8080
+    environment:
+      - MEX_ARTIFICIAL_HOST=0.0.0.0
+    healthcheck:
+      test: [ "CMD", "curl", "http://0.0.0.0:8080/_system/check" ]
+      interval: 60s
+      timeout: 5s
+      retries: 5
     volumes:
-      - ./out:/out
+      - data:/app/data
+volumes:
+  data:

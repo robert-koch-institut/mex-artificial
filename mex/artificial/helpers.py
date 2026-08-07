@@ -1,13 +1,10 @@
 import json
 from collections import OrderedDict, defaultdict
-from collections.abc import Generator, Iterable, Mapping, Sequence
 from itertools import count, islice
-from os import PathLike
 from pathlib import Path
-from typing import cast
+from typing import TYPE_CHECKING, cast
 
 from faker import Faker
-from faker.typing import SeedType
 from rich.progress import track
 
 from mex.artificial.constants import (
@@ -27,11 +24,18 @@ from mex.artificial.provider import (
     TemporalEntityProvider,
     TextProvider,
 )
-from mex.artificial.types import LocaleType
 from mex.common.merged.main import create_merged_item
-from mex.common.models import AnyExtractedModel, AnyMergedModel
 from mex.common.transform import MExEncoder
 from mex.common.types import AnyMergedIdentifier, Validation
+
+if TYPE_CHECKING:
+    from collections.abc import Generator, Iterable, Mapping, Sequence
+    from os import PathLike
+
+    from faker.typing import SeedType
+
+    from mex.artificial.types import LocaleType
+    from mex.common.models import AnyExtractedModel, AnyMergedModel
 
 
 def create_faker(
@@ -57,7 +61,7 @@ def generate_artificial_extracted_items(
     seed: SeedType = DEFAULT_SEED,
     chattiness: int = DEFAULT_CHATTINESS,
     stem_types: Sequence[str] = DEFAULT_MODELS,
-) -> Generator[AnyExtractedModel, None, None]:
+) -> Generator[AnyExtractedModel]:
     """Infinitely generate extracted items for the given settings."""
     faker = create_faker(locale, seed, chattiness)
     ids_by_type: Mapping[str, OrderedDict[AnyMergedIdentifier, None]] = defaultdict(
@@ -96,7 +100,7 @@ def generate_artificial_items_and_rule_sets(
     seed: SeedType = DEFAULT_SEED,
     chattiness: int = DEFAULT_CHATTINESS,
     stem_types: Sequence[str] = DEFAULT_MODELS,
-) -> Generator[ExtractedItemAndRuleSet, None, None]:
+) -> Generator[ExtractedItemAndRuleSet]:
     """Infinitely generate artificial extracted items and rule-sets."""
     faker = create_faker(locale, seed, chattiness)
     ids_by_type: Mapping[str, OrderedDict[AnyMergedIdentifier, None]] = defaultdict(
@@ -148,7 +152,7 @@ def generate_artificial_merged_items(
     seed: SeedType = DEFAULT_SEED,
     chattiness: int = DEFAULT_CHATTINESS,
     stem_types: Sequence[str] = DEFAULT_MODELS,
-) -> Generator[AnyMergedModel, None, None]:
+) -> Generator[AnyMergedModel]:
     """Infinitely generate merged items for the given settings."""
     for item_combination in generate_artificial_items_and_rule_sets(
         locale, seed, chattiness, stem_types
