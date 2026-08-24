@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- update test data
+- update test data to new model version
 - added noqa to artificial function to fix linting error
 
 ### Security
