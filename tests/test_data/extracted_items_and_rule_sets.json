@@ -423,8 +423,8 @@
             ],
             "documentation": [],
             "end": [
-                "2002-10-18",
-                "2013-04-06"
+                "2002-10-18T12:31:55Z",
+                "2013-04-06T17:36:31Z"
             ],
             "entityType": "ExtractedActivity",
             "externalAssociate": [
@@ -600,7 +600,11 @@
             ],
             "stableTargetId": "cLXSxE9FusTqkuzRL7u9Lb",
             "start": [
-                "2008"
+                "2008-04-29",
+                "2008-06-24",
+                "2013-09-25",
+                "1996-03-11",
+                "2012-11-06"
             ],
             "succeeds": [
                 "hjYSgm6xO1azGP9zcYi1wS"
@@ -609,154 +613,220 @@
             "title": [
                 {
                     "language": "en",
-                    "value": "Way cold what Mrs. Phone decision picture. Ten interest billion Mrs reflect."
+                    "value": "Assume prove similar ten interest billion Mrs reflect. Position vote section child learn forward. Available concern edge audience."
                 },
                 {
                     "language": "en",
-                    "value": "Agency response also available. Some newspaper offer direction."
+                    "value": "Hold picture item admit pull movement."
                 },
                 {
                     "language": "en",
-                    "value": "Later identify first hope brother accept. As second animal summer group me face rate. Beat she join house produce listen mouth carry."
-                },
-                {
-                    "language": "en",
-                    "value": "Whether century quality trial some. Whatever action themselves center among of. Mr water fight security tough gas. Town surface central contain pattern education. Consider son system surface."
+                    "value": "Animal summer group me face rate paper example. High state air choose detail section. Far plant fear thought whole term possible."
                 }
             ],
             "website": [
                 {
-                    "language": "ru",
-                    "title": "Powers King",
-                    "url": "https://anderson-rios.com/"
-                },
-                {
-                    "language": "ru",
-                    "title": "Jones",
-                    "url": "https://www.knight.com/"
-                },
-                {
                     "language": null,
-                    "title": "Sanchez Walker",
-                    "url": "https://taylor-quinn.info/"
+                    "title": "Williams",
+                    "url": "https://www.clark-figueroa.com/"
                 },
                 {
-                    "language": null,
-                    "title": null,
-                    "url": "https://tucker-rodriguez.org/"
+                    "language": "en",
+                    "title": "Whitehead York",
+                    "url": "http://www.davenport.org/"
                 },
                 {
-                    "language": null,
-                    "title": "Trevino Taylor",
-                    "url": "http://mercado.com/"
+                    "language": "fr",
+                    "title": "Murray",
+                    "url": "http://www.carpenter.com/"
                 },
                 {
-                    "language": null,
-                    "title": null,
-                    "url": "http://lewis.net/"
-                },
-                {
-                    "language": null,
-                    "title": null,
-                    "url": "http://walker-barton.com/"
-                },
-                {
-                    "language": "ru",
-                    "title": "Mason Davis",
-                    "url": "http://www.sutton.com/"
+                    "language": "es",
+                    "title": "Harvey Mccullough",
+                    "url": "https://hopkins.org/"
                 }
             ]
         },
         "rule_set": null
     },
     {
-        "extracted_item": {
-            "affiliation": [
-                "Cyzy5gAgoMK3T5L0h9Vl8"
-            ],
-            "email": [
-                "info@rki.de"
-            ],
-            "entityType": "ExtractedPerson",
-            "familyName": [
-                "lachen Wetter",
-                "warum aus"
-            ],
-            "fullName": [
-                "schwer",
-                "Papa und Fuß",
-                "Freude Nase mich",
-                "durch Herr richtig",
-                "heiß nehmen"
-            ],
-            "givenName": [
-                "zum wenig",
-                "los"
-            ],
-            "hadPrimarySource": "00000000000000",
-            "identifier": "b5Gzf5E14PMhjFsLurbLJh",
-            "identifierInPrimarySource": "Person_0",
-            "isniId": [
-                "https://isni.org/isni/9082723184322259",
-                "https://isni.org/isni/3651777392603029"
-            ],
-            "memberOf": [
-                "gHT3JqDyFK07vYI0Gqycpz"
-            ],
-            "orcidId": [
-                "https://orcid.org/9904-1379-7723-692X"
-            ],
-            "stableTargetId": "dtxpM0s8BoqKWe7by0AzoG"
-        },
+        "extracted_item": null,
         "rule_set": {
             "additive": {
-                "affiliation": [],
-                "email": [],
-                "entityType": "AdditivePerson",
-                "familyName": [],
-                "fullName": [],
-                "givenName": [],
-                "isniId": [],
-                "memberOf": [],
-                "orcidId": [],
-                "supersededBy": null
+                "abstract": [],
+                "accessRestriction": null,
+                "alternateIdentifier": [],
+                "alternativeTitle": [],
+                "bibliographicResourceType": [
+                    "https://mex.rki.de/item/bibliographic-resource-type-8",
+                    "https://mex.rki.de/item/bibliographic-resource-type-6",
+                    "https://mex.rki.de/item/bibliographic-resource-type-13"
+                ],
+                "contributingUnit": [],
+                "creator": [],
+                "distribution": [],
+                "doi": null,
+                "edition": null,
+                "editor": [],
+                "editorOfSeries": [],
+                "entityType": "AdditiveBibliographicResource",
+                "isbnIssn": [
+                    "ok"
+                ],
+                "issue": null,
+                "issued": null,
+                "journal": [],
+                "keyword": [],
+                "language": [
+                    "https://mex.rki.de/item/language-5"
+                ],
+                "license": null,
+                "pages": null,
+                "publicationPlace": null,
+                "publicationYear": null,
+                "publisher": [],
+                "repositoryURL": [
+                    {
+                        "language": null,
+                        "title": "Taylor",
+                        "url": "http://williams-juarez.com/"
+                    },
+                    {
+                        "language": "ru",
+                        "title": "Wood Williams",
+                        "url": "https://hardin-keith.com/"
+                    },
+                    {
+                        "language": null,
+                        "title": null,
+                        "url": "https://www.schmitt.com/"
+                    },
+                    {
+                        "language": null,
+                        "title": null,
+                        "url": "http://gray.com/"
+                    },
+                    {
+                        "language": null,
+                        "title": null,
+                        "url": "https://black.com/"
+                    }
+                ],
+                "section": null,
+                "subtitle": [],
+                "supersededBy": null,
+                "title": [
+                    {
+                        "language": null,
+                        "value": "Poor deep cost gun response brother discover."
+                    }
+                ],
+                "titleOfBook": [],
+                "titleOfSeries": [
+                    {
+                        "language": "en",
+                        "value": "Claim street against amount of claim picture always. Chair coach two might if wide point. Water describe paper likely loss."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Central old should perhaps member cold rate two. Opportunity discover history board dark teacher mean information."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Concern top outside there. Me brother lot candidate owner still to."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Have analysis morning director sort smile. Go source traditional student office international. Local discussion teacher exist theory. Election accept season according mission mind. Pressure reach firm gun choice prepare."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Interest hand every quite sense including six. Condition next low write officer similar huge."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Land record class Democrat hundred."
+                    },
+                    {
+                        "language": "en",
+                        "value": "Recent religious claim who accept before certainly unit. Because enjoy he participant right us. Pass minute represent our watch star."
+                    }
+                ],
+                "volume": null,
+                "volumeOfSeries": null
             },
-            "entityType": "PersonRuleSetResponse",
+            "entityType": "BibliographicResourceRuleSetResponse",
             "preventive": {
-                "affiliation": [
-                    "00000000000000"
-                ],
-                "email": [],
-                "entityType": "PreventivePerson",
-                "familyName": [],
-                "fullName": [
-                    "00000000000000"
-                ],
-                "givenName": [
-                    "00000000000000"
-                ],
-                "isniId": [],
-                "memberOf": [],
-                "orcidId": []
+                "abstract": [],
+                "accessRestriction": [],
+                "alternateIdentifier": [],
+                "alternativeTitle": [],
+                "bibliographicResourceType": [],
+                "contributingUnit": [],
+                "creator": [],
+                "distribution": [],
+                "doi": [],
+                "edition": [],
+                "editor": [],
+                "editorOfSeries": [],
+                "entityType": "PreventiveBibliographicResource",
+                "isbnIssn": [],
+                "issue": [],
+                "issued": [],
+                "journal": [],
+                "keyword": [],
+                "language": [],
+                "license": [],
+                "pages": [],
+                "publicationPlace": [],
+                "publicationYear": [],
+                "publisher": [],
+                "repositoryURL": [],
+                "section": [],
+                "subtitle": [],
+                "title": [],
+                "titleOfBook": [],
+                "titleOfSeries": [],
+                "volume": [],
+                "volumeOfSeries": []
             },
-            "stableTargetId": "dtxpM0s8BoqKWe7by0AzoG",
+            "stableTargetId": "e7MYEr0XVmFkW1UwNcVEVz",
             "subtractive": {
-                "affiliation": [],
-                "email": [],
-                "entityType": "SubtractivePerson",
-                "familyName": [],
-                "fullName": [],
-                "givenName": [
-                    "zum wenig"
-                ],
-                "isniId": [],
-                "memberOf": [],
-                "orcidId": [
-                    "https://orcid.org/9904-1379-7723-692X"
-                ]
+                "abstract": [],
+                "accessRestriction": [],
+                "alternateIdentifier": [],
+                "alternativeTitle": [],
+                "bibliographicResourceType": [],
+                "contributingUnit": [],
+                "creator": [],
+                "distribution": [],
+                "doi": [],
+                "edition": [],
+                "editor": [],
+                "editorOfSeries": [],
+                "entityType": "SubtractiveBibliographicResource",
+                "isbnIssn": [],
+                "issue": [],
+                "issued": [],
+                "journal": [],
+                "keyword": [],
+                "language": [],
+                "license": [],
+                "pages": [],
+                "publicationPlace": [],
+                "publicationYear": [],
+                "publisher": [],
+                "repositoryURL": [],
+                "section": [],
+                "subtitle": [],
+                "title": [],
+                "titleOfBook": [],
+                "titleOfSeries": [],
+                "volume": [],
+                "volumeOfSeries": []
             },
             "workflow": {
-                "entityType": "WorkflowPerson",
+                "entityType": "WorkflowBibliographicResource",
                 "forbiddenPublishingTarget": []
             }
         }

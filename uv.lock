@@ -748,12 +748,12 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "annotated-types", specifier = ">=0.7" },
+    { name = "annotated-types", specifier = ">=0.8" },
     { name = "faker", specifier = ">=40,<41" },
-    { name = "mex-common", specifier = ">=3,<4" },
+    { name = "mex-common", specifier = ">=3.4,<4" },
     { name = "pydantic", specifier = ">=2" },
-    { name = "rich", specifier = ">=14" },
-    { name = "typer", specifier = ">=0.23" },
+    { name = "rich", specifier = ">=15" },
+    { name = "typer", specifier = ">=0.27" },
 ]
 
 [package.metadata.requires-dev]
@@ -770,7 +770,7 @@ dev = [
 
 [[package]]
 name = "mex-common"
-version = "3.4.0"
+version = "3.4.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "backoff" },
@@ -785,9 +785,9 @@ dependencies = [
     { name = "requests" },
     { name = "tabulate" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/88/35/5ebfd0dc6d6411a8f3ca5d69ca767ad51712a403ace306a72d2c842f28c1/mex_common-3.4.0.tar.gz", hash = "sha256:ed89e12780315e1173c5ebddb73e809adc9af833494ffe7f641a7db099813f49", size = 102278, upload-time = "2026-08-24T07:42:57.582Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/21/28/c9cc4d2fc99bfc19842cad7d956217da0e03818f99edab8cd87d5bfa4385/mex_common-3.4.1.tar.gz", hash = "sha256:0117664acb348c2680413ea007fd1a0bc68f693b2203f6d492d50455d867c429", size = 102564, upload-time = "2026-09-14T11:01:09.816Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/04/de/5a2920173cdd662d3f47514c1494d076c30a0b11bc3ea180644c1111a1c0/mex_common-3.4.0-py3-none-any.whl", hash = "sha256:a08b0342db9691f80c4b60b6e0ca7cd94374e7ecdc54246d3f3438efbf3ce636", size = 152055, upload-time = "2026-08-24T07:42:56.235Z" },
+    { url = "https://files.pythonhosted.org/packages/14/ba/e26a90704fd4d05848c09268e34c1d10c98ddfee877f8ac31a5253c1f270/mex_common-3.4.1-py3-none-any.whl", hash = "sha256:85ee8e1cb7e024df3f7e1fc00e9ad3eb457835a49dd7588b57160ce91d31b677", size = 152363, upload-time = "2026-09-14T11:01:08.517Z" },
 ]
 
 [[package]]
