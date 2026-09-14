@@ -30,7 +30,7 @@ WORKDIR /app
 COPY --from=builder /usr/local/lib/python3.14/site-packages /usr/local/lib/python3.14/site-packages
 COPY --from=builder /usr/local/bin/artificial /usr/local/bin/artificial
 
-RUN mkdir /out && chown mex:mex /out
+RUN mkdir /out && chown 10001:10001 /out
 
 USER 10001
 
