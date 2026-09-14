@@ -14,7 +14,6 @@ COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
 RUN uv export --no-dev --no-editable | uv pip install --system --no-deps -r -
 
-
 FROM python:3.14-slim
 
 LABEL org.opencontainers.image.authors="mex@rki.de"
