@@ -56,11 +56,11 @@ run: image
 	mkdir -m722 -p $(PWD)/out; \
 	docker run -v $(PWD)/out:/out rki/mex-artificial:${LATEST}; \
 
-start: image
+start:
 	# start the service using docker compose
 	@ echo start mex-artificial:${LATEST} with compose; \
 	mkdir -m722 -p $(PWD)/out; \
-	docker compose up --remove-orphans; \
+	docker compose up --build --remove-orphans; \
 
 docs:
 	# use sphinx to auto-generate html docs from code
