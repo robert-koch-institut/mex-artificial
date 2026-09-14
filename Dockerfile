@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1
+# syntax=docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
 
 FROM python:3.14 AS builder
 
@@ -12,10 +12,7 @@ ENV PIP_PROGRESS_BAR=off
 COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
-RUN uv export --no-dev --no-hashes --output-file requirements.lock
-
-RUN pip wheel --no-cache-dir --wheel-dir /build/wheels -r requirements.lock
-RUN pip wheel --no-cache-dir --wheel-dir /build/wheels --no-deps .
+RUN uv export --no-dev --no-editable | uv pip install --system --no-deps -r -
 
 
 FROM python:3.14-slim
@@ -29,25 +26,14 @@ LABEL org.opencontainers.image.vendor="robert-koch-institut"
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONOPTIMIZE=1
 
-COPY --from=builder /build/wheels /wheels
+WORKDIR /app
 
-RUN pip install --no-cache-dir \
-    --no-index \
-    --find-links=/wheels \
-    /wheels/*.whl \
-    && rm -rf /wheels
-
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "10001" \
-    mex
+COPY --from=builder /usr/local/lib/python3.14/site-packages /usr/local/lib/python3.14/site-packages
+COPY --from=builder /usr/local/bin/artificial /usr/local/bin/artificial
 
 RUN mkdir /out && chown mex:mex /out
 
-USER mex
+USER 10001
 
 ENTRYPOINT [ "artificial", "--path=/out" ]
 CMD [ "--count=100", "--chattiness=10" ]
