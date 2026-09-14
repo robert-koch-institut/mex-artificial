@@ -54,7 +54,9 @@ run: image
 	# run the service as a docker container
 	@ echo running docker container mex-artificial:${LATEST}; \
 	mkdir -m722 -p $(PWD)/out; \
-	docker run -v $(PWD)/out:/out rki/mex-artificial:${LATEST}; \
+	docker run \
+		-v $(PWD)/out:/out \
+		rki/mex-artificial:${LATEST}; \
 
 start:
 	# start the service using docker compose
