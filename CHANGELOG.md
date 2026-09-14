@@ -11,10 +11,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changes
 
-- new template https://github.com/robert-koch-institut/mex-template/releases/tag/2.0.1
-- new template https://github.com/robert-koch-institut/mex-template/releases/tag/2.0.0
-- update mex-common to 3.4.1 and mex-model to 5.1.4
-
 ### Deprecated
 
 ### Removed
@@ -22,6 +18,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Security
+
+## [3.0.2] - 2026-09-14
+
+### Changes
+
+- new template https://github.com/robert-koch-institut/mex-template/releases/tag/2.0.1
+- new template https://github.com/robert-koch-institut/mex-template/releases/tag/2.0.0
+- update mex-common to 3.4.1 and mex-model to 5.1.4
 
 ## [3.0.1] - 2026-08-25
 
