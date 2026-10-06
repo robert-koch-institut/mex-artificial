@@ -415,7 +415,7 @@ class LinkProvider(InternetFakerProvider, PythonFakerProvider):
         if self.pybool():
             title = self.domain_word().replace("-", " ").title()
             if self.pybool():
-                language = LinkLanguage(self.random_element(list(LinkLanguage)))
+                language = self.random_element(list(LinkLanguage))
         return Link(url=self.url(), title=title, language=language)
 
 
