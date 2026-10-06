@@ -410,11 +410,12 @@ class LinkProvider(InternetFakerProvider, PythonFakerProvider):
 
     def link(self) -> Link:
         """Return a link with optional title and language."""
-        title, language = None, None
+        title: str | None = None
+        language: LinkLanguage | None = None
         if self.pybool():
             title = self.domain_word().replace("-", " ").title()
             if self.pybool():
-                language = self.random_element(LinkLanguage)
+                language = LinkLanguage(self.random_element(list(LinkLanguage)))
         return Link(url=self.url(), title=title, language=language)
 
 
