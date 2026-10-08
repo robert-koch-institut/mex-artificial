@@ -4,6 +4,7 @@ from mex.common.models import (
     MEX_PRIMARY_SOURCE_STABLE_TARGET_ID,
     ExtractedPrimarySource,
 )
+from mex.common.types import Text
 
 DEFAULT_LOCALE = [
     "de_DE",
@@ -33,4 +34,5 @@ MEX_PRIMARY_SOURCE = ExtractedPrimarySource.model_construct(
     identifier=MEX_PRIMARY_SOURCE_IDENTIFIER,
     identifierInPrimarySource=MEX_PRIMARY_SOURCE_IDENTIFIER_IN_PRIMARY_SOURCE,
     stableTargetId=MEX_PRIMARY_SOURCE_STABLE_TARGET_ID,
+    title=[Text(value="MEX_PRIMARY_SOURCE")],
 )
