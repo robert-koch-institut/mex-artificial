@@ -12,7 +12,12 @@
             "identifierInPrimarySource": "mex",
             "locatedAt": [],
             "stableTargetId": "00000000000000",
-            "title": "MEX_PRIMARY_SOURCE",
+            "title": [
+                {
+                    "language": "de",
+                    "value": "MEX_PRIMARY_SOURCE"
+                }
+            ],
             "unitInCharge": [],
             "version": null
         },
