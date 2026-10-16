@@ -11,17 +11,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changes
 
-- update dependency to mex-common with modelv5.2
-
 ### Deprecated
 
 ### Removed
 
 ### Fixed
 
-- Lock file maintenance with fixed linting error
-
 ### Security
+
+## [3.1.0] - 2026-10-16
+
+### Changes
+
+- update dependency to mex-common with modelv5.2
+
+### Fixed
+
+- Lock file maintenance with fixed linting error
 
 ## [3.0.4] - 2026-09-28
 
