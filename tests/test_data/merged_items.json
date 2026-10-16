@@ -9,7 +9,12 @@
         "identifier": "00000000000000",
         "locatedAt": [],
         "supersededBy": null,
-        "title": [],
+        "title": [
+            {
+                "language": "de",
+                "value": "MEX_PRIMARY_SOURCE"
+            }
+        ],
         "unitInCharge": [],
         "version": null
     },
