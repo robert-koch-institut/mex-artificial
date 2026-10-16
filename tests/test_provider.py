@@ -230,13 +230,10 @@ def test_builder_provider_subtractive_rule(
             "Organization000000007",
         ],
         "email": ["info@rki.de"],
-        "fullName": ["four popular"],
-        "givenName": ["assume support", "tree near", "whole address better"],
-        "isniId": [
-            "https://isni.org/isni/9163457923022584",
-            "https://isni.org/isni/9753513933287115",
-        ],
-        "memberOf": ["OrganizationalUnit006"],
+        "fullName": ["show"],
+        "givenName": ["me level tree"],
+        "memberOf": ["OrganizationalUnit008", "OrganizationalUnit001"],
+        "orcidId": ["https://orcid.org/8711-5871-4841-858X"],
     }
 
 
@@ -249,11 +246,11 @@ def test_builder_provider_preventive_rule(
         value_probability=0.75,
     )
     assert rule.model_dump(exclude_defaults=True) == {
-        "affiliation": ["PrimarySource00000007"],
         "email": ["PrimarySource00000007"],
         "familyName": ["PrimarySource00000007"],
         "givenName": ["PrimarySource00000007"],
         "isniId": ["PrimarySource00000007"],
+        "orcidId": ["PrimarySource00000007"],
     }
 
 
