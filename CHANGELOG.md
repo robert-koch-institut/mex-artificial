@@ -9,8 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- python 3.15 support
-
 ### Changes
 
 ### Deprecated
@@ -20,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Security
+
+## [3.2.0] - 2026-10-21
+
+### Added
+
+- python 3.15 support
 
 ## [3.1.0] - 2026-10-16
 
