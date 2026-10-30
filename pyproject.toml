@@ -10,7 +10,7 @@ requires-python = ">=3.11,<3.16"
 dependencies = [
     "annotated-types>=0.8",
     "faker>=40,<41",
-    "mex-common>=3.4,<4",
+    "mex-common>=3.6,<4",
     "pydantic>=2",
     "rich>=15",
     "typer>=0.27",
