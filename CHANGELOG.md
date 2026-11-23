@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- fix linting errors and update test data
+- fix linting errors and update according to to mex-common updates
 
 ### Security
 

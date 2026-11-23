@@ -59,7 +59,7 @@ class BuilderProvider(PythonFakerProvider):
 
     def min_max_for_field(self, field: FieldInfo) -> tuple[int, int]:
         """Return a min and max item count for a field."""
-        if get_origin(field.annotation) in (list, Sequence):
+        if get_origin(field.annotation) is Sequence:
             # calculate the item counts based on field annotations
             min_items = 0
             max_items = self.random_element(  # set probabilities for max items
