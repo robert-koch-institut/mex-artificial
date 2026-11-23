@@ -208,9 +208,10 @@ def test_builder_provider_additive_rule(
         value_probability=1,
     )
     assert rule.model_dump(exclude_defaults=True) == {
+        "affiliation": ["Organization000000008"],
         "email": ["info@rki.de"],
-        "fullName": ["someone"],
-        "orcidId": ["https://orcid.org/8778-4080-1609-7535"],
+        "familyName": ["season take play"],
+        "isniId": ["https://isni.org/isni/7840801609753513"],
     }
 
 
@@ -225,11 +226,17 @@ def test_builder_provider_subtractive_rule(
     assert rule.model_dump(exclude_defaults=True) == {
         "affiliation": [
             "Organization000000008",
+            "Organization000000005",
+            "Organization000000007",
         ],
         "email": ["info@rki.de"],
-        "fullName": ["someone"],
-        "givenName": ["season take play"],
-        "isniId": ["https://isni.org/isni/5781565938778408"],
+        "fullName": ["four popular"],
+        "givenName": ["assume support", "tree near", "whole address better"],
+        "isniId": [
+            "https://isni.org/isni/9163457923022584",
+            "https://isni.org/isni/9753513933287115",
+        ],
+        "memberOf": ["OrganizationalUnit006"],
     }
 
 
@@ -244,7 +251,9 @@ def test_builder_provider_preventive_rule(
     assert rule.model_dump(exclude_defaults=True) == {
         "affiliation": ["PrimarySource00000007"],
         "email": ["PrimarySource00000007"],
-        "fullName": ["PrimarySource00000007"],
+        "familyName": ["PrimarySource00000007"],
+        "givenName": ["PrimarySource00000007"],
+        "isniId": ["PrimarySource00000007"],
     }
 
 
@@ -256,7 +265,9 @@ def test_builder_provider_workflow_rule(
         ids_by_type,
         value_probability=0.75,
     )
-    assert rule.model_dump(exclude_defaults=True) == {}
+    assert rule.model_dump(exclude_defaults=True) == {
+        "forbiddenPublishingTarget": ["datenkompass"],
+    }
 
 
 def test_builder_provider_standalone_rule_set(
@@ -271,13 +282,27 @@ def test_builder_provider_standalone_rule_set(
     assert rule_set.model_dump(exclude_defaults=True) == {
         "additive": {
             "affiliation": [
+                "Organization000000007",
+                "Organization000000005",
                 "Organization000000008",
             ],
             "email": ["info@rki.de"],
+            "familyName": ["season take play", "force"],
             "fullName": [
-                "someone",
+                "opportunity blood",
+                "leader four",
+                "push while democratic",
+                "me level tree",
+                "ever assume support",
             ],
-            "orcidId": ["https://orcid.org/8778-4080-1609-7535"],
+            "isniId": [
+                "https://isni.org/isni/9753513933287115",
+                "https://isni.org/isni/1484185839894719",
+                "https://isni.org/isni/9342320947112201",
+                "https://isni.org/isni/8483396947751591",
+                "https://isni.org/isni/3304135256012309",
+                "https://isni.org/isni/0139916151090321",
+            ],
         },
         "stableTargetId": "b3wrW78ASMOyBrXF6ikQAO",
     }
