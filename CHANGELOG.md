@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- fix linting errors and update test data
+
 ### Security
 
 ## [3.2.0] - 2026-10-21
