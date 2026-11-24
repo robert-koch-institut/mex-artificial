@@ -1,3 +1,4 @@
+from collections.abc import Sequence
 from typing import Annotated, Any
 
 import pytest
@@ -21,13 +22,13 @@ from mex.common.types import (
 
 
 class DummyModel(BaseModel):
-    no_min: list[str] = []
-    has_min: list[bytes] = Field([], min_length=2)
-    has_max: list[bytes] = Field([], max_length=5)
+    no_min: Sequence[str] = []
+    has_min: Sequence[bytes] = Field([], min_length=2)
+    has_max: Sequence[bytes] = Field([], max_length=5)
     is_required: int
     is_optional: bool | None = None
-    is_union: float | list[float]
-    is_inner_union: list[float | int] = []
+    is_union: float | Sequence[float]
+    is_inner_union: Sequence[float | int] = []
     is_union_with_pattern: (
         Annotated[
             str,
@@ -41,7 +42,7 @@ class DummyModel(BaseModel):
         ]
         | None
     ) = None
-    is_nested_pattern: list[
+    is_nested_pattern: Sequence[
         Annotated[
             str,
             Field(
@@ -309,7 +310,7 @@ def test_builder_provider_standalone_rule_set(
 
 
 def test_reference_provider(faker: Faker, ids_by_type: dict[str, list[str]]) -> None:
-    inner_type = list[MergedPrimarySourceIdentifier | MergedOrganizationIdentifier]
+    inner_type = Sequence[MergedPrimarySourceIdentifier | MergedOrganizationIdentifier]
     assert faker.reference(inner_type, ids_by_type) == "Organization000000005"
     assert faker.reference(dict[str, str], ids_by_type) is None
 
