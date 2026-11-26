@@ -10,7 +10,12 @@ from ruamel.yaml import YAML
 from typer import Typer
 from typer.testing import CliRunner
 
-from mex.artificial.main import _log_to_stderr, anonymize, artificial, mapping
+from mex.artificial.main import (
+    _log_to_stderr,
+    anonymize_command,
+    mapping_command,
+    merged_command,
+)
 from mex.common.logging import logger
 from mex.common.models import (
     AccessPlatformMapping,
@@ -23,7 +28,7 @@ from mex.common.models import (
 def test_main(caplog: LogCaptureFixture) -> None:
     runner = CliRunner()
     app = Typer()
-    app.command()(artificial)
+    app.command()(merged_command)
     result = runner.invoke(app, ["--count", "30"], catch_exceptions=False)
     assert result.exit_code == 0
     assert "artificial data generation done" in caplog.text
@@ -32,7 +37,7 @@ def test_main(caplog: LogCaptureFixture) -> None:
 def test_mapping() -> None:
     runner = CliRunner()
     app = Typer()
-    app.command()(mapping)
+    app.command()(mapping_command)
     result = runner.invoke(app, ["--stem-type", "Person"], catch_exceptions=False)
     assert result.exit_code == 0
     doc = YAML(typ="safe").load(result.stdout)
@@ -43,7 +48,7 @@ def test_mapping() -> None:
 def test_mapping_invalid_stem_type() -> None:
     runner = CliRunner()
     app = Typer()
-    app.command()(mapping)
+    app.command()(mapping_command)
     result = runner.invoke(app, ["--stem-type", "Nope"])
     assert result.exit_code == 2
 
@@ -51,7 +56,7 @@ def test_mapping_invalid_stem_type() -> None:
 def test_mapping_path(tmp_path: Path) -> None:
     runner = CliRunner()
     app = Typer()
-    app.command()(mapping)
+    app.command()(mapping_command)
     out_file = tmp_path / "nested" / "mapping.yaml"
     result = runner.invoke(
         app,
@@ -68,7 +73,7 @@ def test_mapping_path(tmp_path: Path) -> None:
 def test_anonymize(tmp_path: Path) -> None:
     runner = CliRunner()
     app = Typer()
-    app.command()(mapping)
+    app.command()(mapping_command)
     generated = tmp_path / "Person_generated.yaml"
     runner.invoke(
         app, ["--stem-type", "Person", "--path", str(generated)], catch_exceptions=False
@@ -79,7 +84,7 @@ def test_anonymize(tmp_path: Path) -> None:
     )
 
     app = Typer()
-    app.command()(anonymize)
+    app.command()(anonymize_command)
     result = runner.invoke(app, [str(in_file)], catch_exceptions=False)
     assert result.exit_code == 0
     assert "#" not in result.stdout
@@ -101,7 +106,7 @@ def test_anonymize_invalid_file_name(tmp_path: Path) -> None:
     in_file = tmp_path / "Nope_mapping.yaml"
     in_file.write_text("title: []\n", encoding="utf-8")
     app = Typer()
-    app.command()(anonymize)
+    app.command()(anonymize_command)
     result = CliRunner().invoke(app, [str(in_file)])
     assert result.exit_code == 2
     output = " ".join(re.sub(r"[│╭╮╰╯─]", " ", result.output).split())
@@ -112,7 +117,7 @@ def test_anonymize_invalid_yaml_content(tmp_path: Path) -> None:
     in_file = tmp_path / "Resource_list.yaml"
     in_file.write_text("- just\n- a list\n", encoding="utf-8")
     app = Typer()
-    app.command()(anonymize)
+    app.command()(anonymize_command)
     result = CliRunner().invoke(app, [str(in_file)])
     assert result.exit_code == 2
     output = " ".join(re.sub(r"[│╭╮╰╯─]", " ", result.output).split())
@@ -138,7 +143,7 @@ def test_log_to_stderr(capsys: pytest.CaptureFixture[str]) -> None:
 def test_anonymize_keeps_field_order(tmp_path: Path) -> None:
     runner = CliRunner()
     app = Typer()
-    app.command()(mapping)
+    app.command()(mapping_command)
     generated = tmp_path / "Resource_generated.yaml"
     runner.invoke(
         app,
@@ -152,7 +157,7 @@ def test_anonymize_keeps_field_order(tmp_path: Path) -> None:
     YAML().dump({key: raw[key] for key in order}, in_file)
 
     app = Typer()
-    app.command()(anonymize)
+    app.command()(anonymize_command)
     result = runner.invoke(app, [str(in_file)], catch_exceptions=False)
     assert result.exit_code == 0
     assert list(YAML(typ="safe").load(result.stdout)) == order
@@ -160,7 +165,7 @@ def test_anonymize_keeps_field_order(tmp_path: Path) -> None:
 
 def _generate_mapping(runner: CliRunner, stem_type: str, out_file: Path) -> None:
     app = Typer()
-    app.command()(mapping)
+    app.command()(mapping_command)
     result = runner.invoke(
         app,
         ["--stem-type", stem_type, "--path", str(out_file)],
@@ -182,7 +187,7 @@ def test_anonymize_folder(tmp_path: Path) -> None:
     (in_dir / "README.md").write_text("# not yaml\n", encoding="utf-8")
 
     app = Typer()
-    app.command()(anonymize)
+    app.command()(anonymize_command)
     out_dir = tmp_path / "anonymized"
     result = runner.invoke(
         app, [str(in_dir), "--path", str(out_dir)], catch_exceptions=False
@@ -226,7 +231,7 @@ def test_anonymize_folder_invalid_path(
     (tmp_path / "file.yaml").write_text("", encoding="utf-8")
     path = make_path(tmp_path)
     app = Typer()
-    app.command()(anonymize)
+    app.command()(anonymize_command)
     args = [str(in_dir)] + (["--path", str(path)] if path else [])
     result = CliRunner().invoke(app, args)
     assert result.exit_code == 2
@@ -241,7 +246,7 @@ def test_anonymize_file_into_folder(tmp_path: Path) -> None:
     out_dir = tmp_path / "out"
     out_dir.mkdir()
     app = Typer()
-    app.command()(anonymize)
+    app.command()(anonymize_command)
     result = runner.invoke(
         app, [str(in_file), "--path", str(out_dir)], catch_exceptions=False
     )

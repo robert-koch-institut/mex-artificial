@@ -44,7 +44,7 @@ def _log_to_stderr() -> Generator[None, None, None]:
             handler.setStream(sys.stdout)
 
 
-def artificial(  # noqa: PLR0913, PLR0917
+def merged_command(  # noqa: PLR0913, PLR0917
     count: Annotated[
         int,
         typer.Option(
@@ -114,7 +114,7 @@ def _validate_mapping_stem_type(value: str) -> str:
     return value
 
 
-def mapping(
+def mapping_command(
     stem_type: Annotated[
         str,
         typer.Option(
@@ -167,7 +167,7 @@ def mapping(
         typer.echo(output, nl=False)
 
 
-def anonymize(  # noqa: C901, PLR0912
+def anonymize_command(  # noqa: C901, PLR0912
     file: Annotated[
         Path,
         typer.Argument(
@@ -260,16 +260,16 @@ def anonymize(  # noqa: C901, PLR0912
         typer.echo(output, nl=False)
 
 
-def main() -> None:  # pragma: no cover
-    """Wrap entrypoint in typer."""
-    typer.run(artificial)
+def merged() -> None:  # pragma: no cover
+    """Wrap merged items entrypoint in typer."""
+    typer.run(merged_command)
 
 
-def mapping_main() -> None:  # pragma: no cover
+def mapping() -> None:  # pragma: no cover
     """Wrap mapping entrypoint in typer."""
-    typer.run(mapping)
+    typer.run(mapping_command)
 
 
-def anonymize_main() -> None:  # pragma: no cover
+def anonymize() -> None:  # pragma: no cover
     """Wrap anonymize entrypoint in typer."""
-    typer.run(anonymize)
+    typer.run(anonymize_command)
