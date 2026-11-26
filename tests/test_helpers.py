@@ -7,6 +7,8 @@ from typing import Any
 import pytest
 import yaml
 from faker import Faker
+from faker.providers.lorem.de_DE import Provider as GermanLorem
+from faker.providers.lorem.en_US import Provider as EnglishLorem
 from faker.typing import SeedType
 from pydantic import BaseModel
 
@@ -339,3 +341,31 @@ def test_anonymize_mapping_keeps_key_order(stem_type: str) -> None:
         line.split(":")[0] for line in output.splitlines() if line[:1].isalpha()
     ]
     assert top_level == [k for k in original if k != "comment"]
+
+
+def test_anonymize_mapping_keeps_text_languages() -> None:
+    words_by_language = {
+        "de": set(GermanLorem.word_list),
+        "en": set(EnglishLorem.word_list),
+    }
+    checked = 0
+    for seed in range(5):
+        original = _generated_raw_mapping("Resource", seed)
+        anonymized = anonymize_mapping(original, "Resource", ["de_DE", "en_US"], seed)
+        for before, after in _set_values_pairs(
+            _without(original, {"comment"}), anonymized
+        ):
+            for item_before, item_after in zip(
+                before if isinstance(before, list) else [before],
+                after if isinstance(after, list) else [after],
+                strict=True,
+            ):
+                if not isinstance(item_before, dict):
+                    continue
+                language = item_before.get("language")
+                text = item_after.get("value") or item_after.get("title")
+                if language in words_by_language and text:
+                    assert item_after.get("language") == language
+                    assert set(text.split()) <= words_by_language[language], text
+                    checked += 1
+    assert checked > 10

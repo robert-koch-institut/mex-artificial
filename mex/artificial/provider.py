@@ -645,14 +645,58 @@ class NumerifyPatternsProvider(PythonFakerProvider):
         return None
 
 
+def _given_language(original: Text | Link, raw: Any) -> str | None:  # noqa: ANN401
+    """Return the language code given for a text or link before validation."""
+    if raw is None:
+        language = original.language
+    elif isinstance(raw, dict):
+        language = raw.get("language")
+    else:  # e.g. plain strings as shorthand for texts
+        language = None
+    if isinstance(language, Enum):
+        return str(language.value)
+    return language if isinstance(language, str) else None
+
+
 class AnonymizationProvider(PythonFakerProvider):
     """Faker provider that replaces values with dummy values of the same shape."""
 
-    def similar_text(self, original: str) -> str:
-        """Return random words with roughly the same length as the original."""
+    def __init__(
+        self,
+        factory: FakerFactory,
+        factories_by_language: Mapping[str, FakerFactory] | None = None,
+    ) -> None:
+        """Configure the faker factories to use for each text language.
+
+        Args:
+            factory: The faker factory this provider is added to
+            factories_by_language: Factories by language code, e.g. `de`
+        """
+        super().__init__(factory)
+        self._factories_by_language = dict(factories_by_language or {})
+
+    def factory_for_language(self, language: str | None) -> FakerFactory:
+        """Return the factory for the given language, or roll a die if unknown."""
+        if language and (factory := self._factories_by_language.get(language)):
+            return factory
+        if self._factories_by_language:
+            return self.random_element(list(self._factories_by_language.values()))
+        return cast("FakerFactory", self.generator)
+
+    def similar_text(self, original: str, language: str | None = None) -> str:
+        """Return random words with roughly the same length as the original.
+
+        Args:
+            original: Text to match the length of
+            language: Language code of the words, e.g. `de`, random if unknown
+
+        Returns:
+            Random words in the given language
+        """
+        factory = self.factory_for_language(language)
         words: list[str] = []
         while original and len(" ".join(words)) < len(original):
-            words.append(self.generator.word())
+            words.append(str(factory.format("word")))
         return " ".join(words)
 
     def similar_int(self, original: int) -> int:
@@ -695,26 +739,37 @@ class AnonymizationProvider(PythonFakerProvider):
         self,
         original: Any,  # noqa: ANN401
         field_infos: list[RandomFieldInfo],
+        raw: Any = None,  # noqa: ANN401
     ) -> Any:  # noqa: ANN401
         """Return a dummy value of the same type and shape as the validated original.
 
         Args:
             original: Value validated against its mex-common type
             field_infos: Infos for all types of the corresponding extracted field
+            raw: The original before validation, to look up the given languages,
+                because validation would detect a language for texts without one
 
         Returns:
             Dummy value of the same type, lists keep their length
         """
         if isinstance(original, list):
-            return [self.anonymous_value(item, field_infos) for item in original]
-        if isinstance(original, Text):
-            return Text(
-                value=self.similar_text(original.value), language=original.language
-            )
-        if isinstance(original, Link):
+            raw_items = raw if isinstance(raw, list) else [None] * len(original)
+            return [
+                self.anonymous_value(item, field_infos, raw_item)
+                for item, raw_item in zip(original, raw_items, strict=True)
+            ]
+        if isinstance(original, Text | Link):
+            language = _given_language(original, raw)
+            if isinstance(original, Text):
+                return Text(
+                    value=self.similar_text(original.value, language),
+                    language=original.language,
+                )
             return Link(
                 url=self.generator.url(),
-                title=self.similar_text(original.title) if original.title else None,
+                title=self.similar_text(original.title, language)
+                if original.title
+                else None,
                 language=original.language,
             )
         if isinstance(original, Identifier):
@@ -734,17 +789,26 @@ class AnonymizationProvider(PythonFakerProvider):
             return self.anonymous_string(original, field_infos)
         return self.anonymous_raw_value(original)
 
-    def anonymous_raw_value(self, original: Any) -> Any:  # noqa: ANN401, PLR0911
+    def anonymous_raw_value(  # noqa: PLR0911
+        self,
+        original: Any,  # noqa: ANN401
+        language: str | None = None,
+    ) -> Any:  # noqa: ANN401
         """Return a dummy value of the same shape for raw, untyped data.
 
         This is the fallback for values that do not validate against their type.
-        Language keys of text-like dictionaries are kept as they are.
+        Language keys of text-like dictionaries are kept as they are and texts
+        within these dictionaries are generated in that language.
         """
         if isinstance(original, list):
-            return [self.anonymous_raw_value(item) for item in original]
+            return [self.anonymous_raw_value(item, language) for item in original]
         if isinstance(original, dict):
+            if isinstance(given := original.get("language"), str):
+                language = given
             return {
-                key: value if key == "language" else self.anonymous_raw_value(value)
+                key: value
+                if key == "language"
+                else self.anonymous_raw_value(value, language)
                 for key, value in original.items()
             }
         if isinstance(original, bool):
@@ -754,5 +818,5 @@ class AnonymizationProvider(PythonFakerProvider):
         if isinstance(original, float):
             return self.pyfloat()
         if isinstance(original, str):
-            return self.similar_text(original)
+            return self.similar_text(original, language)
         return original
