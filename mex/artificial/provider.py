@@ -4,18 +4,21 @@ from collections.abc import Callable, Collection, Mapping, Sequence
 from datetime import datetime
 from enum import Enum
 from functools import partial
-from typing import Any, cast, get_args, get_origin
+from types import NoneType, UnionType
+from typing import Any, TypeVar, Union, cast, get_args, get_origin
 
 from annotated_types import MaxLen, MinLen
 from faker import Generator as FakerFactory
 from faker.providers import BaseProvider as BaseFakerProvider
 from faker.providers.internet import Provider as InternetFakerProvider
 from faker.providers.python import Provider as PythonFakerProvider
+from pydantic import BaseModel as PydanticBaseModel
 from pydantic import ValidationError
 from pydantic.fields import FieldInfo
 
 from mex.artificial.constants import (
     DEFAULT_GENERATION_ATTEMPTS,
+    DEFAULT_MAPPING_EXTRA_ITEMS,
     DEFAULT_RULE_VALUE_PROBABILITY,
     DEFAULT_SEED,
 )
@@ -25,6 +28,7 @@ from mex.common.identity import get_provider
 from mex.common.models import (
     ADDITIVE_MODEL_CLASSES_BY_NAME,
     EXTRACTED_MODEL_CLASSES_BY_NAME,
+    MAPPING_MODEL_CLASSES_BY_NAME,
     MEX_PRIMARY_SOURCE_STABLE_TARGET_ID,
     PREVENTIVE_MODEL_CLASSES_BY_NAME,
     RULE_SET_RESPONSE_CLASSES_BY_NAME,
@@ -32,6 +36,7 @@ from mex.common.models import (
     WORKFLOW_MODEL_CLASSES_BY_NAME,
     AnyAdditiveModel,
     AnyExtractedModel,
+    AnyMappingModel,
     AnyPreventiveModel,
     AnyRuleModel,
     AnyRuleSetResponse,
@@ -52,6 +57,48 @@ from mex.common.types import (
     Text,
 )
 from mex.common.utils import ensure_list
+
+
+def _strip_optional(annotation: Any) -> Any:  # noqa: ANN401
+    """Unwrap `X | None` into `X`, leave all other annotations untouched."""
+    if get_origin(annotation) in (Union, UnionType):
+        args = [arg for arg in get_args(annotation) if arg is not NoneType]
+        if len(args) == 1:
+            return args[0]
+    return annotation
+
+
+def _contains_type_var(annotation: Any) -> bool:  # noqa: ANN401
+    """Check whether the annotation is or contains an unbound type variable."""
+    if isinstance(annotation, TypeVar):
+        return True
+    return any(_contains_type_var(arg) for arg in get_args(annotation))
+
+
+def _leaf_field_info(field: FieldInfo) -> RandomFieldInfo:
+    """Build the field info for a field without any type arguments."""
+    return RandomFieldInfo(
+        inner_type=field.annotation,
+        numerify_patterns=[
+            re.sub(r"[0-9]", "#", e)
+            for e in ensure_list(field.examples)
+            if isinstance(e, str) and not any(char in e for char in "#%$!@")
+        ],
+        regex_patterns=[m.pattern for m in field.metadata if hasattr(m, "pattern")],
+        examples=ensure_list(field.examples),
+    )
+
+
+def get_all_field_infos(field: FieldInfo) -> list[RandomFieldInfo]:
+    """Return the field infos for all types a field can hold, unpacking unions."""
+    if args := get_args(field.annotation):
+        return [
+            info
+            for type_ in args
+            if type_ is not NoneType
+            for info in get_all_field_infos(field.from_annotation(type_))
+        ]
+    return [_leaf_field_info(field)]
 
 
 class BuilderProvider(PythonFakerProvider):
@@ -89,16 +136,7 @@ class BuilderProvider(PythonFakerProvider):
                     if type_ is not type(None)
                 ]
             )
-        return RandomFieldInfo(
-            inner_type=field.annotation,
-            numerify_patterns=[
-                re.sub(r"[0-9]", "#", e)
-                for e in ensure_list(field.examples)
-                if isinstance(e, str) and not any(char in e for char in "#%$!@")
-            ],
-            regex_patterns=[m.pattern for m in field.metadata if hasattr(m, "pattern")],
-            examples=ensure_list(field.examples),
-        )
+        return _leaf_field_info(field)
 
     def field_value_factory(  # noqa: PLR0911
         self,
@@ -187,6 +225,137 @@ class BuilderProvider(PythonFakerProvider):
             if _attempts_left > 0:  # if again you don't succeed, try, try again
                 return self.extracted_item(
                     stem_types, ids_by_type, _attempts_left=_attempts_left - 1
+                )
+            raise
+        return model
+
+    def mapping_value(
+        self,
+        mapping_field: FieldInfo,
+        extracted_field: FieldInfo,
+        ids_by_type: Mapping[str, Collection[AnyMergedIdentifier]],
+        *,
+        is_list: bool,
+    ) -> Any:  # noqa: ANN401
+        """Generate a value for a field of a mapping model, mapping field or rule.
+
+        The value is derived from the field's annotation alone, so fields added to
+        the mapping models later on are populated without further code changes:
+        - mapping lists (e.g. `MappingFieldList`, `MappingRuleList`) are filled with
+          nested mapping models, respecting the `min_length` constraint
+        - generic value slots (e.g. `setValues`, `exampleOutputs`) are filled with
+          values matching the corresponding extracted field
+        - plain strings and lists of strings are filled with random text
+
+        Args:
+            mapping_field: Field of a mapping model, mapping field or mapping rule
+            extracted_field: Extracted model field that the mapping targets
+            ids_by_type: Available identifiers by stem type for references
+            is_list: Whether the targeted extracted value is a list
+
+        Returns:
+            Raw value for the field, or `None` if no value could be generated
+        """
+        annotation = _strip_optional(mapping_field.annotation)
+        if item_type := getattr(get_origin(annotation), "_item_type", None):
+            # `MappingFieldList[list[X]]` vs `MappingFieldList[X]`, nested mapping
+            # lists are still parametrized with a type variable though
+            if not _contains_type_var(value_type := get_args(annotation)[0]):
+                is_list = get_origin(value_type) is list
+            min_items = next(
+                (m.min_length for m in mapping_field.metadata if isinstance(m, MinLen)),
+                0,
+            )
+            return [
+                self.mapping_model(
+                    item_type, extracted_field, ids_by_type, is_list=is_list
+                )
+                for _ in range(
+                    self.pyint(min_items, min_items + DEFAULT_MAPPING_EXTRA_ITEMS)
+                )
+            ]
+        if _contains_type_var(annotation):
+            values = self.field_value(extracted_field, ids_by_type)
+            if is_list:
+                return values or None
+            return values[0] if values else None
+        if get_origin(annotation) is list:
+            return [
+                self.generator.text_string()
+                for _ in range(self.pyint(1, 1 + DEFAULT_MAPPING_EXTRA_ITEMS))
+            ]
+        if annotation is str:
+            return self.generator.text_string()
+        msg = f"Cannot create fake mapping data for {mapping_field.annotation}"
+        raise RuntimeError(msg)
+
+    def mapping_model(
+        self,
+        model_class: type[PydanticBaseModel],
+        extracted_field: FieldInfo,
+        ids_by_type: Mapping[str, Collection[AnyMergedIdentifier]],
+        *,
+        is_list: bool,
+    ) -> dict[str, Any]:
+        """Generate raw data for a nested mapping model, e.g. a field or rule."""
+        raw_data: dict[str, Any] = {}
+        for name, field in model_class.model_fields.items():
+            if not field.is_required() and not self.pybool():
+                continue
+            value = self.mapping_value(
+                field, extracted_field, ids_by_type, is_list=is_list
+            )
+            # skip empty values, they are indistinguishable from the default
+            if value is not None:
+                raw_data[name] = value
+        if not raw_data:
+            # avoid empty models, e.g. rules with neither `forValues` nor `setValues`
+            for name in self.random_sample(
+                list(model_class.model_fields), len(model_class.model_fields)
+            ):
+                value = self.mapping_value(
+                    model_class.model_fields[name],
+                    extracted_field,
+                    ids_by_type,
+                    is_list=is_list,
+                )
+                if value is not None:
+                    raw_data[name] = value
+                    break
+        return raw_data
+
+    def mapping_item(
+        self,
+        stem_type: str,
+        ids_by_type: Mapping[str, Collection[AnyMergedIdentifier]],
+        *,
+        _attempts_left: int = DEFAULT_GENERATION_ATTEMPTS,
+    ) -> AnyMappingModel:
+        """Generate a single mapping for the given stem type."""
+        entity_type = ensure_postfix(stem_type, "Mapping")
+        mapping_class = MAPPING_MODEL_CLASSES_BY_NAME[entity_type]
+        extracted_class = EXTRACTED_MODEL_CLASSES_BY_NAME[
+            ensure_prefix(stem_type, "Extracted")
+        ]
+        raw_data: dict[str, Any] = {}
+        for name in sorted(mapping_class.model_fields):
+            if name not in extracted_class.model_fields or name == "entityType":
+                continue
+            mapping_field = mapping_class.model_fields[name]
+            if not mapping_field.is_required() and not self.pybool():
+                continue
+            raw_data[name] = self.mapping_value(
+                mapping_field,
+                extracted_class.model_fields[name],
+                ids_by_type,
+                is_list=False,
+            )
+        try:
+            model = mapping_class.model_validate(raw_data)
+        except ValidationError:
+            if _attempts_left > 0:  # if again you don't succeed, try, try again
+                return self.mapping_item(
+                    stem_type, ids_by_type, _attempts_left=_attempts_left - 1
                 )
             raise
         return model
@@ -474,3 +643,116 @@ class NumerifyPatternsProvider(PythonFakerProvider):
             if re.match(regex_pattern, numerified):
                 return numerified
         return None
+
+
+class AnonymizationProvider(PythonFakerProvider):
+    """Faker provider that replaces values with dummy values of the same shape."""
+
+    def similar_text(self, original: str) -> str:
+        """Return random words with roughly the same length as the original."""
+        words: list[str] = []
+        while original and len(" ".join(words)) < len(original):
+            words.append(self.generator.word())
+        return " ".join(words)
+
+    def similar_int(self, original: int) -> int:
+        """Return a random integer with the same sign and number of digits."""
+        digits = len(str(abs(original)))
+        value = self.random_int(10 ** (digits - 1) if digits > 1 else 0, 10**digits - 1)
+        return -value if original < 0 else value
+
+    def anonymous_string(
+        self, original: str, field_infos: list[RandomFieldInfo]
+    ) -> str:
+        """Return a dummy string, adhering to a pattern if the original matches one."""
+        for info in field_infos:
+            if info.inner_type is not str or not any(
+                re.match(pattern, original) for pattern in info.regex_patterns
+            ):
+                continue
+            candidates: list[str | None] = []
+            if info.numerify_patterns:
+                candidates.append(
+                    self.generator.numerify_patterns(
+                        info.numerify_patterns, info.regex_patterns
+                    )
+                )
+            if re.search(r"[0-9]", original):
+                candidates.append(
+                    self.generator.numerify_patterns(
+                        [re.sub(r"[0-9]", "#", original)], info.regex_patterns
+                    )
+                )
+            if string_examples := [e for e in info.examples if isinstance(e, str)]:
+                candidates.append(self.random_element(string_examples))
+            if anonymized := next((c for c in candidates if c), None):
+                return anonymized
+            msg = f"Cannot anonymize string matching {info.regex_patterns}"
+            raise RuntimeError(msg)
+        return self.similar_text(original)
+
+    def anonymous_value(  # noqa: PLR0911
+        self,
+        original: Any,  # noqa: ANN401
+        field_infos: list[RandomFieldInfo],
+    ) -> Any:  # noqa: ANN401
+        """Return a dummy value of the same type and shape as the validated original.
+
+        Args:
+            original: Value validated against its mex-common type
+            field_infos: Infos for all types of the corresponding extracted field
+
+        Returns:
+            Dummy value of the same type, lists keep their length
+        """
+        if isinstance(original, list):
+            return [self.anonymous_value(item, field_infos) for item in original]
+        if isinstance(original, Text):
+            return Text(
+                value=self.similar_text(original.value), language=original.language
+            )
+        if isinstance(original, Link):
+            return Link(
+                url=self.generator.url(),
+                title=self.similar_text(original.title) if original.title else None,
+                language=original.language,
+            )
+        if isinstance(original, Identifier):
+            return type(original).generate(self.random_int(0, 2**31))
+        if isinstance(original, TemporalEntity):
+            return type(original)(
+                self.generator.temporal_entity([original.precision]),
+                precision=original.precision,
+            )
+        if isinstance(original, Enum):
+            return self.random_element(list(type(original)))
+        if isinstance(original, bool):
+            return self.pybool()
+        if isinstance(original, int):
+            return self.similar_int(original)
+        if isinstance(original, str):
+            return self.anonymous_string(original, field_infos)
+        return self.anonymous_raw_value(original)
+
+    def anonymous_raw_value(self, original: Any) -> Any:  # noqa: ANN401, PLR0911
+        """Return a dummy value of the same shape for raw, untyped data.
+
+        This is the fallback for values that do not validate against their type.
+        Language keys of text-like dictionaries are kept as they are.
+        """
+        if isinstance(original, list):
+            return [self.anonymous_raw_value(item) for item in original]
+        if isinstance(original, dict):
+            return {
+                key: value if key == "language" else self.anonymous_raw_value(value)
+                for key, value in original.items()
+            }
+        if isinstance(original, bool):
+            return self.pybool()
+        if isinstance(original, int):
+            return self.similar_int(original)
+        if isinstance(original, float):
+            return self.pyfloat()
+        if isinstance(original, str):
+            return self.similar_text(original)
+        return original

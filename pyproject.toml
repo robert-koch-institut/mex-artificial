@@ -12,6 +12,7 @@ dependencies = [
     "faker>=40,<41",
     "mex-common>=3.8,<4",
     "pydantic>=2",
+    "pyyaml>=6",
     "rich>=15",
     "typer>=0.27",
 ]
@@ -25,10 +26,13 @@ dev = [
     "pytest>=9",
     "ruff>=0.17",
     "sphinx>=9",
+    "types-pyyaml>=6",
 ]
 
 [project.scripts]
 artificial = "mex.artificial.main:main"
+artificial-mapping = "mex.artificial.main:mapping_main"
+artificial-anonymize = "mex.artificial.main:anonymize_main"
 
 [tool.cruft]
 template = "https://github.com/robert-koch-institut/mex-template"
@@ -137,3 +141,6 @@ packages = ["mex"]
 
 [tool.hatch.build.targets.sdist]
 packages = ["mex"]
+
+[tool.uv.sources]
+mex-common = { git = "https://github.com/robert-koch-institut/mex-common", branch = "feature/model-5.3" }

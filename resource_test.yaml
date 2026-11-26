@@ -1,0 +1,856 @@
+hadPrimarySource:
+  - fieldInPrimarySource: these agree new
+    examplesInPrimarySource:
+      - for actually
+      - one
+    mappingRules:
+      - forValues:
+          - table sing
+          - office former
+          - thus bar event
+        setValues: bFQoRhcVH5DIpn
+        transformValues:
+          - yet artist
+          - American
+        rule: small enjoy gun
+      - exampleOutputs: bFQoRhcVH5DJuJ
+      - setValues: bFQoRhcVH5DHYH
+        transformValues:
+          - article sign professor
+          - head
+          - military
+        exampleOutputs: bFQoRhcVH5DIpn
+    comment: draw
+  - locationInPrimarySource: tend
+    examplesInPrimarySource:
+      - knowledge century wait
+      - list
+    mappingRules:
+      - forValues:
+          - cost range
+          - should stock
+        rule: it
+        exampleOutputs: bFQoRhcVH5DHYH
+      - setValues: bFQoRhcVH5DJki
+        transformValues:
+          - certainly pretty trouble
+identifierInPrimarySource:
+  - examplesInPrimarySource:
+      - foreign feel
+      - later
+    mappingRules:
+      - forValues:
+          - new once friend
+          - customer season
+        transformValues:
+          - clearly still recent
+      - forValues:
+          - although or
+          - provide positive
+        transformValues:
+          - newspaper yeah
+        rule: day program health
+      - transformValues:
+          - enjoy owner wait
+          - face
+          - you
+    comment: line economic six
+  - mappingRules:
+      - forValues:
+          - let
+        setValues: D4/x4/zz.final6
+        exampleOutputs: '070436'
+      - forValues:
+          - process report improve
+          - up test American
+        rule: card organization see
+        exampleOutputs: '782019'
+      - forValues:
+          - available
+          - series
+        setValues: '056246'
+        rule: choose international trial
+        exampleOutputs: '270808'
+  - mappingRules:
+      - forValues:
+          - tax beautiful be
+          - contain tax evidence
+        setValues: item-487
+        transformValues:
+          - claim American project
+          - cost put music
+        rule: television your
+        exampleOutputs: D9/x3/zz.final7
+      - setValues: D7/x8/zz.final0
+        rule: gun able tax
+    comment: late
+accessRestriction:
+  - locationInPrimarySource: remember Democrat speak
+    examplesInPrimarySource:
+      - through
+      - guess
+      - enough buy picture
+    mappingRules:
+      - setValues: https://mex.rki.de/item/access-restriction-2
+      - setValues: https://mex.rki.de/item/access-restriction-2
+        rule: option
+    comment: site bar
+  - fieldInPrimarySource: answer off fast
+    locationInPrimarySource: sound
+    mappingRules:
+      - setValues: https://mex.rki.de/item/access-restriction-1
+        rule: smile join
+      - forValues:
+          - dark say good
+        setValues: https://mex.rki.de/item/access-restriction-1
+        exampleOutputs: https://mex.rki.de/item/access-restriction-1
+maxTypicalAge:
+  - examplesInPrimarySource:
+      - turn agent but
+      - policy red
+    mappingRules:
+      - exampleOutputs: 4328
+    comment: guy
+  - fieldInPrimarySource: power suggest
+    examplesInPrimarySource:
+      - number as ground
+      - old address color
+      - ten age
+    mappingRules:
+      - forValues:
+          - guy
+          - positive
+      - setValues: 567
+        rule: bill open
+      - forValues:
+          - record drug inside
+        setValues: 2588
+        transformValues:
+          - officer together
+          - direction
+          - them former
+        rule: option red
+numberOfRecords:
+  - locationInPrimarySource: single detail
+    examplesInPrimarySource:
+      - create stuff
+    mappingRules:
+      - transformValues:
+          - mouth involve peace
+          - yeah whether traditional
+          - western
+        rule: least
+    comment: raise raise word
+  - fieldInPrimarySource: bed kind force
+    locationInPrimarySource: whom produce with
+    mappingRules:
+      - transformValues:
+          - eye mention medical
+          - while give expect
+          - bank low summer
+        exampleOutputs: 9157
+sizeOfDataBasis:
+  - mappingRules:
+      - forValues:
+          - specific story
+          - science
+        transformValues:
+          - dinner national
+      - forValues:
+          - benefit PM
+          - thing range
+        setValues: service write red
+        rule: behavior possible capital
+      - forValues:
+          - ready behavior drug
+          - it
+          - tough
+        setValues: nation
+        rule: research child business
+    comment: result share
+  - fieldInPrimarySource: well talk
+    locationInPrimarySource: find
+    mappingRules:
+      - setValues: clearly pay
+      - forValues:
+          - evidence sit
+          - but
+          - chair
+        exampleOutputs: page bed
+      - rule: and all traditional
+version:
+  - fieldInPrimarySource: resource and evening
+    locationInPrimarySource: successful
+    mappingRules:
+      - forValues:
+          - east past
+        transformValues:
+          - of some toward
+        rule: type office
+contact:
+  - fieldInPrimarySource: like
+    locationInPrimarySource: science coach
+    mappingRules:
+      - exampleOutputs:
+          - bFQoRhcVH5DIPh
+          - bFQoRhcVH5DIfC
+      - forValues:
+          - because third share
+          - administration
+          - resource key
+        setValues:
+          - bFQoRhcVH5DKnB
+        rule: by
+      - setValues:
+          - bFQoRhcVH5DJim
+          - bFQoRhcVH5DKdU
+        rule: face
+    comment: cell ready
+  - mappingRules:
+      - forValues:
+          - today after
+        setValues:
+          - bFQoRhcVH5DKnB
+          - bFQoRhcVH5DJ8j
+          - bFQoRhcVH5DIfC
+      - rule: people film
+    comment: city
+  - fieldInPrimarySource: green strategy
+    locationInPrimarySource: better ground state
+    mappingRules:
+      - forValues:
+          - citizen
+          - figure herself indicate
+        transformValues:
+          - mean
+          - education world anything
+        rule: tough
+description:
+  - fieldInPrimarySource: and yourself subject
+    locationInPrimarySource: child book decade
+    mappingRules:
+      - forValues:
+          - book
+          - method choose organization
+          - pull response
+      - forValues:
+          - prove religious
+          - occur
+        transformValues:
+          - season skin
+        rule: also network
+        exampleOutputs:
+          - value: Responsibility southern at be than. At candidate feel. Former claim chance
+              prevent why measure too. Almost before some military outside baby interview.
+              Face top individual win suddenly. Parent do ten after those scientist. Medical
+              effort assume teacher wall. Significant his himself clearly very. Expert stop
+              area along individual.
+            language: en
+          - value: Purpose character would in. Letter learn big sing after our car food. Power
+              crime situation since book art red. Place full buy radio perform small camera
+              treatment. True their race special million. Although hot he couple ground. Away
+              and various main too war project occur. Director simply those physical maybe.
+              Information figure box international not type very. As indeed choose west social
+              issue.
+            language: en
+  - fieldInPrimarySource: wide treat
+    locationInPrimarySource: entire bar he
+    examplesInPrimarySource:
+      - role all
+    mappingRules:
+      - forValues:
+          - then
+        setValues:
+          - value: Probably rule too security fall. Usually do center.
+            language: en
+        rule: guy second
+        exampleOutputs:
+          - value: Which fast there network force or ball. Ok choose today watch source firm
+              drug. Fact information animal car. Hour reduce car. Nearly scientist central
+              instead PM. Easy plan PM more.
+            language: en
+      - forValues:
+          - key
+          - wear full let
+        setValues:
+          - value: Everybody newspaper read somebody.
+          - value: Should it easy law. Central leg PM low data ability recognize. Left despite
+              boy without feeling participant interest seem. Question set discussion seven.
+              Place again establish protect a. Moment ok how bill education exist. Other along
+              society figure future. Teacher three seven attention team executive care.
+            language: en
+          - value: Most improve play idea sing. Factor head pick church recent. Husband life
+              nice federal place score. Live reason five present art. Central many thought
+              democratic green. Thousand act money at term rather. According American per
+              yourself their record. Cell of course its respond. Collection instead today
+              itself language remember. Firm decade cost glass work interview man. Somebody
+              keep daughter report town. Doctor be cost.
+            language: en
+          - value: Particularly partner relate mention expect.
+            language: en
+        transformValues:
+          - arm project
+          - name reduce range
+keyword:
+  - locationInPrimarySource: a
+    examplesInPrimarySource:
+      - you
+      - safe choice college
+    mappingRules:
+      - setValues:
+          - value: Drive example color draw difficult. Leg theory case north add us. Reach
+              responsibility commercial. Affect station member although.
+            language: en
+          - value: Challenge check skin skin industry nothing rather represent. Hair describe
+              hundred candidate.
+            language: en
+        exampleOutputs:
+          - value: Trouble drive loss turn attorney. Your those head against particularly.
+              Theory everybody particularly test hospital personal move. Certain hotel should.
+              Item bit leave left college listen. Opportunity you exist me. Generation pick
+              she picture send cultural. Computer on fast play fact.
+            language: en
+          - value: Especially road get car party close. Office less politics religious back
+              international. Catch check clearly ahead career manage tonight. Save respond
+              friend budget while take important tell.
+            language: en
+    comment: production more
+  - fieldInPrimarySource: run check while
+    locationInPrimarySource: six one focus
+    examplesInPrimarySource:
+      - in market
+      - follow it investment
+    mappingRules:
+      - setValues:
+          - value: Other owner message entire rule. Heart soldier action throughout. Five
+              put hard recent project speech director. No still back task. Ago poor coach
+              year. Part decade remain if again care.
+            language: en
+          - value: North trouble upon beautiful open free. Them although per environmental
+              medical nearly hour. Congress must city system story. Lead while long not. News
+              enter director book cell speech.
+            language: en
+          - value: Only cup almost identify. Make real use nice themselves gas best above.
+            language: en
+          - value: Ever across great western unit. Back off difficult happen. Team certainly
+              explain current simply process. Executive partner story budget great than.
+            language: en
+          - value: Trouble it grow husband short year term look. Building child usually sea
+              upon. Material body himself home message woman. Stock determine human find discussion
+              military ability.
+            language: en
+        rule: vote dream
+    comment: spend amount investment
+  - fieldInPrimarySource: deep share
+    locationInPrimarySource: budget
+    examplesInPrimarySource:
+      - ahead east
+      - across
+      - nor above
+    mappingRules:
+      - forValues:
+          - worry while decision
+          - sit
+          - decade thus
+        setValues:
+          - title: Hebert
+            url: http://james.org/
+          - language: fr
+            title: Aguilar
+            url: https://www.holmes.com/
+        transformValues:
+          - change pressure sport
+        exampleOutputs:
+          - language: ru
+            title: Fisher
+            url: http://hicks.info/
+          - language: es
+            title: Kelley Anderson
+            url: http://chavez.info/
+          - url: https://www.cummings-smith.biz/
+          - url: https://www.allen-woods.com/
+          - title: Campbell Valdez
+            url: http://www.evans.com/
+          - title: Cooper
+            url: http://byrd-jenkins.com/
+    comment: anyone stop
+resourceCreationMethod:
+  - locationInPrimarySource: experience beat water
+    mappingRules:
+      - transformValues:
+          - discussion above wall
+          - than
+          - sit
+      - forValues:
+          - check
+          - nothing analysis
+        transformValues:
+          - contain loss free
+      - forValues:
+          - similar face Republican
+          - current black hard
+          - expert head
+        rule: feeling
+  - fieldInPrimarySource: how
+    locationInPrimarySource: when reach beyond
+    mappingRules:
+      - transformValues:
+          - war similar
+          - day sort strong
+        rule: authority evidence let
+        exampleOutputs:
+          - https://mex.rki.de/item/resource-creation-method-7
+    comment: seven if often
+theme:
+  - fieldInPrimarySource: share despite
+    locationInPrimarySource: building more star
+    examplesInPrimarySource:
+      - 'off'
+    mappingRules:
+      - forValues:
+          - else
+          - return
+          - light
+        setValues:
+          - https://mex.rki.de/item/theme-20
+          - https://mex.rki.de/item/theme-25
+          - https://mex.rki.de/item/theme-37
+        transformValues:
+          - admit can
+          - force
+          - professor
+        exampleOutputs:
+          - https://mex.rki.de/item/theme-21
+          - https://mex.rki.de/item/theme-25
+          - https://mex.rki.de/item/theme-37
+          - https://mex.rki.de/item/theme-36
+      - setValues:
+          - https://mex.rki.de/item/theme-37
+        exampleOutputs:
+          - https://mex.rki.de/item/theme-25
+          - https://mex.rki.de/item/theme-22
+      - forValues:
+          - cultural
+          - we
+        transformValues:
+          - hotel
+          - pretty story
+          - few Republican end
+        rule: machine
+title:
+  - fieldInPrimarySource: scene play
+    locationInPrimarySource: cell alone million
+    mappingRules:
+      - setValues:
+          - value: Yeah process rest really wait if everything. Into name response garden.
+            language: en
+          - value: Far share thought soon large message exist word.
+            language: en
+          - value: Poor herself population seven sign executive. Network physical play pull
+              child push.
+            language: en
+      - exampleOutputs:
+          - value: Position college also keep kid assume dinner former. Agency fund consumer
+              through theory simply. Wall allow power condition. Would truth join issue face
+              key when. City citizen to.
+            language: en
+          - value: Safe figure hospital one environment. Attack she represent family us lawyer
+              finally.
+            language: en
+          - value: Interest amount understand hard. Final ability person choose order. Like
+              ball cause way. Career big remember parent produce cut beyond.
+            language: en
+unitInCharge:
+  - fieldInPrimarySource: material
+    mappingRules:
+      - setValues:
+          - bFQoRhcVH5DIPh
+          - bFQoRhcVH5DKnB
+        transformValues:
+          - move already show
+        exampleOutputs:
+          - bFQoRhcVH5DJ8j
+          - bFQoRhcVH5DKnB
+          - bFQoRhcVH5DIPh
+      - forValues:
+          - rule benefit claim
+        exampleOutputs:
+          - bFQoRhcVH5DIfC
+      - forValues:
+          - responsibility room determine
+          - weight certain cultural
+        setValues:
+          - bFQoRhcVH5DJ82
+          - bFQoRhcVH5DJ8j
+          - bFQoRhcVH5DIfC
+        transformValues:
+          - more
+          - check project
+          - full customer
+        exampleOutputs:
+          - bFQoRhcVH5DIfC
+          - bFQoRhcVH5DJ8j
+          - bFQoRhcVH5DIPh
+          - bFQoRhcVH5DKnB
+    comment: pull
+  - fieldInPrimarySource: indeed
+    locationInPrimarySource: not expect
+    mappingRules:
+      - forValues:
+          - executive several base
+        setValues:
+          - bFQoRhcVH5DJ82
+        transformValues:
+          - protect build Congress
+          - decision try
+contributingUnit:
+  - locationInPrimarySource: join boy
+    examplesInPrimarySource:
+      - matter green
+      - capital measure
+      - scene
+    mappingRules:
+      - setValues:
+          - bFQoRhcVH5DJ82
+      - forValues:
+          - ask
+          - across billion
+          - only natural
+        setValues:
+          - bFQoRhcVH5DJ82
+          - bFQoRhcVH5DIPh
+          - bFQoRhcVH5DIfC
+          - bFQoRhcVH5DJ8j
+        transformValues:
+          - standard compare lawyer
+          - her
+        rule: term
+    comment: live soldier research
+end:
+  - locationInPrimarySource: exactly and
+    examplesInPrimarySource:
+      - hard
+    mappingRules:
+      - forValues:
+          - challenge
+          - stop
+          - response doctor
+  - fieldInPrimarySource: future north
+    examplesInPrimarySource:
+      - nearly
+      - customer
+    mappingRules:
+      - forValues:
+          - half cup third
+        setValues: 2004-01
+        rule: magazine
+      - transformValues:
+          - magazine less
+          - bed
+        rule: bit
+    comment: usually wide
+externalPartner:
+  - locationInPrimarySource: operation somebody
+    mappingRules:
+      - forValues:
+          - discussion career
+        setValues:
+          - bFQoRhcVH5DIIs
+          - bFQoRhcVH5DIxW
+          - bFQoRhcVH5DJWl
+        exampleOutputs:
+          - bFQoRhcVH5DIxW
+          - bFQoRhcVH5DIh9
+          - bFQoRhcVH5DJWl
+    comment: admit
+geopoliticalResolution:
+  - locationInPrimarySource: significant
+    mappingRules:
+      - forValues:
+          - receive according site
+          - myself later town
+        setValues:
+          - https://mex.rki.de/item/geopolitical-resolution-2
+          - https://mex.rki.de/item/geopolitical-resolution-10
+        transformValues:
+          - sense score office
+        exampleOutputs:
+          - https://mex.rki.de/item/geopolitical-resolution-2
+          - https://mex.rki.de/item/geopolitical-resolution-9
+          - https://mex.rki.de/item/geopolitical-resolution-5
+  - fieldInPrimarySource: hour
+    mappingRules:
+      - setValues:
+          - https://mex.rki.de/item/geopolitical-resolution-6
+        exampleOutputs:
+          - https://mex.rki.de/item/geopolitical-resolution-3
+      - setValues:
+          - https://mex.rki.de/item/geopolitical-resolution-10
+        exampleOutputs:
+          - https://mex.rki.de/item/geopolitical-resolution-4
+          - https://mex.rki.de/item/geopolitical-resolution-7
+    comment: perhaps cause professional
+icd10code:
+  - fieldInPrimarySource: within treatment
+    examplesInPrimarySource:
+      - lot see citizen
+      - play amount entire
+      - sure sing
+    mappingRules:
+      - forValues:
+          - work visit although
+        transformValues:
+          - remain city
+          - eat movement
+        rule: simply
+      - setValues:
+          - foreign
+          - wear fight oil
+          - already spring
+      - forValues:
+          - lose
+          - set call
+          - half mission
+        transformValues:
+          - party scientist stand
+          - rich sound
+          - sound
+    comment: they enough
+  - fieldInPrimarySource: others
+    locationInPrimarySource: peace
+    mappingRules:
+      - transformValues:
+          - give
+        exampleOutputs:
+          - him film
+      - setValues:
+          - lawyer conference ability
+          - outside
+          - letter
+        transformValues:
+          - set
+          - where your
+      - setValues:
+          - then contain
+        rule: reason
+    comment: break year mother
+inSeriesFirstResource:
+  - locationInPrimarySource: music high
+    mappingRules:
+      - forValues:
+          - court
+          - car after green
+        transformValues:
+          - quite assume
+    comment: issue
+  - fieldInPrimarySource: hear PM
+    mappingRules:
+      - setValues:
+          - bFQoRhcVH5DJue
+        rule: impact
+      - forValues:
+          - cost
+          - power rock
+        transformValues:
+          - street once
+          - try run mission
+        exampleOutputs:
+          - bFQoRhcVH5DIJQ
+          - bFQoRhcVH5DJue
+          - bFQoRhcVH5DIN4
+    comment: goal
+language:
+  - locationInPrimarySource: generation cover natural
+    mappingRules:
+      - rule: risk prepare minute
+      - forValues:
+          - boy training sometimes
+          - large window race
+          - few value result
+      - forValues:
+          - dark common hotel
+          - threat heavy series
+    comment: audience choice
+  - fieldInPrimarySource: society
+    locationInPrimarySource: majority second
+    mappingRules:
+      - forValues:
+          - against
+          - despite begin
+          - pay over
+        rule: above relate century
+loincId:
+  - examplesInPrimarySource:
+      - side mind soldier
+    mappingRules:
+      - forValues:
+          - sometimes here forget
+          - size
+        exampleOutputs:
+          - https://loinc.org/43668-5
+          - https://loinc.org/10259-9
+methodDescription:
+  - locationInPrimarySource: become
+    mappingRules:
+      - forValues:
+          - seek
+        setValues:
+          - value: Increase mother important ball. You company drop join recognize all structure.
+              Away wish finish within president. Any remain support realize cause. Argue home
+              exactly different week treat mouth threat. Interest college anything relationship.
+              Himself draw final station tough whether address.
+            language: en
+          - value: Buy east example identify likely view. Clearly thought modern dark. Determine
+              feeling certainly necessary. Name Congress ten return understand. During nice
+              thing ok. Seat model similar sometimes. Reveal so suggest.
+            language: en
+          - value: Herself hold his moment.
+          - value: Mouth tonight throw action.
+            language: en
+        rule: individual little represent
+        exampleOutputs:
+          - value: Only scientist teach seven. Memory attack land. Report to product outside
+              they eye out.
+            language: en
+          - value: Stop father politics effect against southern. Part fund feeling cause stand.
+              Give point herself official receive may. Successful country describe method
+              meeting space military. Sing media step live game item lay. Appear role why
+              learn attention cut billion.
+            language: en
+          - value: Vote continue community whole growth. Across yard admit parent up. While
+              door statement scene teach.
+            language: en
+    comment: lay station business
+qualityInformation:
+  - examplesInPrimarySource:
+      - tax writer staff
+      - pattern
+      - this
+    mappingRules:
+      - transformValues:
+          - black reveal south
+          - everybody fact
+          - prove
+        rule: that north suffer
+  - fieldInPrimarySource: involve
+    locationInPrimarySource: various agreement
+    examplesInPrimarySource:
+      - bed
+      - including quickly particularly
+      - down anything determine
+    mappingRules:
+      - forValues:
+          - station inside cause
+        exampleOutputs:
+          - value: Certainly walk camera debate western store office.
+            language: en
+          - value: Deep range ten television model. Then police choice cell. Care yet well
+              according star study form. Beat debate late radio.
+            language: en
+          - value: Base firm himself idea lose international available. Century hundred themselves
+              finish these. Choose himself north professional. Environment few voice thank
+              local option five. Level generation since also himself with garden mention.
+              Off little happy short during. Million born American. Always hand game magazine
+              series think. Ability possible door pressure sea thought. Two seven lose probably.
+            language: en
+          - value: Rate oil defense agree lawyer. Outside wish community kid official within
+              nothing tend. Century involve down herself drive effort drop onto.
+            language: en
+      - forValues:
+          - place
+          - price property
+        rule: consumer not sea
+relatedActivity:
+  - locationInPrimarySource: course plan help
+    mappingRules:
+      - setValues:
+          - bFQoRhcVH5DKa9
+        transformValues:
+          - health
+          - forward side
+          - animal
+        rule: PM
+        exampleOutputs:
+          - bFQoRhcVH5DJen
+    comment: message kind teach
+relatedResource:
+  - mappingRules:
+      - forValues:
+          - good
+        setValues:
+          - bFQoRhcVH5DJzN
+          - bFQoRhcVH5DIIe
+          - bFQoRhcVH5DH1t
+        rule: young
+      - forValues:
+          - street
+          - benefit move adult
+          - pass must give
+        rule: easy again analysis
+        exampleOutputs:
+          - bFQoRhcVH5DH6n
+  - mappingRules:
+      - forValues:
+          - when
+          - performance
+        transformValues:
+          - check simple
+          - experience democratic bar
+        rule: investment court decide
+    comment: note reason
+resourceTypeGeneral:
+  - mappingRules:
+      - setValues:
+          - https://mex.rki.de/item/resource-type-general-16
+          - https://mex.rki.de/item/resource-type-general-18
+        rule: Democrat include
+        exampleOutputs:
+          - https://mex.rki.de/item/resource-type-general-2
+          - https://mex.rki.de/item/resource-type-general-16
+          - https://mex.rki.de/item/resource-type-general-17
+  - examplesInPrimarySource:
+      - early
+    mappingRules:
+      - forValues:
+          - investment available
+          - difference never decide
+          - million
+        rule: part nature purpose
+spatial:
+  - fieldInPrimarySource: pay even scientist
+    examplesInPrimarySource:
+      - process
+    mappingRules:
+      - setValues:
+          - bFQoRhcVH5DI88
+          - bFQoRhcVH5DJN0
+start:
+  - locationInPrimarySource: born
+    examplesInPrimarySource:
+      - prevent management
+    mappingRules:
+      - setValues: '2000'
+        transformValues:
+          - environmental public
+          - in western
+        rule: read effort
+        exampleOutputs: '2002-08-07T07:30:56Z'
+      - setValues: '2019'
+        rule: hold
+        exampleOutputs: '1997'
+      - forValues:
+          - both those
+        setValues: 2004-05
+        rule: group
+        exampleOutputs: '2006-04-30T09:11:07Z'
+  - fieldInPrimarySource: candidate enjoy help
+    mappingRules:
+      - setValues: 2007-10
+        transformValues:
+          - imagine real media
+          - increase
+          - set big know
+        rule: thought fine plant
+      - rule: charge
+        exampleOutputs: '2024-03-01T23:06:16Z'
+    comment: Congress writer listen
