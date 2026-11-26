@@ -5,8 +5,8 @@ from collections.abc import Callable
 from pathlib import Path
 
 import pytest
-import yaml
 from pytest import LogCaptureFixture
+from ruamel.yaml import YAML
 from typer import Typer
 from typer.testing import CliRunner
 
@@ -35,7 +35,7 @@ def test_mapping() -> None:
     app.command()(mapping)
     result = runner.invoke(app, ["--stem-type", "Person"], catch_exceptions=False)
     assert result.exit_code == 0
-    doc = yaml.safe_load(result.stdout)
+    doc = YAML(typ="safe").load(result.stdout)
     assert "fullName" in doc
     assert "entityType" not in doc
 
@@ -60,7 +60,7 @@ def test_mapping_path(tmp_path: Path) -> None:
     )
     assert result.exit_code == 0
     assert result.stdout == ""
-    doc = yaml.safe_load(out_file.read_text(encoding="utf-8"))
+    doc = YAML(typ="safe").load(out_file.read_text(encoding="utf-8"))
     assert "title" in doc
     assert "entityType" not in doc
 
@@ -84,7 +84,7 @@ def test_anonymize(tmp_path: Path) -> None:
     assert result.exit_code == 0
     assert "#" not in result.stdout
     assert "comment:" not in result.stdout
-    PersonMapping.model_validate(yaml.safe_load(result.stdout))
+    PersonMapping.model_validate(YAML(typ="safe").load(result.stdout))
 
     out_file = tmp_path / "out" / "anonymized.yaml"
     result = runner.invoke(
@@ -92,7 +92,9 @@ def test_anonymize(tmp_path: Path) -> None:
     )
     assert result.exit_code == 0
     assert result.stdout == ""
-    PersonMapping.model_validate(yaml.safe_load(out_file.read_text(encoding="utf-8")))
+    PersonMapping.model_validate(
+        YAML(typ="safe").load(out_file.read_text(encoding="utf-8"))
+    )
 
 
 def test_anonymize_invalid_file_name(tmp_path: Path) -> None:
@@ -144,19 +146,16 @@ def test_anonymize_keeps_field_order(tmp_path: Path) -> None:
         catch_exceptions=False,
     )
     # write the generated fields in reversed order, unlike the model field order
-    raw = yaml.safe_load(generated.read_text(encoding="utf-8"))
+    raw = YAML(typ="safe").load(generated.read_text(encoding="utf-8"))
     order = list(reversed(list(raw)))
     in_file = tmp_path / "Resource_reordered.yaml"
-    in_file.write_text(
-        yaml.safe_dump({key: raw[key] for key in order}, sort_keys=False),
-        encoding="utf-8",
-    )
+    YAML().dump({key: raw[key] for key in order}, in_file)
 
     app = Typer()
     app.command()(anonymize)
     result = runner.invoke(app, [str(in_file)], catch_exceptions=False)
     assert result.exit_code == 0
-    assert list(yaml.safe_load(result.stdout)) == order
+    assert list(YAML(typ="safe").load(result.stdout)) == order
 
 
 def _generate_mapping(runner: CliRunner, stem_type: str, out_file: Path) -> None:
@@ -191,7 +190,7 @@ def test_anonymize_folder(tmp_path: Path) -> None:
     assert result.exit_code == 0
 
     written = sorted(
-        str(p.relative_to(out_dir)) for p in out_dir.rglob("*") if p.is_file()
+        p.relative_to(out_dir).as_posix() for p in out_dir.rglob("*") if p.is_file()
     )
     assert written == [
         "Resource_one.yaml",
@@ -206,7 +205,7 @@ def test_anonymize_folder(tmp_path: Path) -> None:
     for relative, model in models:
         output = (out_dir / relative).read_text(encoding="utf-8")
         assert output != (in_dir / relative).read_text(encoding="utf-8")
-        model.model_validate(yaml.safe_load(output))
+        model.model_validate(YAML(typ="safe").load(output))
 
 
 @pytest.mark.parametrize(
@@ -248,5 +247,5 @@ def test_anonymize_file_into_folder(tmp_path: Path) -> None:
     )
     assert result.exit_code == 0
     PersonMapping.model_validate(
-        yaml.safe_load((out_dir / "Person_x.yaml").read_text(encoding="utf-8"))
+        YAML(typ="safe").load((out_dir / "Person_x.yaml").read_text(encoding="utf-8"))
     )

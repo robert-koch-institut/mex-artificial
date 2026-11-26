@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Annotated
 
 import typer
+from ruamel.yaml import YAML
 
 from mex.artificial.constants import (
     DEFAULT_CHATTINESS,
@@ -166,7 +167,7 @@ def mapping(
         typer.echo(output, nl=False)
 
 
-def anonymize(  # noqa: C901
+def anonymize(  # noqa: C901, PLR0912
     file: Annotated[
         Path,
         typer.Argument(
@@ -246,6 +247,11 @@ def anonymize(  # noqa: C901
                 output = anonymize_mapping_file(file, locale, seed)
     except ValueError as error:
         raise typer.BadParameter(str(error), param_hint="FILE") from error
+    raw_mapping = YAML(typ="safe").load(file)
+    if not isinstance(raw_mapping, dict):
+        msg = "file does not contain a YAML mapping"
+        raise typer.BadParameter(msg, param_hint="FILE")
+    locale = locale or DEFAULT_LOCALE
     if path:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(output, encoding="utf-8")
