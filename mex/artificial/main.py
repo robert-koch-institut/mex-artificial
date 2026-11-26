@@ -167,7 +167,7 @@ def mapping(
         typer.echo(output, nl=False)
 
 
-def anonymize(  # noqa: C901
+def anonymize(  # noqa: C901, PLR0912
     file: Annotated[
         Path,
         typer.Argument(

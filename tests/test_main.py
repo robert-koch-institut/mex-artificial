@@ -2,7 +2,6 @@ import logging
 import re
 import sys
 from collections.abc import Callable
-from io import StringIO
 from pathlib import Path
 
 import pytest
@@ -150,11 +149,7 @@ def test_anonymize_keeps_field_order(tmp_path: Path) -> None:
     raw = YAML(typ="safe").load(generated.read_text(encoding="utf-8"))
     order = list(reversed(list(raw)))
     in_file = tmp_path / "Resource_reordered.yaml"
-    stream = StringIO()
-    in_file.write_text(
-        YAML().dump({key: raw[key] for key in order}, stream),
-        encoding="utf-8",
-    )
+    YAML().dump({key: raw[key] for key in order}, in_file)
 
     app = Typer()
     app.command()(anonymize)
@@ -195,7 +190,7 @@ def test_anonymize_folder(tmp_path: Path) -> None:
     assert result.exit_code == 0
 
     written = sorted(
-        str(p.relative_to(out_dir)) for p in out_dir.rglob("*") if p.is_file()
+        p.relative_to(out_dir).as_posix() for p in out_dir.rglob("*") if p.is_file()
     )
     assert written == [
         "Resource_one.yaml",
