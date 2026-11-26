@@ -57,6 +57,13 @@ def create_faker(
     """Create and initialize a new faker instance with the given settings."""
     Faker.seed(seed)
     faker = Faker(locale=locale)
+    factories_by_language = {
+        # the first locale for a language wins, e.g. `de_DE` before `de_AT`
+        locale_name.split("_")[0]: factory
+        for locale_name, factory in reversed(
+            list(zip(faker.locales, faker.factories, strict=True))
+        )
+    }
     for factory in faker.factories:
         factory.add_provider(ReferenceProvider(factory))
         factory.add_provider(LinkProvider(factory))
@@ -64,7 +71,7 @@ def create_faker(
         factory.add_provider(BuilderProvider(factory))
         factory.add_provider(TextProvider(factory, chattiness))
         factory.add_provider(TemporalEntityProvider(factory))
-        factory.add_provider(AnonymizationProvider(factory))
+        factory.add_provider(AnonymizationProvider(factory, factories_by_language))
     return faker
 
 
@@ -339,7 +346,7 @@ def anonymize_mapping(
                 logger.warning("anonymizing invalid setValues of %s", field_name)
             else:
                 dummy = faker.anonymous_value(
-                    typed, get_all_field_infos(extracted_field)
+                    typed, get_all_field_infos(extracted_field), set_values
                 )
                 return _match_shape(
                     adapter.dump_python(dummy, mode="json", exclude_none=True),
@@ -364,6 +371,35 @@ def anonymize_mapping(
     return {
         name: walk(name, value) for name, value in _drop_comments(raw_mapping).items()
     }
+
+
+def anonymize_mapping_file(
+    file: PathLike[str],
+    locale: LocaleType = DEFAULT_LOCALE,
+    seed: SeedType = DEFAULT_SEED,
+) -> str:
+    """Anonymize a mapping YAML file and return the anonymized YAML string.
+
+    Raises:
+        ValueError: If the file name does not start with a stem type or the file
+            does not contain a YAML mapping
+    """
+    file = Path(file)
+    stem_type = stem_type_from_path(file)
+    raw_mapping = YAML(typ="safe").load(file.read_text(encoding="utf-8"))
+    if not isinstance(raw_mapping, dict):
+        msg = "file does not contain a YAML mapping"
+        raise ValueError(msg)  # noqa: TRY004
+    return dump_yaml(anonymize_mapping(raw_mapping, stem_type, locale, seed))
+
+
+def find_mapping_files(folder: PathLike[str]) -> list[Path]:
+    """Return all YAML files in the given folder and its sub-folders, sorted."""
+    return sorted(
+        file
+        for file in Path(folder).rglob("*")
+        if file.suffix in {".yaml", ".yml"} and file.is_file()
+    )
 
 
 def write_merged_items(

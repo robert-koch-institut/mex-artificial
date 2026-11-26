@@ -4,11 +4,14 @@ from typing import Annotated, Any
 
 import pytest
 from faker import Faker
+from faker.providers.lorem.de_DE import Provider as GermanLorem
+from faker.providers.lorem.en_US import Provider as EnglishLorem
 from pydantic import BaseModel, Field, ValidationError
 from pydantic.fields import FieldInfo
 from pytest import MonkeyPatch
 
 from mex.artificial.constants import DEFAULT_MODELS
+from mex.artificial.helpers import create_faker
 from mex.artificial.models import RandomFieldInfo
 from mex.artificial.provider import BuilderProvider
 from mex.common.models import MappingRule
@@ -490,3 +493,71 @@ def test_anonymization_provider_anonymous_raw_value(faker: Faker) -> None:
     assert anonymized["language"] == "de"
     assert anonymized["value"] != "Deutschland"
     assert anonymized["n"][1] is None
+
+
+GERMAN_WORDS = set(GermanLorem.word_list)
+ENGLISH_WORDS = set(EnglishLorem.word_list)
+
+
+@pytest.mark.parametrize(
+    ("language", "words"),
+    [("de", GERMAN_WORDS), ("en", ENGLISH_WORDS)],
+    ids=["german", "english"],
+)
+def test_anonymization_provider_similar_text_language(
+    language: str, words: set[str]
+) -> None:
+    faker = create_faker(["de_DE", "en_US"], 0, 5)
+    for _ in range(20):
+        text = faker.similar_text("ein ganz normaler satz mit worten", language)
+        assert set(text.split()) <= words
+
+
+def test_anonymization_provider_similar_text_rolls_die_without_language() -> None:
+    faker = create_faker(["de_DE", "en_US"], 0, 5)
+    texts = [faker.similar_text("one two three four", None) for _ in range(30)]
+    # unknown languages also roll a die, as there is no `fr_FR` locale
+    texts += [faker.similar_text("one two three four", "fr") for _ in range(30)]
+    assert any(set(text.split()) <= GERMAN_WORDS - ENGLISH_WORDS for text in texts)
+    assert any(set(text.split()) <= ENGLISH_WORDS - GERMAN_WORDS for text in texts)
+
+
+def test_anonymization_provider_anonymous_value_language() -> None:
+    faker = create_faker(["de_DE", "en_US"], 0, 5)
+    original = [
+        Text(value="ein deutscher satz mit worten", language=TextLanguage.DE),
+        Text(value="an english sentence with words", language=TextLanguage.EN),
+        Link(url="https://a.b", title="ein deutscher titel", language="de"),
+        Link(url="https://a.b", title="an english title", language="en"),
+    ]
+    for _ in range(10):
+        de_text, en_text, de_link, en_link = faker.anonymous_value(original, [])
+        assert set(de_text.value.split()) <= GERMAN_WORDS
+        assert set(en_text.value.split()) <= ENGLISH_WORDS
+        assert set(de_link.title.split()) <= GERMAN_WORDS
+        assert set(en_link.title.split()) <= ENGLISH_WORDS
+
+
+def test_anonymization_provider_anonymous_value_raw_language() -> None:
+    faker = create_faker(["de_DE", "en_US"], 0, 5)
+    # validation detected `en` for this text, but the raw input had no language
+    original = [Text(value="an english sentence", language=TextLanguage.EN)]
+    texts = [
+        faker.anonymous_value(original, [], [{"value": "an english sentence"}])[0]
+        for _ in range(30)
+    ]
+    assert any(set(t.value.split()) <= GERMAN_WORDS - ENGLISH_WORDS for t in texts)
+    # the raw input language wins over the detected language
+    (text,) = faker.anonymous_value(
+        original, [], [{"value": "an english sentence", "language": "de"}]
+    )
+    assert set(text.value.split()) <= GERMAN_WORDS
+
+
+def test_anonymization_provider_anonymous_raw_value_language() -> None:
+    faker = create_faker(["de_DE", "en_US"], 0, 5)
+    for _ in range(10):
+        anonymized = faker.anonymous_raw_value(
+            [{"value": "Deutschland ist ein Land", "language": "de"}]
+        )
+        assert set(anonymized[0]["value"].split()) <= GERMAN_WORDS

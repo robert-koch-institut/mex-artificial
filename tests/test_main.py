@@ -1,6 +1,7 @@
 import logging
 import re
 import sys
+from collections.abc import Callable
 from io import StringIO
 from pathlib import Path
 
@@ -12,7 +13,12 @@ from typer.testing import CliRunner
 
 from mex.artificial.main import _log_to_stderr, anonymize, artificial, mapping
 from mex.common.logging import logger
-from mex.common.models import PersonMapping
+from mex.common.models import (
+    AccessPlatformMapping,
+    AnyMappingModel,
+    PersonMapping,
+    ResourceMapping,
+)
 
 
 def test_main(caplog: LogCaptureFixture) -> None:
@@ -155,3 +161,96 @@ def test_anonymize_keeps_field_order(tmp_path: Path) -> None:
     result = runner.invoke(app, [str(in_file)], catch_exceptions=False)
     assert result.exit_code == 0
     assert list(YAML(typ="safe").load(result.stdout)) == order
+
+
+def _generate_mapping(runner: CliRunner, stem_type: str, out_file: Path) -> None:
+    app = Typer()
+    app.command()(mapping)
+    result = runner.invoke(
+        app,
+        ["--stem-type", stem_type, "--path", str(out_file)],
+        catch_exceptions=False,
+    )
+    assert result.exit_code == 0
+
+
+def test_anonymize_folder(tmp_path: Path) -> None:
+    runner = CliRunner()
+    in_dir = tmp_path / "mappings"
+    _generate_mapping(runner, "Resource", in_dir / "Resource_one.yaml")
+    _generate_mapping(runner, "Person", in_dir / "nested" / "person_two.yml")
+    _generate_mapping(
+        runner, "AccessPlatform", in_dir / "a" / "b" / "access-platform.yaml"
+    )
+    (in_dir / "Unknown_three.yaml").write_text("title: []\n", encoding="utf-8")
+    (in_dir / "Resource_list.yaml").write_text("- not a mapping\n", encoding="utf-8")
+    (in_dir / "README.md").write_text("# not yaml\n", encoding="utf-8")
+
+    app = Typer()
+    app.command()(anonymize)
+    out_dir = tmp_path / "anonymized"
+    result = runner.invoke(
+        app, [str(in_dir), "--path", str(out_dir)], catch_exceptions=False
+    )
+    assert result.exit_code == 0
+
+    written = sorted(
+        str(p.relative_to(out_dir)) for p in out_dir.rglob("*") if p.is_file()
+    )
+    assert written == [
+        "Resource_one.yaml",
+        "a/b/access-platform.yaml",
+        "nested/person_two.yml",
+    ]
+    models: list[tuple[str, type[AnyMappingModel]]] = [
+        ("Resource_one.yaml", ResourceMapping),
+        ("nested/person_two.yml", PersonMapping),
+        ("a/b/access-platform.yaml", AccessPlatformMapping),
+    ]
+    for relative, model in models:
+        output = (out_dir / relative).read_text(encoding="utf-8")
+        assert output != (in_dir / relative).read_text(encoding="utf-8")
+        model.model_validate(YAML(typ="safe").load(output))
+
+
+@pytest.mark.parametrize(
+    ("make_path", "message"),
+    [
+        (lambda tmp: None, "is required when anonymizing a folder"),
+        (lambda tmp: tmp / "mappings", "must not be the input folder"),
+        (lambda tmp: tmp / "mappings" / "out", "must not be the input folder"),
+        (lambda tmp: tmp / "file.yaml", "must be a folder when anonymizing"),
+    ],
+    ids=["missing", "same", "inside", "file"],
+)
+def test_anonymize_folder_invalid_path(
+    tmp_path: Path, make_path: Callable[[Path], Path | None], message: str
+) -> None:
+    in_dir = tmp_path / "mappings"
+    in_dir.mkdir()
+    (tmp_path / "file.yaml").write_text("", encoding="utf-8")
+    path = make_path(tmp_path)
+    app = Typer()
+    app.command()(anonymize)
+    args = [str(in_dir)] + (["--path", str(path)] if path else [])
+    result = CliRunner().invoke(app, args)
+    assert result.exit_code == 2
+    output = " ".join(re.sub(r"[│╭╮╰╯─]", " ", result.output).split())
+    assert message in output
+
+
+def test_anonymize_file_into_folder(tmp_path: Path) -> None:
+    runner = CliRunner()
+    in_file = tmp_path / "Person_x.yaml"
+    _generate_mapping(runner, "Person", in_file)
+    out_dir = tmp_path / "out"
+    out_dir.mkdir()
+    app = Typer()
+    app.command()(anonymize)
+    result = runner.invoke(
+        app, [str(in_file), "--path", str(out_dir)], catch_exceptions=False
+    )
+    assert result.exit_code == 0
+    PersonMapping.model_validate(
+        YAML(typ="safe").load((out_dir / "Person_x.yaml").read_text(encoding="utf-8"))
+    )

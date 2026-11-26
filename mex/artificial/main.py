@@ -16,12 +16,11 @@ from mex.artificial.constants import (
     DEFAULT_SEED,
 )
 from mex.artificial.helpers import (
-    anonymize_mapping,
+    anonymize_mapping_file,
     create_artificial_mapping_item,
     dump_mapping_item,
-    dump_yaml,
+    find_mapping_files,
     generate_artificial_merged_items,
-    stem_type_from_path,
     write_merged_items,
 )
 from mex.common.logging import logger
@@ -168,17 +167,18 @@ def mapping(
         typer.echo(output, nl=False)
 
 
-def anonymize(
+def anonymize(  # noqa: C901
     file: Annotated[
         Path,
         typer.Argument(
             help=(
-                "Mapping YAML file to anonymize, the stem type is derived from the "
-                "file name prefix, e.g. `Resource_grippeweb-plus.yaml`."
+                "Mapping YAML file or folder of mapping files to anonymize. The stem "
+                "type is derived from the file name prefix, e.g. "
+                "`Resource_grippeweb-plus.yaml`. Folders are searched recursively."
             ),
             exists=True,
             file_okay=True,
-            dir_okay=False,
+            dir_okay=True,
             readable=True,
             resolve_path=True,
         ),
@@ -199,17 +199,52 @@ def anonymize(
     path: Annotated[
         Path | None,
         typer.Option(
-            help="File to write the anonymized YAML mapping to, instead of stdout.",
+            help=(
+                "Where to write the anonymized YAML. For a single file: a file or "
+                "folder, defaults to stdout. For a folder: a folder outside of it, "
+                "that mirrors its structure, required."
+            ),
             file_okay=True,
-            dir_okay=False,
+            dir_okay=True,
             writable=True,
             resolve_path=True,
         ),
     ] = None,
 ) -> None:
-    """Anonymize a mapping YAML file: drop comments and replace all setValues."""
+    """Anonymize mapping YAML files: drop comments and replace all setValues."""
+    locale = locale or DEFAULT_LOCALE
+    if file.is_dir():
+        if not path:
+            msg = "is required when anonymizing a folder"
+            raise typer.BadParameter(msg, param_hint="--path")
+        if path.is_file():
+            msg = "must be a folder when anonymizing a folder"
+            raise typer.BadParameter(msg, param_hint="--path")
+        if path.is_relative_to(file):
+            msg = "must not be the input folder or inside of it"
+            raise typer.BadParameter(msg, param_hint="--path")
+        written = 0
+        for in_file in find_mapping_files(file):
+            relative = in_file.relative_to(file)
+            try:
+                output = anonymize_mapping_file(in_file, locale, seed)
+            except ValueError as error:
+                logger.warning("skipping %s: %s", relative, error)
+                continue
+            out_file = path / relative
+            out_file.parent.mkdir(parents=True, exist_ok=True)
+            out_file.write_text(output, encoding="utf-8")
+            written += 1
+        logger.info("wrote %s anonymized mappings to %s", written, path)
+        return
+    if path and path.is_dir():
+        path /= file.name
     try:
-        stem_type = stem_type_from_path(file)
+        if path:
+            output = anonymize_mapping_file(file, locale, seed)
+        else:
+            with _log_to_stderr():
+                output = anonymize_mapping_file(file, locale, seed)
     except ValueError as error:
         raise typer.BadParameter(str(error), param_hint="FILE") from error
     raw_mapping = YAML(typ="safe").load(file)
@@ -218,13 +253,10 @@ def anonymize(
         raise typer.BadParameter(msg, param_hint="FILE")
     locale = locale or DEFAULT_LOCALE
     if path:
-        output = dump_yaml(anonymize_mapping(raw_mapping, stem_type, locale, seed))
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(output, encoding="utf-8")
-        logger.info("wrote anonymized %sMapping to %s", stem_type, path)
+        logger.info("wrote anonymized mapping to %s", path)
     else:
-        with _log_to_stderr():
-            output = dump_yaml(anonymize_mapping(raw_mapping, stem_type, locale, seed))
         typer.echo(output, nl=False)
 
 
