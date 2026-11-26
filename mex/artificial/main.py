@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Annotated
 
 import typer
-import yaml
+from ruamel.yaml import YAML
 
 from mex.artificial.constants import (
     DEFAULT_CHATTINESS,
@@ -212,7 +212,7 @@ def anonymize(
         stem_type = stem_type_from_path(file)
     except ValueError as error:
         raise typer.BadParameter(str(error), param_hint="FILE") from error
-    raw_mapping = yaml.safe_load(file.read_text(encoding="utf-8"))
+    raw_mapping = YAML(typ="safe").load(file)
     if not isinstance(raw_mapping, dict):
         msg = "file does not contain a YAML mapping"
         raise typer.BadParameter(msg, param_hint="FILE")

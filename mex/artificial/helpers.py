@@ -1,16 +1,17 @@
 import json
 from collections import OrderedDict, defaultdict
 from collections.abc import Generator, Iterable, Mapping, Sequence
+from io import StringIO
 from itertools import count, islice
 from os import PathLike
 from pathlib import Path
 from typing import Any, cast, get_args
 
-import yaml
 from faker import Faker
 from faker.typing import SeedType
 from pydantic import TypeAdapter, ValidationError
 from rich.progress import track
+from ruamel.yaml import YAML
 
 from mex.artificial.constants import (
     DEFAULT_CHATTINESS,
@@ -218,31 +219,17 @@ def create_artificial_mapping_item(
     return cast("AnyMappingModel", faker.mapping_item(stem_type, ids_by_type))
 
 
-class _IndentedSafeDumper(yaml.SafeDumper):
-    """YAML dumper that indents list items and writes `None` as an empty value."""
-
-    def increase_indent(self, flow: bool = False, indentless: bool = False) -> None:  # noqa: ARG002, FBT001, FBT002
-        """Never emit indentless sequences."""
-        super().increase_indent(flow, False)  # noqa: FBT003
-
-
-_IndentedSafeDumper.add_representer(
-    type(None),
-    lambda dumper, _: dumper.represent_scalar("tag:yaml.org,2002:null", ""),
-)
-
-
 def dump_yaml(data: object) -> str:
     """Dump the given data into a formatted YAML string."""
-    return yaml.dump(
-        data,
-        Dumper=_IndentedSafeDumper,
-        allow_unicode=True,
-        default_flow_style=False,
-        indent=2,
-        sort_keys=False,
-        width=88,
-    )
+    yaml = YAML()
+    yaml.indent(mapping=2, sequence=4, offset=2)
+    yaml.default_flow_style = False
+    yaml.allow_unicode = True
+    yaml.width = 88
+
+    stream = StringIO()
+    yaml.dump(data, stream)
+    return stream.getvalue()
 
 
 def dump_mapping_item(item: AnyMappingModel) -> str:
