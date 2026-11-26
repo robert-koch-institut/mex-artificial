@@ -110,7 +110,7 @@ def test_anonymize_invalid_file_name(tmp_path: Path) -> None:
     result = CliRunner().invoke(app, [str(in_file)])
     assert result.exit_code == 2
     output = " ".join(re.sub(r"[│╭╮╰╯─]", " ", result.output).split())
-    assert "does not match any mapping stem type" in output
+    assert "does not start with any mapping stem type" in output
 
 
 def test_anonymize_invalid_yaml_content(tmp_path: Path) -> None:
@@ -182,6 +182,11 @@ def test_anonymize_folder(tmp_path: Path) -> None:
     _generate_mapping(
         runner, "AccessPlatform", in_dir / "a" / "b" / "access-platform.yaml"
     )
+    (in_dir / "filters" / "activity_filter.yaml").parent.mkdir()
+    (in_dir / "filters" / "activity_filter.yaml").write_text(
+        "# yaml comment\nfields:\n  - filterRules: [{rule: r}]\n    comment: c\n",
+        encoding="utf-8",
+    )
     (in_dir / "Unknown_three.yaml").write_text("title: []\n", encoding="utf-8")
     (in_dir / "Resource_list.yaml").write_text("- not a mapping\n", encoding="utf-8")
     (in_dir / "README.md").write_text("# not yaml\n", encoding="utf-8")
@@ -200,8 +205,16 @@ def test_anonymize_folder(tmp_path: Path) -> None:
     assert written == [
         "Resource_one.yaml",
         "a/b/access-platform.yaml",
+        "filters/activity_filter.yaml",
         "nested/person_two.yml",
     ]
+    filter_output = (out_dir / "filters" / "activity_filter.yaml").read_text(
+        encoding="utf-8"
+    )
+    assert YAML(typ="safe").load(filter_output) == {
+        "fields": [{"filterRules": [{"rule": "r"}]}]
+    }
+    assert "comment" not in filter_output
     models: list[tuple[str, type[AnyMappingModel]]] = [
         ("Resource_one.yaml", ResourceMapping),
         ("nested/person_two.yml", PersonMapping),

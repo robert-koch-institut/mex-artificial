@@ -1,4 +1,5 @@
 import json
+import re
 from collections import OrderedDict, defaultdict
 from collections.abc import Generator, Iterable, Mapping, Sequence
 from io import StringIO
@@ -40,6 +41,7 @@ from mex.common.merged.main import create_merged_item
 from mex.common.models import (
     EXTRACTED_MODEL_CLASSES,
     EXTRACTED_MODEL_CLASSES_BY_NAME,
+    FILTER_MODEL_CLASSES_BY_NAME,
     MAPPING_MODEL_CLASSES,
     MAPPING_MODEL_CLASSES_BY_NAME,
     AnyExtractedModel,
@@ -252,22 +254,36 @@ def dump_mapping_item(item: AnyMappingModel) -> str:
     )
 
 
-def stem_type_from_path(path: PathLike[str]) -> str:
-    """Derive the mapping stem type from the prefix of a mapping file name.
+def _name_words(name: str) -> list[str]:
+    """Split a name into lowercase words at separators and camel case humps."""
+    spaced = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", name)
+    return [word.lower() for word in re.split(r"[^A-Za-z0-9]+", spaced) if word]
 
-    The prefix is the part of the file name before the first underscore, matched
-    case-insensitively and ignoring dashes, e.g. `Resource_grippeweb-plus.yaml`,
-    `resource.yaml` and `access-platform_mock.yaml` are all supported.
+
+def stem_type_from_path(path: PathLike[str]) -> str:
+    """Derive the mapping stem type from the beginning of a mapping file name.
+
+    The file name is split into words at dashes, underscores, dots, spaces and
+    camel case humps. The stem type whose name equals the concatenation of the
+    leading words is chosen, preferring the longest match. That way,
+    `Resource_grippeweb-plus.yaml`, `access-platform-bla-blup.yaml`,
+    `variable-xsystem.yaml`, `variable_group_foo.yaml` (a variable group) and
+    `accessplatform.yaml` are all supported.
 
     Raises:
-        ValueError: If the prefix does not match any mapping stem type
+        ValueError: If the file name does not start with any mapping stem type
     """
-    prefix = Path(path).stem.split("_", 1)[0]
-    normalized = prefix.replace("-", "").lower()
-    for model in MAPPING_MODEL_CLASSES:
-        if model.stemType.lower() == normalized:
-            return model.stemType
-    msg = f"File name prefix `{prefix}` does not match any mapping stem type"
+    stem = Path(path).stem
+    words = _name_words(stem)
+    leading = {"".join(words[: i + 1]) for i in range(len(words))}
+    matches = [
+        model.stemType
+        for model in MAPPING_MODEL_CLASSES
+        if model.stemType.lower() in leading
+    ]
+    if matches:
+        return max(matches, key=len)
+    msg = f"File name `{stem}` does not start with any mapping stem type"
     raise ValueError(msg)
 
 
@@ -285,11 +301,14 @@ def _match_shape(anonymized: Any, original: Any) -> Any:  # noqa: ANN401
 
     Validation can add keys, e.g. a detected `language` for texts without one, or
     turn strings into texts, so the anonymized data is brought back into shape.
+    Keys of the original that are missing from the anonymized data, e.g. because
+    the model ignores them, are dropped so no original values leak through.
     """
     if isinstance(anonymized, dict) and isinstance(original, dict):
         return {
-            k: _match_shape(anonymized[k], v) if k in anonymized else v
+            k: _match_shape(anonymized[k], v)
             for k, v in original.items()
+            if k in anonymized
         }
     if (
         isinstance(anonymized, dict)
@@ -424,12 +443,43 @@ def anonymize_mapping(  # noqa: C901
     }
 
 
+FILTER_FILE_PATTERN = re.compile(r"[_-]filter$", re.IGNORECASE)
+
+
+def is_filter_path(path: PathLike[str]) -> bool:
+    """Check whether a file name ends in `_filter` or `-filter`."""
+    return bool(FILTER_FILE_PATTERN.search(Path(path).stem))
+
+
+def anonymize_filter(raw_filter: dict[str, Any], stem_type: str) -> dict[str, Any]:
+    """Anonymize a raw filter by dropping all comments of its filter fields.
+
+    Filters have no `setValues`, so everything else is kept as it is. If the filter
+    does not validate against its filter model, e.g. `ActivityFilter`, a warning is
+    logged and the filter is still anonymized.
+    """
+    filter_class = FILTER_MODEL_CLASSES_BY_NAME[f"{stem_type}Filter"]
+    anonymized = cast("dict[str, Any]", _drop_comments(raw_filter))
+    try:
+        filter_class.model_validate(anonymized)
+    except ValidationError as error:
+        logger.warning(
+            "anonymizing invalid %s with %s validation errors",
+            filter_class.__name__,
+            error.error_count(),
+        )
+    return anonymized
+
+
 def anonymize_mapping_file(
     file: PathLike[str],
     locale: LocaleType = DEFAULT_LOCALE,
     seed: SeedType = DEFAULT_SEED,
 ) -> str:
-    """Anonymize a mapping YAML file and return the anonymized YAML string.
+    """Anonymize a mapping or filter YAML file and return the anonymized YAML string.
+
+    Files whose name ends in `_filter` or `-filter` are treated as filters, all
+    others as mappings. YAML comments are always dropped.
 
     Raises:
         ValueError: If the file name does not start with a stem type or the file
@@ -441,6 +491,8 @@ def anonymize_mapping_file(
     if not isinstance(raw_mapping, dict):
         msg = "file does not contain a YAML mapping"
         raise ValueError(msg)  # noqa: TRY004
+    if is_filter_path(file):
+        return dump_yaml(anonymize_filter(raw_mapping, stem_type))
     return dump_yaml(anonymize_mapping(raw_mapping, stem_type, locale, seed))
 
 

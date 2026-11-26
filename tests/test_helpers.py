@@ -20,7 +20,9 @@ from mex.artificial.hand_kept import (
     HAND_KEPT_PERSONS,
 )
 from mex.artificial.helpers import (
+    anonymize_filter,
     anonymize_mapping,
+    anonymize_mapping_file,
     create_artificial_extracted_items,
     create_artificial_items_and_rule_sets,
     create_artificial_mapping_item,
@@ -31,6 +33,7 @@ from mex.artificial.helpers import (
     generate_artificial_extracted_items,
     generate_artificial_items_and_rule_sets,
     generate_artificial_merged_items,
+    is_filter_path,
     referenced_entity_groups,
     stem_type_from_path,
     write_merged_items,
@@ -316,6 +319,18 @@ def test_anonymize_mapping_does_not_add_keys() -> None:
                 assert text.keys() == {"value"}
 
 
+def test_anonymize_mapping_drops_keys_ignored_by_model() -> None:
+    raw = _generated_raw_mapping("Resource")
+    raw["title"][0]["mappingRules"] = [
+        {"setValues": [{"value": "Geheim Titel", "language": "de", "extra": "LEAK"}]}
+    ]
+    anonymized = anonymize_mapping(raw, "Resource", DEFAULT_LOCALE, 0)
+    (text,) = anonymized["title"][0]["mappingRules"][0]["setValues"]
+    assert text.keys() == {"value", "language"}
+    assert text["value"] != "Geheim Titel"
+    assert "LEAK" not in dump_yaml(anonymized)
+
+
 def test_anonymize_mapping_invalid_set_values(caplog: pytest.LogCaptureFixture) -> None:
     raw = _generated_raw_mapping("Resource")
     # replace generated setValues with values of the wrong type and an empty value
@@ -347,15 +362,31 @@ def test_anonymize_mapping_invalid_set_values(caplog: pytest.LogCaptureFixture) 
         ("resource.yaml", "Resource"),
         ("access-platform_mock.yaml", "AccessPlatform"),
         ("OrganizationalUnit_foo_bar.yml", "OrganizationalUnit"),
+        ("organizational-unit.yaml", "OrganizationalUnit"),
+        ("organization_foo.yaml", "Organization"),
+        ("variable-xsystem.yaml", "Variable"),
+        ("variable_group_foo.yaml", "VariableGroup"),
+        ("variable-group.yaml", "VariableGroup"),
+        ("VariableGroup_foo.yaml", "VariableGroup"),
+        ("access-platform-bla-blup.yaml", "AccessPlatform"),
+        ("accessplatform.yaml", "AccessPlatform"),
+        ("Access Platform foo.yaml", "AccessPlatform"),
+        ("resource-series_x.yaml", "ResourceSeries"),
+        ("activity_filter.yaml", "Activity"),
+        ("variable-group-filter.yml", "VariableGroup"),
+        ("Resource_grippeweb_filter.yaml", "Resource"),
     ],
 )
 def test_stem_type_from_path(file_name: str, expected: str) -> None:
     assert stem_type_from_path(Path("some", "dir", file_name)) == expected
 
 
-def test_stem_type_from_path_error() -> None:
-    with pytest.raises(ValueError, match="`Nope` does not match"):
-        stem_type_from_path(Path("Nope_resource.yaml"))
+@pytest.mark.parametrize(
+    "file_name", ["Nope_resource.yaml", "personnel.yaml", "resources_x.yaml"]
+)
+def test_stem_type_from_path_error(file_name: str) -> None:
+    with pytest.raises(ValueError, match="does not start with any mapping stem type"):
+        stem_type_from_path(Path(file_name))
 
 
 def _reversed_keys(data: object) -> object:
@@ -483,3 +514,73 @@ def test_anonymize_mapping_references() -> None:
     ]
     # fields without references keep their forValues
     assert anonymized["title"][0]["mappingRules"][0]["forValues"] == ["fg 31"]
+
+
+@pytest.mark.parametrize(
+    ("file_name", "expected"),
+    [
+        ("activity_filter.yaml", True),
+        ("activity-filter.yaml", True),
+        ("Resource_grippeweb_Filter.yml", True),
+        ("activity.yaml", False),
+        ("activity_filters.yaml", False),
+        ("activityfilter.yaml", False),
+        ("filter_activity.yaml", False),
+    ],
+)
+def test_is_filter_path(file_name: str, *, expected: bool) -> None:
+    assert is_filter_path(Path("some", "dir", file_name)) is expected
+
+
+RAW_FILTER: dict[str, Any] = {
+    "fields": [
+        {
+            "fieldInPrimarySource": "status",
+            "locationInPrimarySource": "table",
+            "examplesInPrimarySource": ["active"],
+            "filterRules": [{"forValues": ["inactive"], "rule": "skip inactive"}],
+            "comment": "secret comment",
+        }
+    ]
+}
+
+
+def test_anonymize_filter(caplog: pytest.LogCaptureFixture) -> None:
+    anonymized = anonymize_filter(RAW_FILTER, "Activity")
+    expected = {"fields": [RAW_FILTER["fields"][0].copy()]}
+    del expected["fields"][0]["comment"]
+    assert anonymized == expected
+    assert "comment" in RAW_FILTER["fields"][0]  # input is not mutated
+    assert "anonymizing invalid" not in caplog.text
+
+
+def test_anonymize_filter_invalid(caplog: pytest.LogCaptureFixture) -> None:
+    raw = {"fields": [{"fieldInPrimarySource": "x", "comment": "c"}]}
+    anonymized = anonymize_filter(raw, "Resource")
+    assert anonymized == {"fields": [{"fieldInPrimarySource": "x"}]}
+    assert "anonymizing invalid ResourceFilter with 1 validation errors" in (
+        caplog.text
+    )
+
+
+def test_anonymize_mapping_file_filter(tmp_path: Path) -> None:
+    in_file = tmp_path / "activity-filter.yaml"
+    in_file.write_text(
+        "# secret yaml comment\n"
+        "fields:\n"
+        "  - fieldInPrimarySource: status  # inline secret\n"
+        "    filterRules:\n"
+        "      - forValues: [inactive]\n"
+        "    comment: secret comment\n",
+        encoding="utf-8",
+    )
+    output = anonymize_mapping_file(in_file)
+    assert "secret" not in output
+    assert YAML(typ="safe").load(output) == {
+        "fields": [
+            {
+                "fieldInPrimarySource": "status",
+                "filterRules": [{"forValues": ["inactive"]}],
+            }
+        ]
+    }

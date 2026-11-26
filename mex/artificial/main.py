@@ -172,9 +172,11 @@ def anonymize_command(  # noqa: C901, PLR0912
         Path,
         typer.Argument(
             help=(
-                "Mapping YAML file or folder of mapping files to anonymize. The stem "
-                "type is derived from the file name prefix, e.g. "
-                "`Resource_grippeweb-plus.yaml`. Folders are searched recursively."
+                "Mapping or filter YAML file, or folder of such files, to anonymize. "
+                "The stem type is derived from the start of the file name, e.g. "
+                "`Resource_grippeweb-plus.yaml` or `variable-group_foo.yaml`. "
+                "Files ending in `_filter` or `-filter` are treated as filters, "
+                "e.g. `activity_filter.yaml`. Folders are searched recursively."
             ),
             exists=True,
             file_okay=True,
@@ -211,7 +213,10 @@ def anonymize_command(  # noqa: C901, PLR0912
         ),
     ] = None,
 ) -> None:
-    """Anonymize mapping YAML files: drop comments and replace all setValues."""
+    """Anonymize mapping and filter YAML files.
+
+    Comments are dropped from both, setValues are only replaced in mappings.
+    """
     locale = locale or DEFAULT_LOCALE
     if file.is_dir():
         if not path:
