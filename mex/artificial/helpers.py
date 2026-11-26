@@ -21,7 +21,8 @@ from mex.artificial.constants import (
     DEFAULT_SEED,
     MEX_PRIMARY_SOURCE,
 )
-from mex.artificial.models import ExtractedItemAndRuleSet
+from mex.artificial.hand_kept import HAND_KEPT_ENTITIES_BY_IDENTIFIER_CLASS
+from mex.artificial.models import ExtractedItemAndRuleSet, HandKeptEntity
 from mex.artificial.provider import (
     AnonymizationProvider,
     BuilderProvider,
@@ -315,7 +316,32 @@ def _match_shape(anonymized: Any, original: Any) -> Any:  # noqa: ANN401
     return anonymized
 
 
-def anonymize_mapping(
+REFERENCE_VALUE_KEYS = frozenset({"forValues", "transformValues"})
+
+
+def referenced_entity_groups(
+    extracted_class: type[AnyExtractedModel], field_name: str
+) -> list[list[HandKeptEntity]]:
+    """Return the hand-kept entities a field of an extracted model may reference.
+
+    Returns:
+        One list of entities for each referenced type, e.g. persons and units,
+        or an empty list if the field references none of the hand-kept types
+    """
+    if not (field := extracted_class.model_fields.get(field_name)):
+        return []
+    inner_types = [info.inner_type for info in get_all_field_infos(field)]
+    return [
+        entities
+        for identifier_class, entities in HAND_KEPT_ENTITIES_BY_IDENTIFIER_CLASS.items()
+        if any(
+            isinstance(inner_type, type) and issubclass(inner_type, identifier_class)
+            for inner_type in inner_types
+        )
+    ]
+
+
+def anonymize_mapping(  # noqa: C901
     raw_mapping: dict[str, Any],
     stem_type: str,
     locale: LocaleType = DEFAULT_LOCALE,
@@ -325,8 +351,14 @@ def anonymize_mapping(
 
     All `comment` keys are removed and all `setValues` are replaced with dummy
     values of the same type, as defined by the mex-common models. Lists keep their
-    length and texts roughly keep their length. All other keys are kept as is.
-    Values that do not validate against their type are anonymized by their shape.
+    length and texts roughly keep their length. Values that do not validate against
+    their type are anonymized by their shape.
+
+    For fields that reference persons, units or organizations, `forValues` and
+    `transformValues` are replaced with synonyms of hand-kept entities of a matching
+    type, that are formatted like the original, e.g. `fg 31` may become `c 1`.
+    The same original value is replaced with the same synonym within a mapping.
+    All other keys are kept as is.
 
     Args:
         raw_mapping: Mapping data loaded from YAML, need not be a valid model
@@ -369,11 +401,30 @@ def anonymize_mapping(
             logger.warning("anonymizing setValues of unknown field %s", field_name)
         return faker.anonymous_raw_value(set_values)
 
+    # replace the same original value with the same synonym throughout the file
+    synonyms: dict[tuple[str, str], str] = {}
+
+    def anonymize_references(field_name: str, values: Any) -> Any:  # noqa: ANN401
+        if not isinstance(values, list) or not (
+            groups := referenced_entity_groups(extracted_class, field_name)
+        ):
+            return values
+        return [
+            synonyms.setdefault(
+                (field_name, value), faker.similar_synonym(value, groups)
+            )
+            if isinstance(value, str)
+            else value
+            for value in values
+        ]
+
     def walk(field_name: str, data: Any) -> Any:  # noqa: ANN401
         if isinstance(data, dict):
             return {
                 key: anonymize_set_values(field_name, value)
                 if key == "setValues"
+                else anonymize_references(field_name, value)
+                if key in REFERENCE_VALUE_KEYS
                 else walk(field_name, value)
                 for key, value in data.items()
             }

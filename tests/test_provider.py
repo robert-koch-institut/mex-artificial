@@ -11,9 +11,19 @@ from pydantic.fields import FieldInfo
 from pytest import MonkeyPatch
 
 from mex.artificial.constants import DEFAULT_MODELS
+from mex.artificial.hand_kept import (
+    HAND_KEPT_ORGANIZATIONAL_UNITS,
+    HAND_KEPT_ORGANIZATIONS,
+    HAND_KEPT_PERSONS,
+)
 from mex.artificial.helpers import create_faker
 from mex.artificial.models import RandomFieldInfo
-from mex.artificial.provider import BuilderProvider
+from mex.artificial.provider import (
+    BuilderProvider,
+    adapt_format,
+    format_shape,
+    format_similarity,
+)
 from mex.common.models import MappingRule
 from mex.common.types import (
     APIType,
@@ -561,3 +571,57 @@ def test_anonymization_provider_anonymous_raw_value_language() -> None:
             [{"value": "Deutschland ist ein Land", "language": "de"}]
         )
         assert set(anonymized[0]["value"].split()) <= GERMAN_WORDS
+
+
+@pytest.mark.parametrize(
+    ("value", "collapsed", "full"),
+    [
+        ("FG 99", "a 9", "AA 99"),
+        ("fg31", "a9", "aa99"),
+        ("Felicitás, Juturna", "a, a", "Aaaaaaaaa, Aaaaaaa"),
+        ("resolvedr@rki.de", "a@a.a", "aaaaaaaaa@aaa.aa"),
+    ],
+)
+def test_format_shape(value: str, collapsed: str, full: str) -> None:
+    assert format_shape(value, collapse=True) == collapsed
+    assert format_shape(value) == full
+
+
+def test_format_similarity() -> None:
+    assert format_similarity("fg 31", "FG 99") > format_similarity("fg 31", "C1")
+    assert format_similarity("fg 31", "C1") > format_similarity("fg 31", "child-unit")
+    assert format_similarity("a@b.c", "x@y.z") == 3.5
+
+
+@pytest.mark.parametrize(
+    ("value", "original", "expected"),
+    [
+        ("C1", "fg 31", "c 1"),
+        ("FG 99", "fg31", "fg99"),
+        ("Robert Koch-Institut", "PAUL-EHRLICH-INSTITUT", "ROBERT KOCH-INSTITUT"),
+        ("Resolved, Roland", "Mustermann, Max", "Resolved, Roland"),
+        ("FG 99", "Q", "FG 99"),
+    ],
+)
+def test_adapt_format(value: str, original: str, expected: str) -> None:
+    assert adapt_format(value, original) == expected
+
+
+def test_anonymization_provider_similar_synonym(faker: Faker) -> None:
+    results = {
+        faker.similar_synonym("fg 31", [HAND_KEPT_ORGANIZATIONAL_UNITS])
+        for _ in range(30)
+    }
+    # a random unit is picked, then its most similarly formatted synonym
+    assert results == {"c 1", "fg 99"}
+    # the group with the most similarly formatted synonyms is picked
+    groups = [HAND_KEPT_ORGANIZATIONS, HAND_KEPT_PERSONS]
+    for _ in range(10):
+        assert faker.similar_synonym("x.y@rki.de", groups).endswith(
+            ("@rki.de", "@mail.tld")
+        )
+
+
+def test_anonymization_provider_similar_synonym_error(faker: Faker) -> None:
+    with pytest.raises(RuntimeError, match="No hand-kept entities"):
+        faker.similar_synonym("fg 31", [[]])

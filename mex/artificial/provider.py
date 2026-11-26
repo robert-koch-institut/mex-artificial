@@ -2,6 +2,7 @@ import re
 from collections import OrderedDict
 from collections.abc import Callable, Collection, Mapping, Sequence
 from datetime import datetime
+from difflib import SequenceMatcher
 from enum import Enum
 from functools import partial
 from types import NoneType, UnionType
@@ -21,8 +22,9 @@ from mex.artificial.constants import (
     DEFAULT_MAPPING_EXTRA_ITEMS,
     DEFAULT_RULE_VALUE_PROBABILITY,
     DEFAULT_SEED,
+    DEFAULT_SYNONYM_SIMILARITY_THRESHOLD,
 )
-from mex.artificial.models import RandomFieldInfo
+from mex.artificial.models import HandKeptEntity, RandomFieldInfo
 from mex.common.fields import LITERAL_FIELDS_BY_CLASS_NAME
 from mex.common.identity import get_provider
 from mex.common.models import (
@@ -658,6 +660,62 @@ def _given_language(original: Text | Link, raw: Any) -> str | None:  # noqa: ANN
     return language if isinstance(language, str) else None
 
 
+_LETTER = r"[^\W\d_]"
+
+
+def format_shape(value: str, *, collapse: bool = False) -> str:
+    """Return the format of a string, e.g. `FG 99` becomes `AA 99`.
+
+    Upper case letters become `A`, lower case letters `a`, digits become `9` and
+    all other characters are kept. When `collapse` is set, letter case is ignored
+    and runs of the same character are reduced to one, e.g. `FG 99` becomes `a 9`.
+    """
+    shape = re.sub(r"\d", "9", value)
+    if collapse:
+        shape = re.sub(_LETTER, "a", shape)
+        return re.sub(r"(.)\1+", r"\1", shape)
+    return "".join(
+        ("A" if char.isupper() else "a") if re.match(_LETTER, char) else char
+        for char in shape
+    )
+
+
+def format_similarity(value: str, other: str) -> float:
+    """Score how similarly two strings are formatted, from 0 to 3.5.
+
+    The score mostly compares the collapsed formats, then the full formats while
+    ignoring letter case, and to a lesser degree the letter case.
+    """
+    collapsed, caseless, cased = (
+        SequenceMatcher(None, shape(value), shape(other)).ratio()
+        for shape in (
+            partial(format_shape, collapse=True),
+            lambda v: format_shape(v).replace("A", "a"),
+            format_shape,
+        )
+    )
+    return 2 * collapsed + caseless + cased / 2
+
+
+def adapt_format(value: str, original: str) -> str:
+    """Adapt the letter case and letter-digit spacing of a value to an original.
+
+    E.g. adapting `C1` to the format of `fg 31` returns `c 1`.
+    """
+    letters = re.findall(_LETTER, original)
+    if letters and original == original.lower():
+        value = value.lower()
+    elif len(letters) > 1 and original == original.upper():
+        value = value.upper()
+    spaced = re.search(rf"{_LETTER} \d", original)
+    joined = re.search(rf"{_LETTER}\d", original)
+    if spaced and not joined:
+        value = re.sub(rf"({_LETTER})(\d)", r"\1 \2", value)
+    elif joined and not spaced:
+        value = re.sub(rf"({_LETTER}) (\d)", r"\1\2", value)
+    return value
+
+
 class AnonymizationProvider(PythonFakerProvider):
     """Faker provider that replaces values with dummy values of the same shape."""
 
@@ -820,3 +878,51 @@ class AnonymizationProvider(PythonFakerProvider):
         if isinstance(original, str):
             return self.similar_text(original, language)
         return original
+
+    def similar_synonym(
+        self,
+        original: str,
+        entity_groups: Sequence[Sequence[HandKeptEntity]],
+    ) -> str:
+        """Return a synonym of a hand-kept entity, formatted like the original.
+
+        First, the group of entities (e.g. persons or units) with the most similarly
+        formatted synonym is picked, ties are broken randomly. Then a random entity
+        of that group is picked, from those with a synonym that is formatted almost
+        as similarly as the best match. Its most similarly formatted synonym is then
+        adapted to the letter case and spacing of the original.
+
+        Args:
+            original: Value to replace, e.g. `fg 31`
+            entity_groups: Groups of entities that the value may refer to
+
+        Returns:
+            Synonym of a hand-kept entity, e.g. `c 1`
+        """
+        groups = [group for group in entity_groups if group]
+        if not groups:
+            msg = "No hand-kept entities to pick a synonym from"
+            raise RuntimeError(msg)
+        group = max(
+            self.random_sample(groups, len(groups)),
+            key=lambda g: max(
+                format_similarity(original, synonym)
+                for entity in g
+                for synonym in entity.synonyms
+            ),
+        )
+        # only pick entities that have a synonym formatted like the best match
+        scores = [
+            max(format_similarity(original, synonym) for synonym in entity.synonyms)
+            for entity in group
+        ]
+        candidates = [
+            entity
+            for entity, score in zip(group, scores, strict=True)
+            if score >= max(scores) * DEFAULT_SYNONYM_SIMILARITY_THRESHOLD
+        ]
+        entity: HandKeptEntity = self.random_element(candidates)
+        synonym = max(
+            entity.synonyms, key=lambda synonym: format_similarity(original, synonym)
+        )
+        return adapt_format(synonym, original)

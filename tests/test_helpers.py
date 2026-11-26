@@ -1,4 +1,5 @@
 import json
+import re
 from collections.abc import Callable, Iterable, Iterator, Sequence
 from itertools import islice
 from pathlib import Path
@@ -13,6 +14,11 @@ from faker.typing import SeedType
 from pydantic import BaseModel
 
 from mex.artificial.constants import DEFAULT_LOCALE, DEFAULT_MODELS
+from mex.artificial.hand_kept import (
+    HAND_KEPT_ORGANIZATIONAL_UNITS,
+    HAND_KEPT_ORGANIZATIONS,
+    HAND_KEPT_PERSONS,
+)
 from mex.artificial.helpers import (
     anonymize_mapping,
     create_artificial_extracted_items,
@@ -25,13 +31,17 @@ from mex.artificial.helpers import (
     generate_artificial_extracted_items,
     generate_artificial_items_and_rule_sets,
     generate_artificial_merged_items,
+    referenced_entity_groups,
     stem_type_from_path,
     write_merged_items,
 )
+from mex.artificial.models import HandKeptEntity
 from mex.artificial.types import LocaleType
 from mex.common.models import (
+    EXTRACTED_MODEL_CLASSES_BY_NAME,
     MAPPING_MODEL_CLASSES,
     MAPPING_MODEL_CLASSES_BY_NAME,
+    AnyExtractedModel,
     PersonMapping,
 )
 
@@ -148,6 +158,39 @@ def test_dump_mapping_item() -> None:
     assert PersonMapping.model_validate(yaml.safe_load(output)) == item
 
 
+def _normalized(value: str) -> str:
+    return "".join(value.lower().split())
+
+
+def _assert_references_replaced(
+    original: list[dict[str, Any]],
+    anonymized: list[dict[str, Any]],
+    extracted_class: type[AnyExtractedModel],
+    name: str,
+) -> None:
+    """Assert references are replaced with hand-kept synonyms of a matching type."""
+    synonyms = {
+        _normalized(synonym)
+        for group in referenced_entity_groups(extracted_class, name)
+        for entity in group
+        for synonym in entity.synonyms
+    }
+    rules = [
+        (rule_before, rule_after)
+        for field_before, field_after in zip(original, anonymized, strict=True)
+        for rule_before, rule_after in zip(
+            field_before["mappingRules"], field_after["mappingRules"], strict=True
+        )
+    ]
+    for rule_before, rule_after in rules:
+        for key in ("forValues", "transformValues"):
+            before = rule_before.get(key) or []
+            after = rule_after.get(key) or []
+            assert len(after) == len(before)
+            for value in after:
+                assert _normalized(value) in synonyms, value
+
+
 def _without(data: object, keys: set[str]) -> object:
     if isinstance(data, dict):
         return {k: _without(v, keys) for k, v in data.items() if k not in keys}
@@ -189,10 +232,22 @@ def test_anonymize_generated_mapping(stem_type: str) -> None:
         assert "#" not in output
         assert "comment" not in output
 
-        # everything except comments and setValues is kept as is
-        assert _without(anonymized, {"setValues"}) == _without(
-            original, {"comment", "setValues"}
+        # everything except comments, setValues and references is kept as is
+        extracted_class = EXTRACTED_MODEL_CLASSES_BY_NAME[f"Extracted{stem_type}"]
+        references = {
+            name for name in original if referenced_entity_groups(extracted_class, name)
+        }
+        assert _without(anonymized, {"setValues", *references}) == _without(
+            original, {"comment", "setValues", *references}
         )
+        reference_keys = {"setValues", "forValues", "transformValues"}
+        for name in references:
+            assert _without(anonymized[name], reference_keys) == _without(
+                original[name], {"comment", *reference_keys}
+            )
+            _assert_references_replaced(
+                original[name], anonymized[name], extracted_class, name
+            )
 
         # setValues keep their type, length and shape
         pairs = list(_set_values_pairs(_without(original, {"comment"}), anonymized))
@@ -369,3 +424,60 @@ def test_anonymize_mapping_keeps_text_languages() -> None:
                     assert set(text.split()) <= words_by_language[language], text
                     checked += 1
     assert checked > 10
+
+
+@pytest.mark.parametrize(
+    ("stem_type", "field_name", "expected"),
+    [
+        ("Resource", "contributor", [HAND_KEPT_PERSONS]),
+        ("Resource", "unitInCharge", [HAND_KEPT_ORGANIZATIONAL_UNITS]),
+        ("Resource", "publisher", [HAND_KEPT_ORGANIZATIONS]),
+        ("Person", "memberOf", [HAND_KEPT_ORGANIZATIONAL_UNITS]),
+        ("Resource", "title", []),
+        ("Resource", "unknownField", []),
+    ],
+)
+def test_referenced_entity_groups(
+    stem_type: str, field_name: str, expected: list[list[HandKeptEntity]]
+) -> None:
+    extracted_class = EXTRACTED_MODEL_CLASSES_BY_NAME[f"Extracted{stem_type}"]
+    assert referenced_entity_groups(extracted_class, field_name) == expected
+
+
+def test_anonymize_mapping_references() -> None:
+    raw = _generated_raw_mapping("Resource")
+    raw["unitInCharge"] = [
+        {
+            "fieldInPrimarySource": "abteilung",
+            "mappingRules": [
+                {"forValues": ["fg 31", "FG31"], "setValues": None},
+                {"forValues": ["fg 31"], "transformValues": ["Fachgebiet 31"]},
+            ],
+        }
+    ]
+    raw["contributor"] = [
+        {"mappingRules": [{"forValues": ["max.mustermann@rki.de", "Mustermann, Max"]}]}
+    ]
+    raw["publisher"] = [{"mappingRules": [{"forValues": ["Paul-Ehrlich-Institut"]}]}]
+    raw["title"] = [{"mappingRules": [{"forValues": ["fg 31"]}]}]
+    anonymized = anonymize_mapping(raw, "Resource", DEFAULT_LOCALE, 0)
+
+    (unit,) = anonymized["unitInCharge"]
+    assert unit["fieldInPrimarySource"] == "abteilung"
+    first, second = unit["mappingRules"]
+    assert first["forValues"][0] in {"c 1", "fg 99"}
+    assert first["forValues"][1] in {"C1", "FG99"}
+    # the same original is replaced with the same synonym
+    assert second["forValues"] == [first["forValues"][0]]
+    assert second["transformValues"][0] in {"Fachgebiet 99", "C1 Unterabteilung"}
+
+    (email, name), *_ = [
+        r["forValues"] for r in anonymized["contributor"][0]["mappingRules"]
+    ]
+    assert re.fullmatch(r"[a-z]+@(rki\.de|mail\.tld)", email)
+    assert re.fullmatch(r"[A-Z][a-zá]+, [A-Z][a-z]+", name)
+    assert anonymized["publisher"][0]["mappingRules"][0]["forValues"] == [
+        "Robert Koch-Institut"
+    ]
+    # fields without references keep their forValues
+    assert anonymized["title"][0]["mappingRules"][0]["forValues"] == ["fg 31"]
