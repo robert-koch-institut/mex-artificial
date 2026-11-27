@@ -11,10 +11,10 @@ from pydantic.fields import FieldInfo
 from pytest import MonkeyPatch
 
 from mex.artificial.constants import DEFAULT_MODELS
-from mex.artificial.hand_kept import (
-    HAND_KEPT_ORGANIZATIONAL_UNITS,
-    HAND_KEPT_ORGANIZATIONS,
-    HAND_KEPT_PERSONS,
+from mex.artificial.dummy import (
+    DUMMY_ORGANIZATIONAL_UNITS,
+    DUMMY_ORGANIZATIONS,
+    DUMMY_PERSONS,
 )
 from mex.artificial.helpers import create_faker
 from mex.artificial.models import RandomFieldInfo
@@ -609,19 +609,13 @@ def test_adapt_format(value: str, original: str, expected: str) -> None:
 
 def test_anonymization_provider_similar_synonym(faker: Faker) -> None:
     results = {
-        faker.similar_synonym("fg 31", [HAND_KEPT_ORGANIZATIONAL_UNITS])
-        for _ in range(30)
+        faker.similar_synonym("fg 31", [DUMMY_ORGANIZATIONAL_UNITS]) for _ in range(30)
     }
     # a random unit is picked, then its most similarly formatted synonym
     assert results == {"c 1", "fg 99"}
     # the group with the most similarly formatted synonyms is picked
-    groups = [HAND_KEPT_ORGANIZATIONS, HAND_KEPT_PERSONS]
+    groups = [DUMMY_ORGANIZATIONS, DUMMY_PERSONS]
     for _ in range(10):
         assert faker.similar_synonym("x.y@rki.de", groups).endswith(
             ("@rki.de", "@mail.tld")
         )
-
-
-def test_anonymization_provider_similar_synonym_error(faker: Faker) -> None:
-    with pytest.raises(RuntimeError, match="No hand-kept entities"):
-        faker.similar_synonym("fg 31", [[]])

@@ -14,10 +14,10 @@ from pydantic import BaseModel
 from ruamel.yaml import YAML
 
 from mex.artificial.constants import DEFAULT_LOCALE, DEFAULT_MODELS
-from mex.artificial.hand_kept import (
-    HAND_KEPT_ORGANIZATIONAL_UNITS,
-    HAND_KEPT_ORGANIZATIONS,
-    HAND_KEPT_PERSONS,
+from mex.artificial.dummy import (
+    DUMMY_ORGANIZATIONAL_UNITS,
+    DUMMY_ORGANIZATIONS,
+    DUMMY_PERSONS,
 )
 from mex.artificial.helpers import (
     anonymize_filter,
@@ -38,7 +38,7 @@ from mex.artificial.helpers import (
     stem_type_from_path,
     write_merged_items,
 )
-from mex.artificial.models import HandKeptEntity
+from mex.artificial.models import DummyEntity
 from mex.artificial.types import LocaleType
 from mex.common.models import (
     EXTRACTED_MODEL_CLASSES_BY_NAME,
@@ -171,7 +171,7 @@ def _assert_references_replaced(
     extracted_class: type[AnyExtractedModel],
     name: str,
 ) -> None:
-    """Assert references are replaced with hand-kept synonyms of a matching type."""
+    """Assert references are replaced with dummy synonyms of a matching type."""
     synonyms = {
         _normalized(synonym)
         for group in referenced_entity_groups(extracted_class, name)
@@ -462,16 +462,16 @@ def test_anonymize_mapping_keeps_text_languages() -> None:
 @pytest.mark.parametrize(
     ("stem_type", "field_name", "expected"),
     [
-        ("Resource", "contributor", [HAND_KEPT_PERSONS]),
-        ("Resource", "unitInCharge", [HAND_KEPT_ORGANIZATIONAL_UNITS]),
-        ("Resource", "publisher", [HAND_KEPT_ORGANIZATIONS]),
-        ("Person", "memberOf", [HAND_KEPT_ORGANIZATIONAL_UNITS]),
+        ("Resource", "contributor", [DUMMY_PERSONS]),
+        ("Resource", "unitInCharge", [DUMMY_ORGANIZATIONAL_UNITS]),
+        ("Resource", "publisher", [DUMMY_ORGANIZATIONS]),
+        ("Person", "memberOf", [DUMMY_ORGANIZATIONAL_UNITS]),
         ("Resource", "title", []),
         ("Resource", "unknownField", []),
     ],
 )
 def test_referenced_entity_groups(
-    stem_type: str, field_name: str, expected: list[list[HandKeptEntity]]
+    stem_type: str, field_name: str, expected: list[list[DummyEntity]]
 ) -> None:
     extracted_class = EXTRACTED_MODEL_CLASSES_BY_NAME[f"Extracted{stem_type}"]
     assert referenced_entity_groups(extracted_class, field_name) == expected

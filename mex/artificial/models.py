@@ -15,8 +15,8 @@ class RandomFieldInfo(BaseModel):
     examples: list[AnyPrimitiveType | dict[str, AnyPrimitiveType]] = []
 
 
-class HandKeptEntity(BaseModel):
-    """A hand-kept dummy entity with all the names it may be referred to by."""
+class DummyEntity(BaseModel):
+    """A dummy entity with all the names it may be referred to by."""
 
     identifier: str
     synonyms: list[str]

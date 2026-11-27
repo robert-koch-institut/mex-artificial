@@ -6,7 +6,6 @@ from pathlib import Path
 from typing import Annotated
 
 import typer
-from ruamel.yaml import YAML
 
 from mex.artificial.constants import (
     DEFAULT_CHATTINESS,
@@ -26,6 +25,20 @@ from mex.artificial.helpers import (
 from mex.common.logging import logger
 from mex.common.models import MAPPING_MODEL_CLASSES
 
+Chattiness = Annotated[
+    int,
+    typer.Option(
+        help="Maximum number of words to approximately produce for text fields.",
+        min=2,
+        max=100,
+    ),
+]
+Seed = Annotated[int, typer.Option(help="The seed value for faker randomness.")]
+Locale = Annotated[
+    list[str] | None,
+    typer.Option(help="The locale to use for faker.", show_default=DEFAULT_LOCALE),
+]
+
 
 @contextmanager
 def _log_to_stderr() -> Generator[None, None, None]:
@@ -44,6 +57,27 @@ def _log_to_stderr() -> Generator[None, None, None]:
             handler.setStream(sys.stdout)
 
 
+MAPPING_STEM_TYPES = sorted(m.stemType for m in MAPPING_MODEL_CLASSES)
+
+
+def _validate_stem_type(value: str) -> str:
+    """Ensure the given stem type has a corresponding mapping model."""
+    if value not in MAPPING_STEM_TYPES:
+        msg = f"must be one of: {', '.join(MAPPING_STEM_TYPES)}"
+        raise typer.BadParameter(msg)
+    return value
+
+
+def _write_output(output: str, path: Path | None) -> None:
+    """Write the output to the given file, or to stdout if no path is given."""
+    if path:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(output, encoding="utf-8")
+        logger.info("wrote %s", path)
+    else:
+        typer.echo(output, nl=False)
+
+
 def merged_command(  # noqa: PLR0913, PLR0917
     count: Annotated[
         int,
@@ -53,27 +87,9 @@ def merged_command(  # noqa: PLR0913, PLR0917
             max=int(10e6 - 1),
         ),
     ] = DEFAULT_COUNT,
-    chattiness: Annotated[
-        int,
-        typer.Option(
-            help="Maximum number of words to approximately produce for text fields.",
-            min=2,
-            max=100,
-        ),
-    ] = DEFAULT_CHATTINESS,
-    seed: Annotated[
-        int,
-        typer.Option(
-            help="The seed value for faker randomness.",
-        ),
-    ] = DEFAULT_SEED,
-    locale: Annotated[
-        list[str] | None,
-        typer.Option(
-            help="The locale to use for faker.",
-            show_default=DEFAULT_LOCALE,
-        ),
-    ] = None,
+    chattiness: Chattiness = DEFAULT_CHATTINESS,
+    seed: Seed = DEFAULT_SEED,
+    locale: Locale = None,
     models: Annotated[
         list[str] | None,
         typer.Option(
@@ -103,52 +119,22 @@ def merged_command(  # noqa: PLR0913, PLR0917
     logger.info("artificial data generation done")
 
 
-MAPPING_STEM_TYPES = sorted(m.stemType for m in MAPPING_MODEL_CLASSES)
-
-
-def _validate_mapping_stem_type(value: str) -> str:
-    """Ensure the given stem type has a corresponding mapping model."""
-    if value not in MAPPING_STEM_TYPES:
-        msg = f"must be one of: {', '.join(MAPPING_STEM_TYPES)}"
-        raise typer.BadParameter(msg)
-    return value
-
-
 def mapping_command(
     stem_type: Annotated[
         str,
         typer.Option(
             "--stem-type",
             help="The stem type of the mapping to create, e.g. `Person`.",
-            callback=_validate_mapping_stem_type,
+            callback=_validate_stem_type,
         ),
     ],
-    chattiness: Annotated[
-        int,
-        typer.Option(
-            help="Maximum number of words to approximately produce for text fields.",
-            min=2,
-            max=100,
-        ),
-    ] = DEFAULT_CHATTINESS,
-    seed: Annotated[
-        int,
-        typer.Option(
-            help="The seed value for faker randomness.",
-        ),
-    ] = DEFAULT_SEED,
-    locale: Annotated[
-        list[str] | None,
-        typer.Option(
-            help="The locale to use for faker.",
-            show_default=DEFAULT_LOCALE,
-        ),
-    ] = None,
+    chattiness: Chattiness = DEFAULT_CHATTINESS,
+    seed: Seed = DEFAULT_SEED,
+    locale: Locale = None,
     path: Annotated[
         Path | None,
         typer.Option(
             help="File to write the YAML mapping to, instead of stdout.",
-            file_okay=True,
             dir_okay=False,
             writable=True,
             resolve_path=True,
@@ -158,16 +144,10 @@ def mapping_command(
     """Generate an artificial mapping and write it as YAML to stdout or a file."""
     locale = locale or DEFAULT_LOCALE
     item = create_artificial_mapping_item(stem_type, locale, seed, chattiness)
-    output = dump_mapping_item(item)
-    if path:
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(output, encoding="utf-8")
-        logger.info("wrote %s to %s", item.entityType, path)
-    else:
-        typer.echo(output, nl=False)
+    _write_output(dump_mapping_item(item), path)
 
 
-def anonymize_command(  # noqa: C901, PLR0912
+def anonymize_command(
     file: Annotated[
         Path,
         typer.Argument(
@@ -179,25 +159,12 @@ def anonymize_command(  # noqa: C901, PLR0912
                 "e.g. `activity_filter.yaml`. Folders are searched recursively."
             ),
             exists=True,
-            file_okay=True,
-            dir_okay=True,
             readable=True,
             resolve_path=True,
         ),
     ],
-    seed: Annotated[
-        int,
-        typer.Option(
-            help="The seed value for faker randomness.",
-        ),
-    ] = DEFAULT_SEED,
-    locale: Annotated[
-        list[str] | None,
-        typer.Option(
-            help="The locale to use for faker.",
-            show_default=DEFAULT_LOCALE,
-        ),
-    ] = None,
+    seed: Seed = DEFAULT_SEED,
+    locale: Locale = None,
     path: Annotated[
         Path | None,
         typer.Option(
@@ -206,8 +173,6 @@ def anonymize_command(  # noqa: C901, PLR0912
                 "folder, defaults to stdout. For a folder: a folder outside of it, "
                 "that mirrors its structure, required."
             ),
-            file_okay=True,
-            dir_okay=True,
             writable=True,
             resolve_path=True,
         ),
@@ -228,41 +193,23 @@ def anonymize_command(  # noqa: C901, PLR0912
         if path.is_relative_to(file):
             msg = "must not be the input folder or inside of it"
             raise typer.BadParameter(msg, param_hint="--path")
-        written = 0
         for in_file in find_mapping_files(file):
             relative = in_file.relative_to(file)
             try:
-                output = anonymize_mapping_file(in_file, locale, seed)
+                _write_output(
+                    anonymize_mapping_file(in_file, locale, seed), path / relative
+                )
             except ValueError as error:
                 logger.warning("skipping %s: %s", relative, error)
-                continue
-            out_file = path / relative
-            out_file.parent.mkdir(parents=True, exist_ok=True)
-            out_file.write_text(output, encoding="utf-8")
-            written += 1
-        logger.info("wrote %s anonymized mappings to %s", written, path)
         return
     if path and path.is_dir():
         path /= file.name
     try:
-        if path:
+        with _log_to_stderr():
             output = anonymize_mapping_file(file, locale, seed)
-        else:
-            with _log_to_stderr():
-                output = anonymize_mapping_file(file, locale, seed)
     except ValueError as error:
         raise typer.BadParameter(str(error), param_hint="FILE") from error
-    raw_mapping = YAML(typ="safe").load(file)
-    if not isinstance(raw_mapping, dict):
-        msg = "file does not contain a YAML mapping"
-        raise typer.BadParameter(msg, param_hint="FILE")
-    locale = locale or DEFAULT_LOCALE
-    if path:
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(output, encoding="utf-8")
-        logger.info("wrote anonymized mapping to %s", path)
-    else:
-        typer.echo(output, nl=False)
+    _write_output(output, path)
 
 
 def merged() -> None:  # pragma: no cover

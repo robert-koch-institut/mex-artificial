@@ -1,4 +1,4 @@
-"""Hand-kept dummy persons, organizational units and organizations.
+"""Dummy persons, organizational units and organizations.
 
 These entities are compiled from the dummy data used throughout the MEx project:
 
@@ -15,7 +15,7 @@ fields that reference persons, units or organizations.
 
 from typing import Final
 
-from mex.artificial.models import HandKeptEntity
+from mex.artificial.models import DummyEntity
 from mex.common.types import (
     Identifier,
     MergedOrganizationalUnitIdentifier,
@@ -23,8 +23,8 @@ from mex.common.types import (
     MergedPersonIdentifier,
 )
 
-HAND_KEPT_PERSONS: Final[list[HandKeptEntity]] = [
-    HandKeptEntity(
+DUMMY_PERSONS: Final[list[DummyEntity]] = [
+    DummyEntity(
         identifier="ResolvedR",
         synonyms=[
             "Roland Resolved",
@@ -37,7 +37,7 @@ HAND_KEPT_PERSONS: Final[list[HandKeptEntity]] = [
             "00000000-0000-4000-8000-000000000001",
         ],
     ),
-    HandKeptEntity(
+    DummyEntity(
         identifier="FelicitasJ",
         synonyms=[
             "Juturna Felicitás",
@@ -50,7 +50,7 @@ HAND_KEPT_PERSONS: Final[list[HandKeptEntity]] = [
             "00000000-0000-4000-8000-000000000002",
         ],
     ),
-    HandKeptEntity(
+    DummyEntity(
         identifier="FictitiousF",
         synonyms=[
             "Frieda Fictitious",
@@ -65,7 +65,7 @@ HAND_KEPT_PERSONS: Final[list[HandKeptEntity]] = [
             "00000000-0000-4000-8000-000000000003",
         ],
     ),
-    HandKeptEntity(
+    DummyEntity(
         identifier="SampleS",
         synonyms=[
             "Sam Sample",
@@ -77,14 +77,14 @@ HAND_KEPT_PERSONS: Final[list[HandKeptEntity]] = [
             "1024",
         ],
     ),
-    HandKeptEntity(
+    DummyEntity(
         identifier="Q42",
         synonyms=["Robert Koch", "Koch, Robert", "Q42"],
     ),
 ]
 
-HAND_KEPT_ORGANIZATIONAL_UNITS: Final[list[HandKeptEntity]] = [
-    HandKeptEntity(
+DUMMY_ORGANIZATIONAL_UNITS: Final[list[DummyEntity]] = [
+    DummyEntity(
         identifier="parent-unit",
         synonyms=[
             "PRNT",
@@ -97,7 +97,7 @@ HAND_KEPT_ORGANIZATIONAL_UNITS: Final[list[HandKeptEntity]] = [
             "parent-unit",
         ],
     ),
-    HandKeptEntity(
+    DummyEntity(
         identifier="child-unit",
         synonyms=[
             "C1",
@@ -109,7 +109,7 @@ HAND_KEPT_ORGANIZATIONAL_UNITS: Final[list[HandKeptEntity]] = [
             "child-unit",
         ],
     ),
-    HandKeptEntity(
+    DummyEntity(
         identifier="fg99",
         synonyms=[
             "FG 99",
@@ -122,8 +122,8 @@ HAND_KEPT_ORGANIZATIONAL_UNITS: Final[list[HandKeptEntity]] = [
     ),
 ]
 
-HAND_KEPT_ORGANIZATIONS: Final[list[HandKeptEntity]] = [
-    HandKeptEntity(
+DUMMY_ORGANIZATIONS: Final[list[DummyEntity]] = [
+    DummyEntity(
         identifier="Q679041",
         synonyms=[
             "Robert Koch-Institut",
@@ -134,7 +134,7 @@ HAND_KEPT_ORGANIZATIONS: Final[list[HandKeptEntity]] = [
             "https://www.wikidata.org/entity/Q679041",
         ],
     ),
-    HandKeptEntity(
+    DummyEntity(
         identifier="Q26678",
         synonyms=[
             "TEST",
@@ -145,10 +145,8 @@ HAND_KEPT_ORGANIZATIONS: Final[list[HandKeptEntity]] = [
     ),
 ]
 
-HAND_KEPT_ENTITIES_BY_IDENTIFIER_CLASS: Final[
-    dict[type[Identifier], list[HandKeptEntity]]
-] = {
-    MergedPersonIdentifier: HAND_KEPT_PERSONS,
-    MergedOrganizationalUnitIdentifier: HAND_KEPT_ORGANIZATIONAL_UNITS,
-    MergedOrganizationIdentifier: HAND_KEPT_ORGANIZATIONS,
+DUMMY_ENTITIES_BY_IDENTIFIER_CLASS: Final[dict[type[Identifier], list[DummyEntity]]] = {
+    MergedPersonIdentifier: DUMMY_PERSONS,
+    MergedOrganizationalUnitIdentifier: DUMMY_ORGANIZATIONAL_UNITS,
+    MergedOrganizationIdentifier: DUMMY_ORGANIZATIONS,
 }

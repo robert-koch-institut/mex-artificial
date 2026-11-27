@@ -24,7 +24,7 @@ from mex.artificial.constants import (
     DEFAULT_SEED,
     DEFAULT_SYNONYM_SIMILARITY_THRESHOLD,
 )
-from mex.artificial.models import HandKeptEntity, RandomFieldInfo
+from mex.artificial.models import DummyEntity, RandomFieldInfo
 from mex.common.fields import LITERAL_FIELDS_BY_CLASS_NAME
 from mex.common.identity import get_provider
 from mex.common.models import (
@@ -722,7 +722,7 @@ class AnonymizationProvider(PythonFakerProvider):
     def __init__(
         self,
         factory: FakerFactory,
-        factories_by_language: Mapping[str, FakerFactory] | None = None,
+        factories_by_language: Mapping[str, FakerFactory],
     ) -> None:
         """Configure the faker factories to use for each text language.
 
@@ -731,15 +731,13 @@ class AnonymizationProvider(PythonFakerProvider):
             factories_by_language: Factories by language code, e.g. `de`
         """
         super().__init__(factory)
-        self._factories_by_language = dict(factories_by_language or {})
+        self._factories_by_language = factories_by_language
 
     def factory_for_language(self, language: str | None) -> FakerFactory:
         """Return the factory for the given language, or roll a die if unknown."""
         if language and (factory := self._factories_by_language.get(language)):
             return factory
-        if self._factories_by_language:
-            return self.random_element(list(self._factories_by_language.values()))
-        return cast("FakerFactory", self.generator)
+        return self.random_element(list(self._factories_by_language.values()))
 
     def similar_text(self, original: str, language: str | None = None) -> str:
         """Return random words with roughly the same length as the original.
@@ -882,9 +880,9 @@ class AnonymizationProvider(PythonFakerProvider):
     def similar_synonym(
         self,
         original: str,
-        entity_groups: Sequence[Sequence[HandKeptEntity]],
+        entity_groups: Sequence[Sequence[DummyEntity]],
     ) -> str:
-        """Return a synonym of a hand-kept entity, formatted like the original.
+        """Return a synonym of a dummy entity, formatted like the original.
 
         First, the group of entities (e.g. persons or units) with the most similarly
         formatted synonym is picked, ties are broken randomly. Then a random entity
@@ -897,31 +895,24 @@ class AnonymizationProvider(PythonFakerProvider):
             entity_groups: Groups of entities that the value may refer to
 
         Returns:
-            Synonym of a hand-kept entity, e.g. `c 1`
+            Synonym of a dummy entity, e.g. `c 1`
         """
-        groups = [group for group in entity_groups if group]
-        if not groups:
-            msg = "No hand-kept entities to pick a synonym from"
-            raise RuntimeError(msg)
+
+        def score(entity: DummyEntity) -> float:
+            return max(format_similarity(original, s) for s in entity.synonyms)
+
         group = max(
-            self.random_sample(groups, len(groups)),
-            key=lambda g: max(
-                format_similarity(original, synonym)
-                for entity in g
-                for synonym in entity.synonyms
-            ),
+            self.random_sample(entity_groups, len(entity_groups)),
+            key=lambda g: max(map(score, g)),
         )
         # only pick entities that have a synonym formatted like the best match
-        scores = [
-            max(format_similarity(original, synonym) for synonym in entity.synonyms)
-            for entity in group
-        ]
+        scores = [score(entity) for entity in group]
         candidates = [
             entity
             for entity, score in zip(group, scores, strict=True)
             if score >= max(scores) * DEFAULT_SYNONYM_SIMILARITY_THRESHOLD
         ]
-        entity: HandKeptEntity = self.random_element(candidates)
+        entity: DummyEntity = self.random_element(candidates)
         synonym = max(
             entity.synonyms, key=lambda synonym: format_similarity(original, synonym)
         )

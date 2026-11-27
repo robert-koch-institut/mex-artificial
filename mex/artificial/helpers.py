@@ -23,8 +23,8 @@ from mex.artificial.constants import (
     DEFAULT_SEED,
     MEX_PRIMARY_SOURCE,
 )
-from mex.artificial.hand_kept import HAND_KEPT_ENTITIES_BY_IDENTIFIER_CLASS
-from mex.artificial.models import ExtractedItemAndRuleSet, HandKeptEntity
+from mex.artificial.dummy import DUMMY_ENTITIES_BY_IDENTIFIER_CLASS
+from mex.artificial.models import DummyEntity, ExtractedItemAndRuleSet
 from mex.artificial.provider import (
     AnonymizationProvider,
     BuilderProvider,
@@ -327,19 +327,19 @@ REFERENCE_VALUE_KEYS = frozenset({"forValues", "transformValues"})
 
 def referenced_entity_groups(
     extracted_class: type[AnyExtractedModel], field_name: str
-) -> list[list[HandKeptEntity]]:
-    """Return the hand-kept entities a field of an extracted model may reference.
+) -> list[list[DummyEntity]]:
+    """Return the dummy entities a field of an extracted model may reference.
 
     Returns:
         One list of entities for each referenced type, e.g. persons and units,
-        or an empty list if the field references none of the hand-kept types
+        or an empty list if the field references none of the dummy types
     """
     if not (field := extracted_class.model_fields.get(field_name)):
         return []
     inner_types = [info.inner_type for info in get_all_field_infos(field)]
     return [
         entities
-        for identifier_class, entities in HAND_KEPT_ENTITIES_BY_IDENTIFIER_CLASS.items()
+        for identifier_class, entities in DUMMY_ENTITIES_BY_IDENTIFIER_CLASS.items()
         if any(
             isinstance(inner_type, type) and issubclass(inner_type, identifier_class)
             for inner_type in inner_types
@@ -361,7 +361,7 @@ def anonymize_mapping(  # noqa: C901
     their type are anonymized by their shape.
 
     For fields that reference persons, units or organizations, `forValues` and
-    `transformValues` are replaced with synonyms of hand-kept entities of a matching
+    `transformValues` are replaced with synonyms of dummy entities of a matching
     type, that are formatted like the original, e.g. `fg 31` may become `c 1`.
     The same original value is replaced with the same synonym within a mapping.
     All other keys are kept as is.
