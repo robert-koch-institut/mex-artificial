@@ -922,6 +922,7 @@ dependencies = [
     { name = "mex-common" },
     { name = "pydantic" },
     { name = "rich" },
+    { name = "ruamel-yaml" },
     { name = "typer" },
 ]
 
@@ -943,9 +944,10 @@ dev = [
 requires-dist = [
     { name = "annotated-types", specifier = ">=0.8" },
     { name = "faker", specifier = ">=40,<41" },
-    { name = "mex-common", specifier = ">=3.8,<4" },
+    { name = "mex-common", git = "https://github.com/robert-koch-institut/mex-common?branch=feature%2Fmodel-5.3" },
     { name = "pydantic", specifier = ">=2" },
     { name = "rich", specifier = ">=15" },
+    { name = "ruamel-yaml", specifier = ">=0.19.1" },
     { name = "typer", specifier = ">=0.27" },
 ]
 
@@ -964,7 +966,7 @@ dev = [
 [[package]]
 name = "mex-common"
 version = "3.8.0"
-source = { registry = "https://pypi.org/simple" }
+source = { git = "https://github.com/robert-koch-institut/mex-common?branch=feature%2Fmodel-5.3#93675d32f1f51ee5c88108a81845a13d0b914c69" }
 dependencies = [
     { name = "backoff" },
     { name = "click" },
@@ -978,18 +980,14 @@ dependencies = [
     { name = "requests" },
     { name = "tabulate" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/11/7c/0606303d708a569c0e66c6ea94b51f9032ec6912252df591fa5d562ed379/mex_common-3.8.0.tar.gz", hash = "sha256:9b596eb1ff8a9a482025e786a9852ee3ab5f0511fa32e5f3b16092b77d6da8a3", size = 107872, upload-time = "2026-11-17T12:42:41.877Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/eb/68/e7e1e008943e63a37e0b95d274ff10eb8e6b9f24b80b01215c488c4e2ee0/mex_common-3.8.0-py3-none-any.whl", hash = "sha256:f1a4695398e0f3810f65dc7b41cd4afb44f911efa106c7ab48df8076abffd43d", size = 159455, upload-time = "2026-11-17T12:42:40.396Z" },
-]
 
 [[package]]
 name = "mex-model"
-version = "5.2.2"
+version = "5.3.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/a2/f0/5ed5b85496c57d68043ff4aa8aea3c34e6139f1c224f0baf0d18fb7f70a5/mex_model-5.2.2.tar.gz", hash = "sha256:fe1a53bab2293b199b9df1db8fce1981506118dc38a826f6ad8301d65a5c6244", size = 73237, upload-time = "2026-10-27T13:47:38.819Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d0/39/4628eff1eec2668dad595a8be32d0dc17e17666f37e21a377c7251322b2f/mex_model-5.3.0.tar.gz", hash = "sha256:a73d11bf6e5d03c1585bc63dd6a0bcb6783b131a0a83dd70a02c1fb74d9c2fcd", size = 122347, upload-time = "2026-11-25T12:07:47.113Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/13/e0/a08e9abeb25959d6daf193d017ddb12cff2d6310c3393cfe3840e0c069ee/mex_model-5.2.2-py3-none-any.whl", hash = "sha256:b3f5bfe95f586074eba35eef407a564121b002f0fd0598661c2f64ee32aa8417", size = 116045, upload-time = "2026-10-27T13:47:37.576Z" },
+    { url = "https://files.pythonhosted.org/packages/15/30/a1d6fe0ad0e1d2b383a29d73dd853e14f602942728d1cf641991af6232e5/mex_model-5.3.0-py3-none-any.whl", hash = "sha256:20ee95407dd2001ee1cde31b6f10079cd1b0dcf319b0bef4489f3b96b3d416f5", size = 165557, upload-time = "2026-11-25T12:07:45.936Z" },
 ]
 
 [[package]]
@@ -1713,6 +1711,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/ae/f9/41dc953bbeb056c17d5f7a519f50fdf010bd0553be2d630bc69d1e022703/roman_numerals-4.1.0.tar.gz", hash = "sha256:1af8b147eb1405d5839e78aeb93131690495fe9da5c91856cb33ad55a7f1e5b2", size = 9077, upload-time = "2025-12-17T18:25:34.381Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/04/54/6f679c435d28e0a568d8e8a7c0a93a09010818634c3c3907fc98d8983770/roman_numerals-4.1.0-py3-none-any.whl", hash = "sha256:647ba99caddc2cc1e55a51e4360689115551bf4476d90e8162cf8c345fe233c7", size = 7676, upload-time = "2025-12-17T18:25:33.098Z" },
+]
+
+[[package]]
+name = "ruamel-yaml"
+version = "0.19.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/c7/3b/ebda527b56beb90cb7652cb1c7e4f91f48649fbcd8d2eb2fb6e77cd3329b/ruamel_yaml-0.19.1.tar.gz", hash = "sha256:53eb66cd27849eff968ebf8f0bf61f46cdac2da1d1f3576dd4ccee9b25c31993", size = 142709, upload-time = "2026-01-02T16:50:31.84Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b8/0c/51f6841f1d84f404f92463fc2b1ba0da357ca1e3db6b7fbda26956c3b82a/ruamel_yaml-0.19.1-py3-none-any.whl", hash = "sha256:27592957fedf6e0b62f281e96effd28043345e0e66001f97683aa9a40c667c93", size = 118102, upload-time = "2026-01-02T16:50:29.201Z" },
 ]
 
 [[package]]

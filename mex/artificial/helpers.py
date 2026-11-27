@@ -1,37 +1,55 @@
 import json
+import re
 from collections import OrderedDict, defaultdict
 from collections.abc import Generator, Iterable, Mapping, Sequence
+from io import StringIO
 from itertools import count, islice
 from os import PathLike
 from pathlib import Path
-from typing import cast
+from typing import Any, cast, get_args
 
 from faker import Faker
 from faker.typing import SeedType
+from pydantic import TypeAdapter, ValidationError
 from rich.progress import track
+from ruamel.yaml import YAML
 
 from mex.artificial.constants import (
     DEFAULT_CHATTINESS,
     DEFAULT_COUNT,
     DEFAULT_LOCALE,
+    DEFAULT_MAPPING_REFERENCE_COUNT,
     DEFAULT_MODELS,
     DEFAULT_SEED,
     MEX_PRIMARY_SOURCE,
 )
-from mex.artificial.models import ExtractedItemAndRuleSet
+from mex.artificial.dummy import DUMMY_ENTITIES_BY_IDENTIFIER_CLASS
+from mex.artificial.models import DummyEntity, ExtractedItemAndRuleSet
 from mex.artificial.provider import (
+    AnonymizationProvider,
     BuilderProvider,
     LinkProvider,
     NumerifyPatternsProvider,
     ReferenceProvider,
     TemporalEntityProvider,
     TextProvider,
+    get_all_field_infos,
 )
 from mex.artificial.types import LocaleType
+from mex.common.logging import logger
 from mex.common.merged.main import create_merged_item
-from mex.common.models import AnyExtractedModel, AnyMergedModel
-from mex.common.transform import MExEncoder
-from mex.common.types import AnyMergedIdentifier, Validation
+from mex.common.models import (
+    EXTRACTED_MODEL_CLASSES,
+    EXTRACTED_MODEL_CLASSES_BY_NAME,
+    FILTER_MODEL_CLASSES_BY_NAME,
+    MAPPING_MODEL_CLASSES,
+    MAPPING_MODEL_CLASSES_BY_NAME,
+    AnyExtractedModel,
+    AnyMappingModel,
+    AnyMergedModel,
+)
+from mex.common.transform import MExEncoder, ensure_postfix, ensure_prefix
+from mex.common.types import AnyMergedIdentifier, Identifier, Validation
 
 
 def create_faker(
@@ -42,6 +60,13 @@ def create_faker(
     """Create and initialize a new faker instance with the given settings."""
     Faker.seed(seed)
     faker = Faker(locale=locale)
+    factories_by_language = {
+        # the first locale for a language wins, e.g. `de_DE` before `de_AT`
+        locale_name.split("_")[0]: factory
+        for locale_name, factory in reversed(
+            list(zip(faker.locales, faker.factories, strict=True))
+        )
+    }
     for factory in faker.factories:
         factory.add_provider(ReferenceProvider(factory))
         factory.add_provider(LinkProvider(factory))
@@ -49,6 +74,7 @@ def create_faker(
         factory.add_provider(BuilderProvider(factory))
         factory.add_provider(TextProvider(factory, chattiness))
         factory.add_provider(TemporalEntityProvider(factory))
+        factory.add_provider(AnonymizationProvider(factory, factories_by_language))
     return faker
 
 
@@ -182,6 +208,300 @@ def create_artificial_merged_items(
             generate_artificial_merged_items(locale, seed, chattiness, stem_types),
             count,
         )
+    )
+
+
+def create_artificial_mapping_item(
+    stem_type: str,
+    locale: LocaleType = DEFAULT_LOCALE,
+    seed: SeedType = DEFAULT_SEED,
+    chattiness: int = DEFAULT_CHATTINESS,
+) -> AnyMappingModel:
+    """Create a single mapping item of the given stem type."""
+    faker = create_faker(locale, seed, chattiness)
+    ids_by_type: Mapping[str, list[AnyMergedIdentifier]] = {
+        model.stemType: [
+            cast("AnyMergedIdentifier", Identifier.generate(faker.random_int()))
+            for _ in range(DEFAULT_MAPPING_REFERENCE_COUNT)
+        ]
+        for model in EXTRACTED_MODEL_CLASSES
+    }
+    return cast("AnyMappingModel", faker.mapping_item(stem_type, ids_by_type))
+
+
+def dump_yaml(data: object) -> str:
+    """Dump the given data into a formatted YAML string."""
+    yaml = YAML()
+    yaml.indent(mapping=2, sequence=4, offset=2)
+    yaml.default_flow_style = False
+    yaml.allow_unicode = True
+    yaml.width = 88
+
+    stream = StringIO()
+    yaml.dump(data, stream)
+    return stream.getvalue()
+
+
+def dump_mapping_item(item: AnyMappingModel) -> str:
+    """Dump a mapping item into a formatted YAML string."""
+    return dump_yaml(
+        item.model_dump(
+            mode="json",
+            exclude={"entityType"},
+            exclude_defaults=True,
+            exclude_none=True,
+        )
+    )
+
+
+def _name_words(name: str) -> list[str]:
+    """Split a name into lowercase words at separators and camel case humps."""
+    spaced = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", name)
+    return [word.lower() for word in re.split(r"[^A-Za-z0-9]+", spaced) if word]
+
+
+def stem_type_from_path(path: PathLike[str]) -> str:
+    """Derive the mapping stem type from the beginning of a mapping file name.
+
+    The file name is split into words at dashes, underscores, dots, spaces and
+    camel case humps. The stem type whose name equals the concatenation of the
+    leading words is chosen, preferring the longest match. That way,
+    `Resource_grippeweb-plus.yaml`, `access-platform-bla-blup.yaml`,
+    `variable-xsystem.yaml`, `variable_group_foo.yaml` (a variable group) and
+    `accessplatform.yaml` are all supported.
+
+    Raises:
+        ValueError: If the file name does not start with any mapping stem type
+    """
+    stem = Path(path).stem
+    words = _name_words(stem)
+    leading = {"".join(words[: i + 1]) for i in range(len(words))}
+    matches = [
+        model.stemType
+        for model in MAPPING_MODEL_CLASSES
+        if model.stemType.lower() in leading
+    ]
+    if matches:
+        return max(matches, key=len)
+    msg = f"File name `{stem}` does not start with any mapping stem type"
+    raise ValueError(msg)
+
+
+def _drop_comments(data: Any) -> Any:  # noqa: ANN401
+    """Recursively remove all `comment` keys from the given data."""
+    if isinstance(data, dict):
+        return {k: _drop_comments(v) for k, v in data.items() if k != "comment"}
+    if isinstance(data, list):
+        return [_drop_comments(item) for item in data]
+    return data
+
+
+def _match_shape(anonymized: Any, original: Any) -> Any:  # noqa: ANN401
+    """Restrict dictionaries to the keys (and key order) of the original data.
+
+    Validation can add keys, e.g. a detected `language` for texts without one, or
+    turn strings into texts, so the anonymized data is brought back into shape.
+    Keys of the original that are missing from the anonymized data, e.g. because
+    the model ignores them, are dropped so no original values leak through.
+    """
+    if isinstance(anonymized, dict) and isinstance(original, dict):
+        return {
+            k: _match_shape(anonymized[k], v)
+            for k, v in original.items()
+            if k in anonymized
+        }
+    if (
+        isinstance(anonymized, dict)
+        and isinstance(original, str)
+        and isinstance(anonymized.get("value"), str)
+    ):
+        # plain strings are valid shorthands for texts, keep them as strings
+        return anonymized["value"]
+    if isinstance(anonymized, list) and isinstance(original, list):
+        return [_match_shape(a, o) for a, o in zip(anonymized, original, strict=True)]
+    return anonymized
+
+
+REFERENCE_VALUE_KEYS = frozenset({"forValues", "transformValues"})
+
+
+def referenced_entity_groups(
+    extracted_class: type[AnyExtractedModel], field_name: str
+) -> list[list[DummyEntity]]:
+    """Return the dummy entities a field of an extracted model may reference.
+
+    Returns:
+        One list of entities for each referenced type, e.g. persons and units,
+        or an empty list if the field references none of the dummy types
+    """
+    if not (field := extracted_class.model_fields.get(field_name)):
+        return []
+    inner_types = [info.inner_type for info in get_all_field_infos(field)]
+    return [
+        entities
+        for identifier_class, entities in DUMMY_ENTITIES_BY_IDENTIFIER_CLASS.items()
+        if any(
+            isinstance(inner_type, type) and issubclass(inner_type, identifier_class)
+            for inner_type in inner_types
+        )
+    ]
+
+
+def anonymize_mapping(  # noqa: C901
+    raw_mapping: dict[str, Any],
+    stem_type: str,
+    locale: LocaleType = DEFAULT_LOCALE,
+    seed: SeedType = DEFAULT_SEED,
+) -> dict[str, Any]:
+    """Anonymize a raw mapping, as loaded from a mapping YAML file.
+
+    All `comment` keys are removed and all `setValues` are replaced with dummy
+    values of the same type, as defined by the mex-common models. Lists keep their
+    length and texts roughly keep their length. Values that do not validate against
+    their type are anonymized by their shape.
+
+    For fields that reference persons, units or organizations, `forValues` and
+    `transformValues` are replaced with synonyms of dummy entities of a matching
+    type, that are formatted like the original, e.g. `fg 31` may become `c 1`.
+    The same original value is replaced with the same synonym within a mapping.
+    All other keys are kept as is.
+
+    Args:
+        raw_mapping: Mapping data loaded from YAML, need not be a valid model
+        stem_type: Stem type of the mapping, e.g. `Resource`
+        locale: Faker locale for the dummy values
+        seed: Faker seed for the dummy values
+
+    Returns:
+        Anonymized copy of the raw mapping
+    """
+    faker = create_faker(locale, seed)
+    mapping_class = MAPPING_MODEL_CLASSES_BY_NAME[ensure_postfix(stem_type, "Mapping")]
+    extracted_class = EXTRACTED_MODEL_CLASSES_BY_NAME[
+        ensure_prefix(stem_type, "Extracted")
+    ]
+
+    def anonymize_set_values(field_name: str, set_values: Any) -> Any:  # noqa: ANN401
+        if set_values is None:
+            return None
+        if (mapping_field := mapping_class.model_fields.get(field_name)) and (
+            extracted_field := extracted_class.model_fields.get(field_name)
+        ):
+            # `MappingFieldList[X]` holds setValues of type `X`
+            adapter: TypeAdapter[Any] = TypeAdapter(
+                get_args(mapping_field.annotation)[0]
+            )
+            try:
+                typed = adapter.validate_python(set_values)
+            except ValidationError:
+                logger.warning("anonymizing invalid setValues of %s", field_name)
+            else:
+                dummy = faker.anonymous_value(
+                    typed, get_all_field_infos(extracted_field), set_values
+                )
+                return _match_shape(
+                    adapter.dump_python(dummy, mode="json", exclude_none=True),
+                    set_values,
+                )
+        else:
+            logger.warning("anonymizing setValues of unknown field %s", field_name)
+        return faker.anonymous_raw_value(set_values)
+
+    # replace the same original value with the same synonym throughout the file
+    synonyms: dict[tuple[str, str], str] = {}
+
+    def anonymize_references(field_name: str, values: Any) -> Any:  # noqa: ANN401
+        if not isinstance(values, list) or not (
+            groups := referenced_entity_groups(extracted_class, field_name)
+        ):
+            return values
+        return [
+            synonyms.setdefault(
+                (field_name, value), faker.similar_synonym(value, groups)
+            )
+            if isinstance(value, str)
+            else value
+            for value in values
+        ]
+
+    def walk(field_name: str, data: Any) -> Any:  # noqa: ANN401
+        if isinstance(data, dict):
+            return {
+                key: anonymize_set_values(field_name, value)
+                if key == "setValues"
+                else anonymize_references(field_name, value)
+                if key in REFERENCE_VALUE_KEYS
+                else walk(field_name, value)
+                for key, value in data.items()
+            }
+        if isinstance(data, list):
+            return [walk(field_name, item) for item in data]
+        return data
+
+    return {
+        name: walk(name, value) for name, value in _drop_comments(raw_mapping).items()
+    }
+
+
+FILTER_FILE_PATTERN = re.compile(r"[_-]filter$", re.IGNORECASE)
+
+
+def is_filter_path(path: PathLike[str]) -> bool:
+    """Check whether a file name ends in `_filter` or `-filter`."""
+    return bool(FILTER_FILE_PATTERN.search(Path(path).stem))
+
+
+def anonymize_filter(raw_filter: dict[str, Any], stem_type: str) -> dict[str, Any]:
+    """Anonymize a raw filter by dropping all comments of its filter fields.
+
+    Filters have no `setValues`, so everything else is kept as it is. If the filter
+    does not validate against its filter model, e.g. `ActivityFilter`, a warning is
+    logged and the filter is still anonymized.
+    """
+    filter_class = FILTER_MODEL_CLASSES_BY_NAME[f"{stem_type}Filter"]
+    anonymized = cast("dict[str, Any]", _drop_comments(raw_filter))
+    try:
+        filter_class.model_validate(anonymized)
+    except ValidationError as error:
+        logger.warning(
+            "anonymizing invalid %s with %s validation errors",
+            filter_class.__name__,
+            error.error_count(),
+        )
+    return anonymized
+
+
+def anonymize_mapping_file(
+    file: PathLike[str],
+    locale: LocaleType = DEFAULT_LOCALE,
+    seed: SeedType = DEFAULT_SEED,
+) -> str:
+    """Anonymize a mapping or filter YAML file and return the anonymized YAML string.
+
+    Files whose name ends in `_filter` or `-filter` are treated as filters, all
+    others as mappings. YAML comments are always dropped.
+
+    Raises:
+        ValueError: If the file name does not start with a stem type or the file
+            does not contain a YAML mapping
+    """
+    file = Path(file)
+    stem_type = stem_type_from_path(file)
+    raw_mapping = YAML(typ="safe").load(file.read_text(encoding="utf-8"))
+    if not isinstance(raw_mapping, dict):
+        msg = "file does not contain a YAML mapping"
+        raise ValueError(msg)  # noqa: TRY004
+    if is_filter_path(file):
+        return dump_yaml(anonymize_filter(raw_mapping, stem_type))
+    return dump_yaml(anonymize_mapping(raw_mapping, stem_type, locale, seed))
+
+
+def find_mapping_files(folder: PathLike[str]) -> list[Path]:
+    """Return all YAML files in the given folder and its sub-folders, sorted."""
+    return sorted(
+        file
+        for file in Path(folder).rglob("*")
+        if file.suffix in {".yaml", ".yml"} and file.is_file()
     )
 
 

@@ -13,6 +13,7 @@ dependencies = [
     "mex-common>=3.8,<4",
     "pydantic>=2",
     "rich>=15",
+    "ruamel-yaml>=0.19.1",
     "typer>=0.27",
 ]
 [dependency-groups]
@@ -28,7 +29,9 @@ dev = [
 ]
 
 [project.scripts]
-artificial = "mex.artificial.main:main"
+artificial = "mex.artificial.main:merged"
+mapping = "mex.artificial.main:mapping"
+anonymize = "mex.artificial.main:anonymize"
 
 [tool.cruft]
 template = "https://github.com/robert-koch-institut/mex-template"
@@ -137,3 +140,6 @@ packages = ["mex"]
 
 [tool.hatch.build.targets.sdist]
 packages = ["mex"]
+
+[tool.uv.sources]
+mex-common = { git = "https://github.com/robert-koch-institut/mex-common", branch = "feature/model-5.3" }

@@ -15,6 +15,13 @@ class RandomFieldInfo(BaseModel):
     examples: list[AnyPrimitiveType | dict[str, AnyPrimitiveType]] = []
 
 
+class DummyEntity(BaseModel):
+    """A dummy entity with all the names it may be referred to by."""
+
+    identifier: str
+    synonyms: list[str]
+
+
 class ExtractedItemAndRuleSet(BaseModel):
     """A combination of an extracted item and a rule-set (both optional)."""
 
